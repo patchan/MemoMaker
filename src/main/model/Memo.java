@@ -16,21 +16,14 @@ public class Memo {
     // MODIFIES: this
     // EFFECTS: produces a memo with an arbitrary number of bars
     // the while true loop was implemented based on the B04 SimpleCalculator
-    public void makeMemo() {
-        String operation = "";
+    public void makeMemo(int numBars) {
+        int i = 0;
 
-        while (true) {
-            System.out.println("What would you like to do?"
-                    + "(\'add\' to add more bars or \'quit\')");
-            operation = scanner.nextLine();
-
-            if (operation.equals("quit")) {
-                break;
-            }
-
+        while (i < numBars) {
             bar = new Bar();
             bar.makeBar();
             addToMemo(bar);
+            i++;
         }
     }
     
