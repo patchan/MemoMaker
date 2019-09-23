@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Memo {
-    private ArrayList<Bar> memo;
-    private Bar bar;
+    public ArrayList<Bar> memo;
+    public Bar bar;
     // the implementation of the Scanner to receive user input was adapted from the B04 SimpleCalculator
     private Scanner scanner = new Scanner(System.in);
 
