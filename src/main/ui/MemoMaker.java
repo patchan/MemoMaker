@@ -7,7 +7,7 @@ public class MemoMaker {
 
     public MemoMaker() {
         memo = new Memo();
-        memo.makeMemo(4);
+        memo.makeMemo();
         memo.printMemo();
     }
 

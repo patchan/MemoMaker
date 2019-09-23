@@ -4,27 +4,37 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Memo {
-    public ArrayList<Bar> memo;
-    public Bar bar;
+    private ArrayList<Bar> memo;
+    private Bar bar;
     // the implementation of the Scanner to receive user input was adapted from the B04 SimpleCalculator
     private Scanner scanner = new Scanner(System.in);
 
+    // EFFECTS: constructs an empty memo
     public Memo() {
         memo = new ArrayList<>();
     }
 
+    // REQUIRES: scoreLength > 0
     // MODIFIES: this
-    // EFFECTS: produces a memo with an arbitrary number of bars
-    // the while true loop was implemented based on the B04 SimpleCalculator
-    public void makeMemo(int numBars) {
+    // EFFECTS: produces a memo with a number of bars given by scoreLength
+    public void makeMemo() {
         int i = 0;
-
-        while (i < numBars) {
+        int scoreLength;
+        scoreLength = getScoreLength();
+        while (i < scoreLength) {
             bar = new Bar();
             bar.makeBar();
             addToMemo(bar);
             i++;
         }
+    }
+
+    // EFFECTS: returns user input for the number of bars to create in the memo
+    public int getScoreLength() {
+        System.out.println("How many bars would you like in the memo?");
+        int numBars;
+        numBars = scanner.nextInt();
+        return numBars;
     }
     
     // MODIFIES: this

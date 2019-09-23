@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bar {
-    public ArrayList<Note> bar;
-    public Note note;
+    private ArrayList<Note> bar;
+    private Note note;
     // the implementation of the Scanner to receive user input was adapted from the B04 SimpleCalculator
     private Scanner scanner = new Scanner(System.in);
 
+    // EFFECTS: constructs an empty bar
     public Bar() {
         bar = new ArrayList<>();
     }
@@ -68,9 +69,7 @@ public class Bar {
     public void printBar() {
         ArrayList<String> notesList;
         notesList = getBar();
-        for (String s : notesList) {
-            System.out.println(s);
-        }
+        System.out.println(notesList);
     }
 
     // EFFECTS: returns true if Note n is in the bar
