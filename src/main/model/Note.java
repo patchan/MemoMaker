@@ -1,24 +1,35 @@
 package model;
 
-public class Note {
+import java.io.Serializable;
+
+public class Note implements Serializable {
     private static final int NATURAL = 0;
     private static final int SHARP = 1;
     private static final int FLAT = -1;
 
     private String name;
     private int degree;
+    private int octave;
 
-    // EFFECTS: constructs a Note with the parameter name and the degree set to natural
-    public Note(String name) {
+    // EFFECTS: constructs a Note with the parameter name, octave, and the degree set to natural
+    public Note(String name, int octave) {
         this.name = name;
+        this.octave = octave;
         this.degree = NATURAL;
     }
 
     // REQUIRES: name is single character string
     // MODIFIES: this
     // EFFECTS: sets the note name of this note
-    public void setNote(String name) {
+    public void setNoteName(String name) {
         this.name = name;
+    }
+
+    // REQUIRES: octave is a non-negative integer
+    // MODIFIES: this
+    // EFFECTS: sets the note octave of this note
+    public void setOctave(int octave) {
+        this.octave = octave;
     }
 
     // REQUIRES: degree is integer -1, 0, or 1
@@ -29,8 +40,13 @@ public class Note {
     }
 
     // EFFECTS: produces the note name
-    public String getNote() {
+    public String getNoteName() {
         return this.name;
+    }
+
+    // EFFECTS: produces the note octave
+    public int getOctave() {
+        return this.octave;
     }
 
     // EFFECTS: produces the note degree
@@ -56,7 +72,7 @@ public class Note {
     // EFFECTS: produces a composite name with the note name and degree symbol
     public String compositeName() {
         String compositeName;
-        compositeName = this.name + this.getDegreeSymbol();
+        compositeName = this.name + this.octave + this.getDegreeSymbol();
         return compositeName;
     }
 

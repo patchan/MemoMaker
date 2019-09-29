@@ -12,21 +12,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 // unit tests for the Bar class
 public class BarTest {
     private Note a, b, c, d, e, f;
-    private Bar bar1, bar2;
+    private Bar bar1, bar2, bar3;
 
     @BeforeEach
     public void setup() {
-        a = new Note("A");
-        b = new Note("B");
-        c = new Note("C");
-        d = new Note("D");
-        e = new Note("E");
-        f = new Note("F");
+        a = new Note("A", 4);
+        b = new Note("B", 4);
+        c = new Note("C", 4);
+        d = new Note("D", 4);
+        e = new Note("E", 4);
+        f = new Note("F", 4);
         bar1 = new Bar();
         bar2 = new Bar();
+        bar3 = new Bar();
         bar2.addToBar(a);
         bar2.addToBar(b);
         bar2.addToBar(c);
+        bar3.addToBar(d);
+        bar3.addToBar(e);
+        bar3.addToBar(f);
+        bar3.addToBar(a);
     }
 
     @Test
@@ -54,8 +59,17 @@ public class BarTest {
     }
 
     @Test
-    public void testBarSize() {
+    public void testBarSizeEmpty() {
         assertEquals(0, bar1.barSize());
+    }
+
+    @Test
+    public void testBarSizeSome() {
         assertEquals(3, bar2.barSize());
+    }
+
+    @Test
+    public void testBarSizeFull() {
+        assertEquals(4, bar3.barSize());
     }
 }

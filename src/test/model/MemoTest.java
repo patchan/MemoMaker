@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,15 +14,17 @@ public class MemoTest {
     private Note a, b, c, d, e, f;
     private Bar bar1, bar2;
     private Memo emptyMemo, memo;
+    private Readable savedMemo;
 
     @BeforeEach
     public void setup() {
-        a = new Note("A");
-        b = new Note("B");
-        c = new Note("C");
-        d = new Note("D");
-        e = new Note("E");
-        f = new Note("F");
+        a = new Note("A", 4);
+        b = new Note("B", 4);
+        c = new Note("C", 4);
+        d = new Note("D", 4);
+        e = new Note("E", 4);
+        f = new Note("F", 4);
+        b.setDegree(1);
         bar1 = new Bar();
         bar1.addToBar(a);
         bar1.addToBar(b);
@@ -77,4 +81,14 @@ public class MemoTest {
         assertTrue(memo.memoContains(d));
         assertFalse(memo.memoContains(f));
     }
+
+    @Test
+    public void testLoadAndSave() throws IOException, ClassNotFoundException {
+        memo.saveMemo();
+        Memo savedMemo = memo;
+        memo.loadMemo();
+        Memo loadedMemo = memo;
+        assertEquals(loadedMemo.returnMemo(), savedMemo.returnMemo());
+    }
+
 }

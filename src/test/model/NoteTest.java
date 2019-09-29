@@ -16,56 +16,76 @@ public class NoteTest {
 
     @BeforeEach
     public void setup() {
-        a = new Note("A");
-        b = new Note("B");
-        c = new Note("C");
-        d = new Note("D");
+        a = new Note("A", 4);
+        b = new Note("B", 4);
+        c = new Note("C", 4);
+        d = new Note("D", 4);
     }
 
     @Test
     public void testSetNote() {
-        a.setNote("B");
-        assertEquals("B", a.getNote());
+        a.setNoteName("B");
+        assertEquals("B", a.getNoteName());
     }
 
     @Test
-    public void testSetDegree() {
-        a.setDegree(-1);
-        b.setDegree(0);
-        c.setDegree(-1);
-        assertEquals(-1, a.getDegree());
-        assertEquals(0, b.getDegree());
-        assertEquals(-1, c.getDegree());
+    public void testSetDegreeNatural() {
         a.setDegree(0);
         assertEquals(0, a.getDegree());
     }
 
     @Test
-    public void testGetDegreeSymbol() {
+    public void testSetOctave() {
+        a.setOctave(1);
+        assertEquals(1, a.getOctave());
+    }
+
+    @Test
+    public void testSetDegreeSharp() {
+        a.setDegree(1);
+        assertEquals(1, a.getDegree());
+    }
+
+    @Test
+    public void testSetDegreeFlat() {
+        a.setDegree(-1);
+        assertEquals(-1, a.getDegree());
+    }
+
+    @Test
+    public void testGetDegreeSymbolNatural() {
         a.setDegree(0);
-        b.setDegree(1);
-        c.setDegree(-1);
         assertEquals("", a.getDegreeSymbol());
+    }
+
+    @Test
+    public void testGetDegreeSymbolSharp() {
+        b.setDegree(1);
         assertEquals("#", b.getDegreeSymbol());
+    }
+
+    @Test
+    public void testGetDegreeSymbolFlat() {
+        c.setDegree(-1);
         assertEquals("b", c.getDegreeSymbol());
     }
 
     @Test
     public void testCompositeNameNatural() {
         d.setDegree(0);
-        assertEquals("D", d.compositeName());
+        assertEquals("D4", d.compositeName());
     }
 
     @Test
     public void testCompositeNameFlat() {
         d.setDegree(-1);
-        assertEquals("Db", d.compositeName());
+        assertEquals("D4b", d.compositeName());
     }
 
     @Test
     public void testCompositeNameSharp() {
         d.setDegree(1);
-        assertEquals("D#", d.compositeName());
+        assertEquals("D4#", d.compositeName());
     }
 
 
