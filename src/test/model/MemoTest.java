@@ -84,9 +84,9 @@ public class MemoTest {
 
     @Test
     public void testLoadAndSave() throws IOException, ClassNotFoundException {
-        memo.saveMemo();
+        memo.save();
         Memo savedMemo = memo;
-        memo.loadMemo();
+        memo.load();
         Memo loadedMemo = memo;
         assertEquals(loadedMemo.returnMemo(), savedMemo.returnMemo());
     }

@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bar implements Serializable {
-    private Bar bar;
     private ArrayList<Note> notes;
-    private Note note;
     // the implementation of the Scanner to receive user input was adapted from the B04 SimpleCalculator
     private transient Scanner scanner = new Scanner(System.in);
 
@@ -24,7 +22,7 @@ public class Bar implements Serializable {
         while (i < barLength) {
             String name = getNoteName();
             int octave = getNoteOctave();
-            note = new Note(name, octave);
+            Note note = new Note(name, octave);
             int degree = getNoteDegree();
             note.setDegree(degree);
             addToBar(note);
@@ -53,12 +51,12 @@ public class Bar implements Serializable {
     private int getNoteDegree() {
         System.out.println("Enter an accidental (-1 for flat, 0 for natural, 1 for sharp):");
         int degree = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextInt();
         return degree;
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a Note to this Memo
+    // EFFECTS: adds a Note to this Bar
     public void addToBar(Note note) {
         notes.add(note);
         System.out.println("The note \"" + note.compositeName() + "\" has been added to the bar.");

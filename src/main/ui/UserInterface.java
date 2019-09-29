@@ -22,16 +22,22 @@ public class UserInterface {
 
     public Command getUserCommand() {
         int command = scanner.nextInt();
+        return parseUserCommand(command);
+    }
+
+    // REQUIRES: commandInput is Integer[1, 5]
+    // EFFECTS: returns the appropriate Command subtype for command input
+    public static Command parseUserCommand(int commandInput) {
         Command userCommand = null;
-        if (command == 1) {
-            userCommand = new NewMemoCommand();
-        } else if (command == 2) {
-            userCommand = new AddToMemoCommand();
-        } else if (command == 3) {
-            userCommand = new LoadMemoCommand();
-        } else if (command == 4) {
-            userCommand = new SaveMemoCommand();
-        } else if (command == 5) {
+        if (commandInput == 1) {
+            userCommand = new CreateNewCommand();
+        } else if (commandInput == 2) {
+            userCommand = new AddCommand();
+        } else if (commandInput == 3) {
+            userCommand = new LoadCommand();
+        } else if (commandInput == 4) {
+            userCommand = new SaveCommand();
+        } else if (commandInput == 5) {
             userCommand = new QuitCommand();
         }
         return userCommand;

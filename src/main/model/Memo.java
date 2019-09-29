@@ -2,13 +2,10 @@ package model;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Memo implements Readable, Writeable, Serializable {
     private Memo memo;
     private ArrayList<Bar> bars;
-    // the implementation of the Scanner to receive user input was adapted from the B04 SimpleCalculator
-    private transient Scanner scanner = new Scanner(System.in);
 
     // EFFECTS: constructs an empty memo
     public Memo() {
@@ -17,25 +14,15 @@ public class Memo implements Readable, Writeable, Serializable {
 
     // REQUIRES: scoreLength > 0
     // MODIFIES: this
-    // EFFECTS: produces a memo with a number of bars given by scoreLength
-    public void makeMemo() {
+    // EFFECTS: produces a new memo with a number of bars given by numBars
+    public void makeMemo(int numBars) {
         int i = 0;
-        int scoreLength;
-        scoreLength = getScoreLength();
-        while (i < scoreLength) {
+        while (i < numBars) {
             Bar newBar = new Bar();
             newBar.makeBar();
             addToMemo(newBar);
             i++;
         }
-    }
-
-    // EFFECTS: returns user input for the number of bars to create in the memo
-    public int getScoreLength() {
-        System.out.println("How many bars would you like in the memo?");
-        int numBars;
-        numBars = scanner.nextInt();
-        return numBars;
     }
 
     // MODIFIES: this
@@ -95,7 +82,7 @@ public class Memo implements Readable, Writeable, Serializable {
     // REQUIRES: file containing memo to load
     // EFFECTS: loads a memo object
     @Override
-    public void loadMemo() throws IOException, ClassNotFoundException {
+    public void load() throws IOException, ClassNotFoundException {
         FileInputStream loadedFile = new FileInputStream(new File("my_memo"));
         ObjectInputStream loadedObjects = new ObjectInputStream(loadedFile);
 
@@ -117,7 +104,7 @@ public class Memo implements Readable, Writeable, Serializable {
     // MODIFIES: overwrites file being saved to
     // EFFECTS: saves the memo as a java object to a json file
     @Override
-    public void saveMemo() throws IOException {
+    public void save() throws IOException {
         FileOutputStream saveFile = new FileOutputStream(new File("my_memo"));
         ObjectOutputStream saveObjects = new ObjectOutputStream(saveFile);
 
