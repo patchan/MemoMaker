@@ -1,17 +1,20 @@
 package ui;
 
-import ui.UserInterface.UserCommand;
+import model.Memo;
+import ui.commands.Command;
 
 import java.io.IOException;
 
 public class MemoMaker {
     private UserInterface ui = new UserInterface();
+    private Memo memo = new Memo();
+
 
     public MemoMaker() throws IOException, ClassNotFoundException {
         while (true) {
             ui.askForCommand();
-            UserCommand command = ui.getUserCommand();
-            ui.executeCommand(command);
+            Command command = ui.getUserCommand();
+            command.executeCommand(memo);
         }
     }
 
