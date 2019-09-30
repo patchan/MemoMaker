@@ -11,6 +11,7 @@ public class UserInterface {
 
     public UserInterface() {}
 
+    // EFFECTS: prints instructions to user
     public void askForCommand() {
         System.out.println("What would you like to do?");
         System.out.println("Enter '1' to create a new memo");
@@ -20,6 +21,8 @@ public class UserInterface {
         System.out.println("Enter '5' to quit");
     }
 
+    // REQUIRES: scanner input must be Integer[1, 5]
+    // EFFECTS: gets command from user
     public Command getUserCommand() {
         int command = scanner.nextInt();
         return parseUserCommand(command);
