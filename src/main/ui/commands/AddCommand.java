@@ -3,7 +3,7 @@ package ui.commands;
 import model.Bar;
 import model.Memo;
 
-public class AddCommand implements Command {
+public class AddCommand extends CreateNewCommand {
 
     public AddCommand() {}
 
@@ -12,10 +12,16 @@ public class AddCommand implements Command {
     // EFFECT: adds a new bar to memo
     @Override
     public void executeCommand(Memo memo) {
-        Bar bar = new Bar();
-        bar.makeBar();
-        memo.addToMemo(bar);
+        int numBars = getScoreLength();
+        int i = 0;
+        while (i < numBars) {
+            Bar newBar = new Bar();
+            makeBar(newBar);
+            memo.addToMemo(newBar);
+            i++;
+        }
         memo.printMemo();
+        System.out.println("ADD");
     }
 
     @Override

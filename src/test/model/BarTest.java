@@ -16,12 +16,12 @@ public class BarTest {
 
     @BeforeEach
     public void setup() {
-        a = new Note("A", 4);
-        b = new Note("B", 4);
-        c = new Note("C", 4);
-        d = new Note("D", 4);
-        e = new Note("E", 4);
-        f = new Note("F", 4);
+        a = new QuarterNote("A", 4, 4);
+        b = new QuarterNote("B", 4, 4);
+        c = new QuarterNote("C", 4, 4);
+        d = new QuarterNote("D", 4, 4);
+        e = new QuarterNote("E", 4, 4);
+        f = new QuarterNote("F", 4, 4);
         bar1 = new Bar();
         bar2 = new Bar();
         bar3 = new Bar();

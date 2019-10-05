@@ -6,53 +6,10 @@ import java.util.Scanner;
 
 public class Bar implements Serializable {
     private ArrayList<Note> notes;
-    // the implementation of the Scanner to receive user input was adapted from the B04 SimpleCalculator
-    private transient Scanner scanner = new Scanner(System.in);
 
     // EFFECTS: constructs an empty bar
     public Bar() {
         this.notes = new ArrayList<>();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: produces a bar with four quarter notes
-    public void makeBar() {
-        int i = 0;
-        int barLength = 4;
-        while (i < barLength) {
-            String name = getNoteName();
-            int octave = getNoteOctave();
-            Note note = new Note(name, octave);
-            int degree = getNoteDegree();
-            note.setDegree(degree);
-            addToBar(note);
-            i++;
-        }
-    }
-
-    // REQUIRES: input is single character string
-    // EFFECTS: returns user input for note name as string
-    private String getNoteName() {
-        System.out.println("Enter a quarter note:");
-        String name = scanner.nextLine();
-        return name;
-    }
-
-    // REQUIRES: input is single character string
-    // EFFECTS: returns user input for note name as string
-    private int getNoteOctave() {
-        System.out.println("Enter the octave of the note:");
-        int octave = scanner.nextInt();
-        return octave;
-    }
-
-    // REQUIRES: input is integer -1, 0, or 1
-    // EFFECTS: returns user input for note degree as an integer
-    private int getNoteDegree() {
-        System.out.println("Enter an accidental (-1 for flat, 0 for natural, 1 for sharp):");
-        int degree = scanner.nextInt();
-        scanner.nextInt();
-        return degree;
     }
 
     // MODIFIES: this

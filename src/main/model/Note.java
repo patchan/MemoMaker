@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Note implements Serializable {
+public abstract class Note implements Serializable {
     private static final int NATURAL = 0;
     private static final int SHARP = 1;
     private static final int FLAT = -1;
@@ -10,54 +10,55 @@ public class Note implements Serializable {
     private String name;
     private int degree;
     private int octave;
+    protected double duration;
 
     // EFFECTS: constructs a Note with the parameter name, octave, and the degree set to natural
-    public Note(String name, int octave) {
+    public Note(String name, int octave, int degree) {
         this.name = name;
         this.octave = octave;
-        this.degree = NATURAL;
+        this.degree = degree;
     }
 
     // REQUIRES: name is single character string
     // MODIFIES: this
     // EFFECTS: sets the note name of this note
-    public void setNoteName(String name) {
+    protected void setNoteName(String name) {
         this.name = name;
     }
 
     // REQUIRES: octave is a non-negative integer
     // MODIFIES: this
     // EFFECTS: sets the note octave of this note
-    public void setOctave(int octave) {
+    protected void setOctave(int octave) {
         this.octave = octave;
     }
 
     // REQUIRES: degree is integer -1, 0, or 1
     // MODIFIES: this
     // EFFECTS: sets the note degree of this note
-    public void setDegree(int degree) {
+    protected void setDegree(int degree) {
         this.degree = degree;
     }
 
     // EFFECTS: produces the note name
-    public String getNoteName() {
+    protected String getNoteName() {
         return this.name;
     }
 
     // EFFECTS: produces the note octave
-    public int getOctave() {
+    protected int getOctave() {
         return this.octave;
     }
 
     // EFFECTS: produces the note degree
-    public int getDegree() {
+    protected int getDegree() {
         return this.degree;
     }
 
     // REQUIRES: degree is integer -1, 0, or -1
     // EFFECTS: produces symbolized note degree where
     //          FLAT = "b", NATURAL = "", and SHARP = "#"
-    public String getDegreeSymbol() {
+    protected String getDegreeSymbol() {
         String accidental = null;
         if (degree == FLAT) {
             accidental = "b";
@@ -70,7 +71,7 @@ public class Note implements Serializable {
     }
 
     // EFFECTS: produces a composite name with the note name and degree symbol
-    public String compositeName() {
+    protected String compositeName() {
         String compositeName;
         compositeName = this.name + this.octave + this.getDegreeSymbol();
         return compositeName;

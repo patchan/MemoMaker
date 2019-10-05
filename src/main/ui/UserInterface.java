@@ -25,6 +25,7 @@ public class UserInterface {
     // EFFECTS: gets command from user
     public Command getUserCommand() {
         int command = scanner.nextInt();
+        scanner.nextLine();
         return parseUserCommand(command);
     }
 

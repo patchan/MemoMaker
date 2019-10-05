@@ -14,16 +14,15 @@ public class MemoTest {
     private Note a, b, c, d, e, f;
     private Bar bar1, bar2;
     private Memo emptyMemo, memo;
-    private Readable savedMemo;
 
     @BeforeEach
     public void setup() {
-        a = new Note("A", 4);
-        b = new Note("B", 4);
-        c = new Note("C", 4);
-        d = new Note("D", 4);
-        e = new Note("E", 4);
-        f = new Note("F", 4);
+        a = new QuarterNote("A", 4, 4);
+        b = new QuarterNote("B", 4, 4);
+        c = new QuarterNote("C", 4, 4);
+        d = new QuarterNote("D", 4, 4);
+        e = new QuarterNote("E", 4, 4);
+        f = new QuarterNote("F", 4, 4);
         b.setDegree(1);
         bar1 = new Bar();
         bar1.addToBar(a);
@@ -86,7 +85,7 @@ public class MemoTest {
     public void testLoadAndSave() throws IOException, ClassNotFoundException {
         memo.save();
         Memo savedMemo = memo;
-        memo.load();
+        emptyMemo.load();
         Memo loadedMemo = memo;
         assertEquals(loadedMemo.returnMemo(), savedMemo.returnMemo());
     }

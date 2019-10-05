@@ -16,10 +16,10 @@ public class NoteTest {
 
     @BeforeEach
     public void setup() {
-        a = new Note("A", 4);
-        b = new Note("B", 4);
-        c = new Note("C", 4);
-        d = new Note("D", 4);
+        a = new QuarterNote("A", 4, 4);
+        b = new QuarterNote("B", 4, 4);
+        c = new QuarterNote("C", 4, 4);
+        d = new QuarterNote("D", 4, 4);
     }
 
     @Test

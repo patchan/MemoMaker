@@ -7,10 +7,11 @@ import java.io.IOException;
 
 public class MemoMaker {
     private UserInterface ui = new UserInterface();
-    private Memo memo = new Memo();
+    private Memo memo;
 
 
     public MemoMaker() throws IOException, ClassNotFoundException {
+        memo = new Memo();
         while (true) {
             ui.askForCommand();
             Command command = ui.getUserCommand();

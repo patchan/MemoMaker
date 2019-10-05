@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Memo implements Readable, Writeable, Serializable {
-    private Memo memo;
     private ArrayList<Bar> bars;
 
     // EFFECTS: constructs an empty memo
@@ -12,17 +11,8 @@ public class Memo implements Readable, Writeable, Serializable {
         this.bars = new ArrayList<>();
     }
 
-    // REQUIRES: scoreLength > 0
-    // MODIFIES: this
-    // EFFECTS: produces a new memo with a number of bars given by numBars
-    public void makeMemo(int numBars) {
-        int i = 0;
-        while (i < numBars) {
-            Bar newBar = new Bar();
-            newBar.makeBar();
-            addToMemo(newBar);
-            i++;
-        }
+    public void clearMemo() {
+        bars.clear();
     }
 
     // MODIFIES: this
@@ -42,14 +32,14 @@ public class Memo implements Readable, Writeable, Serializable {
 
     // EFFECTS: returns an ArrayList of Bars in the memo
     //          this method is for testing the loadMemo method
-    public Memo returnMemo() {
+    public ArrayList<ArrayList<String>> returnMemo() {
         ArrayList<ArrayList<String>> listOfBars = new ArrayList<>();
         for (Bar b : bars) {
             ArrayList<String> listOfNotes;
             listOfNotes = b.getBar();
             listOfBars.add(listOfNotes);
         }
-        return memo;
+        return listOfBars;
     }
 
     // EFFECTS: returns true if Note n is in the memo
@@ -86,18 +76,18 @@ public class Memo implements Readable, Writeable, Serializable {
         FileInputStream loadedFile = new FileInputStream(new File("my_memo"));
         ObjectInputStream loadedObjects = new ObjectInputStream(loadedFile);
 
-        ArrayList<Bar> loadedBars = (ArrayList<Bar>) loadedObjects.readObject();
-        Memo loadedMemo = new Memo();
-        for (Bar b : loadedBars) {
-            loadedMemo.addToMemo(b);
-        }
+        clearMemo();
+        bars = (ArrayList<Bar>) loadedObjects.readObject();
+//        for (Bar b : bars) {
+//            bars.addToMemo(b);
+//        }
+        System.out.println("bar count is " + barCount());
 
         loadedObjects.close();
         loadedFile.close();
 
         System.out.println("A memo has been loaded.");
-        loadedMemo.printMemo();
-        memo = loadedMemo;
+        printMemo();
     }
 
     // REQUIRES: non-empty memo
