@@ -34,9 +34,9 @@ public class UserInterface {
     public static Command parseUserCommand(int userInput) {
         Command userCommand = null;
         if (userInput == 1) {
-            userCommand = new CreateNewCommand();
+            userCommand = new CreateNewMemo();
         } else if (userInput == 2) {
-            userCommand = new AddCommand();
+            userCommand = new AddToMemo();
         } else if (userInput == 3) {
             userCommand = new LoadCommand();
         } else if (userInput == 4) {

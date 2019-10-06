@@ -1,29 +1,36 @@
-//package model;
-//
-//import java.io.Serializable;
-//
-//public class Rest extends MusicalObject implements Serializable {
-//    private float duration;
-//
-//    public Rest(float duration) {
-//        this.duration = duration;
-//    }
-//
-//    public void setRest(float duration) {
-//        this.duration = duration;
-//    }
-//
-//    public float getRest() {
-//        return duration;
-//    }
-//
-//    @Override
-//    String getCompositeName() {
-//        return null;
-//    }
-//
-//    @Override
-//    String printName() {
-//        return null;
-//    }
-//}
+package model;
+
+import java.io.Serializable;
+
+public class Rest extends MusicalObject implements Serializable {
+
+    public Rest(double restDur) {
+        this.duration = restDur;
+    }
+
+    // EFFECTS: returns the composite rest name
+    @Override
+    protected String getCompositeName() {
+        String compositeName = null;
+        if (duration == 1) {
+            compositeName = "Q-rest";
+        } else if (duration == 0.25) {
+            compositeName = "16-rest";
+        } else if (duration == 0.5) {
+            compositeName = "8-rest";
+        } else if (duration == 2) {
+            compositeName = "H-rest";
+        } else if (duration == 4) {
+            compositeName = "W-rest";
+        }
+        return compositeName;
+    }
+
+    // EFFECTS: prints the rest name and returns "Rest: compositeName"
+    @Override
+    protected String printName() {
+        String compositeName = getCompositeName();
+        System.out.println("Rest: " + compositeName);
+        return "Rest: " + compositeName;
+    }
+}

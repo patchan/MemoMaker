@@ -1,0 +1,56 @@
+package model;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class RestTest {
+    private Rest quarter;
+    private Rest half;
+    private Rest eighth;
+    private Rest sixteenth;
+    private Rest whole;
+
+    @BeforeEach
+    public void setup() {
+        quarter = new Rest(1);
+        half = new Rest(2);
+        eighth = new Rest(0.5);
+        sixteenth = new Rest(0.25);
+        whole = new Rest(4);
+    }
+
+    @Test
+    public void testGetCompositeNameQuarter() {
+        assertEquals("Q-rest", quarter.getCompositeName());
+    }
+
+    @Test
+    public void testGetCompositeNameHalf() {
+        assertEquals("H-rest", half.getCompositeName());
+    }
+
+    @Test
+    public void testGetCompositeNameSixteenth() {
+        assertEquals("16-rest", sixteenth.getCompositeName());
+    }
+
+    @Test
+    public void testGetCompositeNameEighth() {
+        assertEquals("8-rest", eighth.getCompositeName());
+    }
+
+    @Test
+    public void testGetCompositeNameWhole() {
+        assertEquals("W-rest", whole.getCompositeName());
+    }
+
+    @Test
+    public void testPrintRest() {
+        assertEquals("Rest: W-rest", whole.printName());
+    }
+
+}

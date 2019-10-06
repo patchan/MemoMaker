@@ -64,6 +64,7 @@ public class Note extends MusicalObject implements Serializable {
         return compositeName;
     }
 
+    // EFFECTS: prints the note composite name and returns "Note: compositeName"
     @Override
     protected String printName() {
         String compositeName = getCompositeName();

@@ -3,9 +3,9 @@ package ui.commands;
 import model.Bar;
 import model.Memo;
 
-public class AddCommand extends CreateNewCommand {
+public class AddToMemo extends CreateNewMemo {
 
-    public AddCommand() {}
+    public AddToMemo() {}
 
     // REQUIRES: memo is not empty
     // MODIFIES: memo
@@ -25,6 +25,6 @@ public class AddCommand extends CreateNewCommand {
 
     @Override
     public boolean equals(Object command) {
-        return command instanceof AddCommand;
+        return command instanceof AddToMemo;
     }
 }

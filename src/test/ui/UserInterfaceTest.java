@@ -18,13 +18,13 @@ public class UserInterfaceTest {
 
     @Test
     public void parseNewCommandTest() {
-        Command command = new CreateNewCommand();
+        Command command = new CreateNewMemo();
         assertEquals(command, UserInterface.parseUserCommand(inputNewMemo));
     }
 
     @Test
     public void parseAddCommandTest() {
-        Command command = new AddCommand();
+        Command command = new AddToMemo();
         assertEquals(command, UserInterface.parseUserCommand(inputAddTo));
     }
 

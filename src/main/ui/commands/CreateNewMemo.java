@@ -4,11 +4,11 @@ import model.*;
 
 import java.util.Scanner;
 
-public class CreateNewCommand implements Command {
+public class CreateNewMemo implements Command {
     // the implementation of the Scanner to receive user input was adapted from the B04 SimpleCalculator
     private transient Scanner scanner = new Scanner(System.in);
 
-    public CreateNewCommand() {}
+    public CreateNewMemo() {}
 
     // EFFECTS: creates a new memo
     @Override
@@ -26,7 +26,8 @@ public class CreateNewCommand implements Command {
         memo.printMemo();
     }
 
-    protected Bar makeBar(Bar bar) {
+    // EFFECTS: creates a new bar with musical objects
+    protected void makeBar(Bar bar) {
         double i = 0;
         int barLength = getBarLength();
         while (i < barLength) {
@@ -34,19 +35,23 @@ public class CreateNewCommand implements Command {
             bar.addToBar(newObject);
             i = i + newObject.getDuration();
         }
-        return bar;
     }
 
+    // REQUIRES: input must be integer 1, 2, or 3
+    // EFFECTS: creates a new musical object (either Note, Chord, or Rest) based on user input
     protected MusicalObject makeMusicalObject(int input) {
         MusicalObject mo = null;
         if (input == 1) {
             mo = makeNote(getObjectDuration());
         } else if (input == 2) {
             mo = makeChord(getObjectDuration(), getChordNotes());
+        } else if (input == 3) {
+            mo = makeRest(getObjectDuration());
         }
         return mo;
     }
 
+    // EFFECTS: creates a new chord
     protected Chord makeChord(double noteDur, int chordNotes) {
         Chord mo = new Chord(getChordName(), getChordQuality(), getChordExtensions());
         mo.setDuration(noteDur);
@@ -58,16 +63,23 @@ public class CreateNewCommand implements Command {
         return mo;
     }
 
+    // EFFECTS: creates a new note
     protected Note makeNote(double noteDur) {
         Note mo = new Note(getNoteName(), getNoteOctave(), getNoteDegree());
         mo.setDuration(noteDur);
         return mo;
     }
 
-    // REQUIRES: input is integer 1 or 2
+    // EFFECTS: creates a new rest
+    protected Rest makeRest(double restDur) {
+        Rest mo = new Rest(restDur);
+        return mo;
+    }
+
+    // REQUIRES: input is integer 1, 2, or 3
     // EFFECTS: returns user input for the object type to be created
     private int getObjectType() {
-        System.out.println("Do you want to add a note or a chord? (1 for note, 2 for chord)");
+        System.out.println("What do you want to add to the bar? (1 for note, 2 for chord, 3 for rest)");
         int input = scanner.nextInt();
         scanner.nextLine();
         return input;
@@ -84,7 +96,8 @@ public class CreateNewCommand implements Command {
     // REQUIRES: input is single character string
     // EFFECTS: returns user input for note name as string
     protected double getObjectDuration() {
-        System.out.println("Enter a note duration:\n(Use 1 for quarter, 2 for half, 0.5 for 8th, 0.25 for 16th)");
+        System.out.println("Enter a note duration:");
+        System.out.println("Use 1 for quarter, 0.5 for 8th, 0.25 for 16th, 2 for half, 4 for whole");
         double noteDur = scanner.nextDouble();
         scanner.nextLine();
         return noteDur;
@@ -159,7 +172,7 @@ public class CreateNewCommand implements Command {
 
     @Override
     public boolean equals(Object command) {
-        return command instanceof CreateNewCommand;
+        return command instanceof CreateNewMemo;
     }
 
 }
