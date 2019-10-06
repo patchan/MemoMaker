@@ -11,6 +11,8 @@ public class Memo implements Readable, Writeable, Serializable {
         this.bars = new ArrayList<>();
     }
 
+    // MODIFIES: this
+    // EFFECTS: clears the entire memo
     public void clearMemo() {
         bars.clear();
     }
@@ -43,9 +45,9 @@ public class Memo implements Readable, Writeable, Serializable {
     }
 
     // EFFECTS: returns true if Note n is in the memo
-    public Boolean memoContains(Note n) {
+    public Boolean memoContains(MusicalObject mo) {
         for (Bar b : bars) {
-            if (b.barContains(n)) {
+            if (b.barContains(mo)) {
                 return true;
             }
         }
@@ -78,9 +80,6 @@ public class Memo implements Readable, Writeable, Serializable {
 
         clearMemo();
         bars = (ArrayList<Bar>) loadedObjects.readObject();
-//        for (Bar b : bars) {
-//            bars.addToMemo(b);
-//        }
         System.out.println("bar count is " + barCount());
 
         loadedObjects.close();

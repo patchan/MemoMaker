@@ -16,16 +16,16 @@ public class NoteTest {
 
     @BeforeEach
     public void setup() {
-        a = new QuarterNote("A", 4, 4);
-        b = new QuarterNote("B", 4, 4);
-        c = new QuarterNote("C", 4, 4);
-        d = new QuarterNote("D", 4, 4);
+        a = new Note("A", 4, 4);
+        b = new Note("B", 4, 4);
+        c = new Note("C", 4, 4);
+        d = new Note("D", 4, 4);
     }
 
     @Test
     public void testSetNote() {
-        a.setNoteName("B");
-        assertEquals("B", a.getNoteName());
+        a.setName("B");
+        assertEquals("B", a.getName());
     }
 
     @Test
@@ -53,6 +53,12 @@ public class NoteTest {
     }
 
     @Test
+    public void testSetDuration() {
+        a.setDuration(2);
+        assertEquals(2, a.getDuration());
+    }
+
+    @Test
     public void testGetDegreeSymbolNatural() {
         a.setDegree(0);
         assertEquals("", a.getDegreeSymbol());
@@ -73,20 +79,25 @@ public class NoteTest {
     @Test
     public void testCompositeNameNatural() {
         d.setDegree(0);
-        assertEquals("D4", d.compositeName());
+        assertEquals("D4", d.getCompositeName());
     }
 
     @Test
     public void testCompositeNameFlat() {
         d.setDegree(-1);
-        assertEquals("D4b", d.compositeName());
+        assertEquals("D4b", d.getCompositeName());
     }
 
     @Test
     public void testCompositeNameSharp() {
         d.setDegree(1);
-        assertEquals("D4#", d.compositeName());
+        assertEquals("D4#", d.getCompositeName());
     }
 
+    @Test
+    public void testPrintName() {
+        d.setDegree(1);
+        assertEquals("Note: D4#", d.printName());
+    }
 
 }

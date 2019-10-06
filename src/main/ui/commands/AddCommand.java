@@ -21,7 +21,6 @@ public class AddCommand extends CreateNewCommand {
             i++;
         }
         memo.printMemo();
-        System.out.println("ADD");
     }
 
     @Override

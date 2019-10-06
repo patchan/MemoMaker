@@ -22,34 +22,55 @@ public class CreateNewCommand implements Command {
             memo.addToMemo(newBar);
             i++;
         }
+        System.out.println("A new memo was created.");
         memo.printMemo();
-        System.out.println("NEW");
     }
 
     protected Bar makeBar(Bar bar) {
         double i = 0;
         int barLength = getBarLength();
         while (i < barLength) {
-            double noteDur = getNoteDuration();
-            Note note = makeNote(noteDur);
-            bar.addToBar(note);
-            i = i + noteDur;
+            MusicalObject newObject = makeMusicalObject(getObjectType());
+            bar.addToBar(newObject);
+            i = i + newObject.getDuration();
         }
         return bar;
     }
 
-    protected Note makeNote(double noteDur) {
-        Note note = null;
-        if (noteDur == 1) {
-            note = new QuarterNote(getNoteName(), getNoteOctave(), getNoteDegree());
-        } else if (noteDur == 2) {
-            note = new HalfNote(getNoteName(), getNoteOctave(), getNoteDegree());
-        } else if (noteDur == 0.5) {
-            note = new EighthNote(getNoteName(), getNoteOctave(), getNoteDegree());
-        } else if (noteDur == 0.25) {
-            note = new SixteenthNote(getNoteName(), getNoteOctave(), getNoteDegree());
+    protected MusicalObject makeMusicalObject(int input) {
+        MusicalObject mo = null;
+        if (input == 1) {
+            mo = makeNote(getObjectDuration());
+        } else if (input == 2) {
+            mo = makeChord(getObjectDuration(), getChordNotes());
         }
-        return note;
+        return mo;
+    }
+
+    protected Chord makeChord(double noteDur, int chordNotes) {
+        Chord mo = new Chord(getChordName(), getChordQuality(), getChordExtensions());
+        mo.setDuration(noteDur);
+        int i = 0;
+        while (i < chordNotes) {
+            mo.addNotes(makeNote(noteDur));
+            i++;
+        }
+        return mo;
+    }
+
+    protected Note makeNote(double noteDur) {
+        Note mo = new Note(getNoteName(), getNoteOctave(), getNoteDegree());
+        mo.setDuration(noteDur);
+        return mo;
+    }
+
+    // REQUIRES: input is integer 1 or 2
+    // EFFECTS: returns user input for the object type to be created
+    private int getObjectType() {
+        System.out.println("Do you want to add a note or a chord? (1 for note, 2 for chord)");
+        int input = scanner.nextInt();
+        scanner.nextLine();
+        return input;
     }
 
     // REQUIRES: input is single character string
@@ -62,8 +83,8 @@ public class CreateNewCommand implements Command {
 
     // REQUIRES: input is single character string
     // EFFECTS: returns user input for note name as string
-    protected double getNoteDuration() {
-        System.out.println("Enter a note duration:\n(Use 2 for half, 1 for quarter, 0.5 for 8th, 0.25 for 16th)");
+    protected double getObjectDuration() {
+        System.out.println("Enter a note duration:\n(Use 1 for quarter, 2 for half, 0.5 for 8th, 0.25 for 16th)");
         double noteDur = scanner.nextDouble();
         scanner.nextLine();
         return noteDur;
@@ -85,6 +106,37 @@ public class CreateNewCommand implements Command {
         int degree = scanner.nextInt();
         scanner.nextLine();
         return degree;
+    }
+
+    // REQUIRES: input is single character string
+    // EFFECTS: returns user input for chord name as string
+    protected String getChordName() {
+        System.out.println("Enter a chord root:");
+        String name = scanner.nextLine();
+        return name;
+    }
+
+    // REQUIRES: input must be one of "maj" "min" "aug" or "dim"
+    // EFFECTS: returns user input for chord quality as string
+    protected String getChordQuality() {
+        System.out.println("Enter (maj, min, aug, or dim) as the chord quality:");
+        String name = scanner.nextLine();
+        return name;
+    }
+
+    // EFFECTS: returns user input for chord extensions as string
+    protected String getChordExtensions() {
+        System.out.println("Enter chord extensions:");
+        String name = scanner.nextLine();
+        return name;
+    }
+
+    // EFFECTS: returns user input for chord extensions as string
+    protected int getChordNotes() {
+        System.out.println("How many notes are in your chord?");
+        int notes = scanner.nextInt();
+        scanner.nextLine();
+        return notes;
     }
 
     // EFFECTS: returns user input for the number of bars to create in the memo

@@ -11,7 +11,7 @@ public class UserInterface {
 
     public UserInterface() {}
 
-    // EFFECTS: prints instructions to user
+    // EFFECTS: prints command instructions to the user
     public void askForCommand() {
         System.out.println("What would you like to do?");
         System.out.println("Enter '1' to create a new memo");
@@ -24,24 +24,24 @@ public class UserInterface {
     // REQUIRES: scanner input must be Integer[1, 5]
     // EFFECTS: gets command from user
     public Command getUserCommand() {
-        int command = scanner.nextInt();
+        int userCommand = scanner.nextInt();
         scanner.nextLine();
-        return parseUserCommand(command);
+        return parseUserCommand(userCommand);
     }
 
-    // REQUIRES: commandInput is Integer[1, 5]
+    // REQUIRES: userInput is Integer[1, 5]
     // EFFECTS: returns the appropriate Command subtype for command input
-    public static Command parseUserCommand(int commandInput) {
+    public static Command parseUserCommand(int userInput) {
         Command userCommand = null;
-        if (commandInput == 1) {
+        if (userInput == 1) {
             userCommand = new CreateNewCommand();
-        } else if (commandInput == 2) {
+        } else if (userInput == 2) {
             userCommand = new AddCommand();
-        } else if (commandInput == 3) {
+        } else if (userInput == 3) {
             userCommand = new LoadCommand();
-        } else if (commandInput == 4) {
+        } else if (userInput == 4) {
             userCommand = new SaveCommand();
-        } else if (commandInput == 5) {
+        } else if (userInput == 5) {
             userCommand = new QuitCommand();
         }
         return userCommand;
