@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RestTest {
+    private Rest blank;
     private Rest quarter;
     private Rest half;
     private Rest eighth;
@@ -16,11 +17,18 @@ public class RestTest {
 
     @BeforeEach
     public void setup() {
+        blank = new Rest();
         quarter = new Rest(1);
         half = new Rest(2);
         eighth = new Rest(0.5);
         sixteenth = new Rest(0.25);
         whole = new Rest(4);
+    }
+
+    @Test
+    public void testMakeMusicalObject() {
+        blank.makeMusicalObject(1);
+        assertEquals(1, blank.getDuration());
     }
 
     @Test

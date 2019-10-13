@@ -1,6 +1,6 @@
 package model;
 
-import ui.commands.Command;
+import exceptions.*;
 import ui.commands.CreateNewMemo;
 
 import java.io.Serializable;
@@ -16,24 +16,33 @@ public class Note extends MusicalObject implements Serializable {
     public Note() {}
 
     // EFFECTS: constructs a Note with the parameter name, octave, and the degree set to natural
-    public Note(String name, int octave, int degree) {
+    public Note(String name, int octave, int degree, double duration) {
         this.name = name;
         this.octave = octave;
         this.degree = degree;
+        this.duration = duration;
     }
 
     // REQUIRES: octave is a non-negative integer
     // MODIFIES: this
     // EFFECTS: sets the note octave of this note
-    public void setOctave(int octave) {
-        this.octave = octave;
+    public void setOctave(int octave) throws OctaveException {
+        if (octave >= 0 && octave <= 8) {
+            this.octave = octave;
+        } else {
+            throw new OctaveException();
+        }
     }
 
     // REQUIRES: degree is integer -1, 0, or 1
     // MODIFIES: this
     // EFFECTS: sets the note degree of this note
-    public void setDegree(int degree) {
-        this.degree = degree;
+    public void setDegree(int degree) throws DegreeException {
+        if (degree < -1 || degree > 1) {
+            throw new DegreeException();
+        } else {
+            this.degree = degree;
+        }
     }
 
     // EFFECTS: produces the note octave
@@ -65,9 +74,13 @@ public class Note extends MusicalObject implements Serializable {
     @Override
     protected void makeMusicalObject(double noteDur) {
         CreateNewMemo c = new CreateNewMemo();
-        setName(c.getNoteName());
-        setOctave(c.getNoteOctave());
-        setDegree(c.getNoteDegree());
+        try {
+            setName(c.getNoteName());
+            setOctave(c.getNoteOctave());
+            setDegree(c.getNoteDegree());
+        } catch (InvalidEntryException e) {
+            System.out.println("Invalid entry.");
+        }
         setDuration(noteDur);
     }
 

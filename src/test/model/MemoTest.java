@@ -17,13 +17,12 @@ public class MemoTest {
 
     @BeforeEach
     public void setup() {
-        a = new Note("A", 4, 4);
-        b = new Note("B", 4, 4);
-        c = new Note("C", 4, 4);
-        d = new Note("D", 4, 4);
-        e = new Note("E", 4, 4);
-        f = new Note("F", 4, 4);
-        b.setDegree(1);
+        a = new Note("A", 4, 0, 1);
+        b = new Note("B", 4, 1, 1);
+        c = new Note("C", 4, 0, 1);
+        d = new Note("D", 4, 0, 1);
+        e = new Note("E", 4, 0, 1);
+        f = new Note("F", 4, 0, 1);
         bar1 = new Bar();
         bar1.addToBar(a);
         bar1.addToBar(b);

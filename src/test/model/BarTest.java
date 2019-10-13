@@ -16,12 +16,12 @@ public class BarTest {
 
     @BeforeEach
     public void setup() {
-        a = new Note("A", 4, 4);
-        b = new Note("B", 4, 4);
-        c = new Note("C", 4, 4);
-        d = new Note("D", 4, 4);
-        e = new Note("E", 4, 4);
-        f = new Note("F", 4, 4);
+        a = new Note("A", 4, 0, 1);
+        b = new Note("B", 4, 0, 1);
+        c = new Note("C", 4, 0, 1);
+        d = new Note("D", 4, 0, 1);
+        e = new Note("E", 4, 0, 1);
+        f = new Note("F", 4, 0, 1);
         bar1 = new Bar();
         bar2 = new Bar();
         bar3 = new Bar();
@@ -45,11 +45,11 @@ public class BarTest {
 
     @Test
     public void testGetBar() {
-        ArrayList<String> result = new ArrayList<>();
-        result.add(a.getCompositeName());
-        result.add(b.getCompositeName());
-        result.add(c.getCompositeName());
-        assertEquals(result, bar2.getBar());
+        ArrayList<String> expectedResult = new ArrayList<>();
+        expectedResult.add(a.getCompositeName());
+        expectedResult.add(b.getCompositeName());
+        expectedResult.add(c.getCompositeName());
+        assertEquals(expectedResult, bar2.getBar());
     }
 
     @Test
@@ -77,5 +77,17 @@ public class BarTest {
     @Test
     public void testBarSizeFull() {
         assertEquals(4, bar3.barSize());
+    }
+
+    @Test
+    public void testWithinBarLengthTrue() {
+        bar1.setBarLength(2);
+        assertTrue(bar1.withinBarLength(a.getDuration()));
+    }
+
+    @Test
+    public void testWithinBarLengthFalse() {
+        bar2.setBarLength(3);
+        assertFalse(bar2.withinBarLength(a.getDuration()));
     }
 }

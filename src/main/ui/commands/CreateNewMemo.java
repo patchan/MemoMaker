@@ -4,6 +4,7 @@ import model.*;
 
 import java.util.Scanner;
 
+
 public class CreateNewMemo implements Command {
     // the implementation of the Scanner to receive user input was adapted from the B04 SimpleCalculator
     private transient Scanner scanner = new Scanner(System.in);
@@ -26,7 +27,6 @@ public class CreateNewMemo implements Command {
         memo.printMemo();
     }
 
-    // REQUIRES: input is integer 1, 2, or 3
     // EFFECTS: returns user input for the object type to be created
     public int getObjectType() {
         System.out.println("What do you want to add to the bar? (1 for note, 2 for chord, 3 for rest)");

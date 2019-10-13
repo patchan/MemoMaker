@@ -1,15 +1,13 @@
 package model;
 
+import exceptions.InvalidEntryException;
+import exceptions.QualityException;
 import ui.commands.CreateNewMemo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Chord extends MusicalObject implements Serializable {
-    private static final String MAJOR = "maj";
-    private static final String MINOR = "min";
-    private static final String AUGMENTED = "aug";
-    private static final String DIMINISHED = "dim";
 
     protected String quality;
     protected String extensions;
@@ -19,26 +17,27 @@ public class Chord extends MusicalObject implements Serializable {
         notes = new ArrayList<>();
     }
 
-    public Chord(String name, String quality, String extensions) {
+    public Chord(String name, String quality, String extensions, double duration) {
         this.name = name;
-        setQuality(quality);
+        this.quality = quality;
         this.extensions = extensions;
+        this.duration = duration;
         notes = new ArrayList<>();
     }
 
     // MODIFIES: this
     // EFFECTS: sets the quality of this chord
-    public void setQuality(String s) {
+    public void setQuality(String s) throws QualityException {
         if (s.equalsIgnoreCase("maj")) {
-            quality = MAJOR;
+            quality = ChordQuality.MAJ.getValue();
         } else if (s.equalsIgnoreCase("min")) {
-            quality = MINOR;
+            quality = ChordQuality.MIN.getValue();
         } else if (s.equalsIgnoreCase("aug")) {
-            quality = AUGMENTED;
+            quality = ChordQuality.AUG.getValue();
         } else if (s.equalsIgnoreCase("dim")) {
-            quality = DIMINISHED;
+            quality = ChordQuality.DIM.getValue();
         } else {
-            quality = null;
+            throw new QualityException();
         }
     }
 
@@ -88,16 +87,18 @@ public class Chord extends MusicalObject implements Serializable {
     @Override
     protected void makeMusicalObject(double noteDur) {
         CreateNewMemo c = new CreateNewMemo();
-        setName(c.getChordName());
-        setQuality(c.getChordQuality());
+        try {
+            setName(c.getChordName());
+            setQuality(c.getChordQuality());
+        } catch (InvalidEntryException e) {
+            e.printStackTrace();
+        }
         setExtensions(c.getChordExtensions());
         setDuration(noteDur);
         int chordNotes = c.getChordNotes();
         int i = 0;
         while (i < chordNotes) {
-            Note note = new Note();
-            note.makeMusicalObject(noteDur);
-            addNotes(note);
+            addNotes(new Note(c.getNoteName(), c.getNoteOctave(), c.getNoteDegree(), noteDur));
             i++;
         }
     }

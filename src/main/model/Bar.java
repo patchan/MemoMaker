@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Bar implements Serializable {
     private ArrayList<MusicalObject> musicalObjects;
+    private int barline;
 
     // EFFECTS: constructs an empty bar
     public Bar() {
@@ -18,13 +19,35 @@ public class Bar implements Serializable {
     public void makeBar() {
         CreateNewMemo c = new CreateNewMemo();
         double i = 0;
-        int barLength = c.getBarLength();
-        while (i < barLength) {
+        barline = c.getBarLength();
+        while (i < barline) {
             MusicalObject newObject = setObjectType(c.getObjectType());
-            newObject.makeMusicalObject(c.getObjectDuration());
-            addToBar(newObject);
-            i = i + newObject.getDuration();
+            double objectLength = c.getObjectDuration();
+            if (withinBarLength(objectLength)) {
+                newObject.makeMusicalObject(objectLength);
+                addToBar(newObject);
+                i = i + newObject.getDuration();
+            } else {
+                System.out.println("That note doesn't fit in the bar. The bar is currently "
+                        + totalObjectLength() + " notes long. Enter another note.");
+                continue;
+            }
         }
+    }
+
+    public boolean withinBarLength(double objectLength) {
+        if (barline >= objectLength + totalObjectLength()) {
+            return true;
+        }
+        return false;
+    }
+
+    public double totalObjectLength() {
+        double totLength = 0;
+        for (MusicalObject mo : musicalObjects) {
+            totLength = totLength + mo.getDuration();
+        }
+        return totLength;
     }
 
     // MODIFIES: this
@@ -57,6 +80,11 @@ public class Bar implements Serializable {
         return objectList;
     }
 
+    // EFFECTS: produces a list of all the musical objects in the bar
+    public void setBarLength(int length) {
+        this.barline = length;
+    }
+
     // EFFECTS: prints the composite names of all the musical objects in the bar as a list
     public void printBar() {
         ArrayList<String> objectList;
@@ -64,9 +92,8 @@ public class Bar implements Serializable {
         System.out.println(objectList);
     }
 
-    // REQUIRES: int i is the 1-based position in the bar
     // MODIFIES: this
-    // EFFECTS: removes this musical object from the bar
+    // EFFECTS: removes the musical object at the 1-based position i of the bar
     public void removeObject(int i) {
         musicalObjects.remove(i - 1);
     }
