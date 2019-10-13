@@ -16,7 +16,7 @@ public class AddToMemo extends CreateNewMemo {
         int i = 0;
         while (i < numBars) {
             Bar newBar = new Bar();
-            makeBar(newBar);
+            newBar.makeBar();
             memo.addToMemo(newBar);
             i++;
         }

@@ -1,5 +1,7 @@
 package model;
 
+import ui.commands.CreateNewMemo;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,10 +14,36 @@ public class Bar implements Serializable {
     }
 
     // MODIFIES: this
+    // EFFECTS: creates a new bar with musical objects
+    public void makeBar() {
+        CreateNewMemo c = new CreateNewMemo();
+        double i = 0;
+        int barLength = c.getBarLength();
+        while (i < barLength) {
+            MusicalObject newObject = setObjectType(c.getObjectType());
+            newObject.makeMusicalObject(c.getObjectDuration());
+            addToBar(newObject);
+            i = i + newObject.getDuration();
+        }
+    }
+
+    // MODIFIES: this
     // EFFECTS: adds a Note to this Bar
     public void addToBar(MusicalObject mo) {
         musicalObjects.add(mo);
         System.out.println(mo.printName() + " has been added to the bar.");
+    }
+
+    public MusicalObject setObjectType(int type) {
+        MusicalObject mo = null;
+        if (type == 1) {
+            mo = new Note();
+        } else if (type == 2) {
+            mo = new Chord();
+        } else if (type == 3) {
+            mo = new Rest();
+        }
+        return mo;
     }
 
     // EFFECTS: produces a list of all the musical objects in the bar

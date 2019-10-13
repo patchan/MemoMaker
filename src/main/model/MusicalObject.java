@@ -39,4 +39,8 @@ public abstract class MusicalObject implements Serializable {
 
     // EFFECTS: prints the name of this musical object
     abstract String printName();
+
+    // MODIFIES: this
+    // EFFECTS: creates a musical object of a given type
+    abstract void makeMusicalObject(double duration);
 }

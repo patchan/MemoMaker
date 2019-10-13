@@ -4,8 +4,16 @@ import java.io.Serializable;
 
 public class Rest extends MusicalObject implements Serializable {
 
+    public Rest() {}
+
     public Rest(double restDur) {
         this.duration = restDur;
+    }
+
+    // EFFECTS: creates a new rest
+    @Override
+    protected void makeMusicalObject(double restDur) {
+        setDuration(restDur);
     }
 
     // EFFECTS: returns the composite rest name

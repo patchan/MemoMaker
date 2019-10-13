@@ -1,5 +1,7 @@
 package model;
 
+import ui.commands.CreateNewMemo;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,6 +14,10 @@ public class Chord extends MusicalObject implements Serializable {
     protected String quality;
     protected String extensions;
     protected ArrayList<Note> notes;
+
+    public Chord() {
+        notes = new ArrayList<>();
+    }
 
     public Chord(String name, String quality, String extensions) {
         this.name = name;
@@ -34,6 +40,11 @@ public class Chord extends MusicalObject implements Serializable {
         } else {
             quality = null;
         }
+    }
+
+    // EFFECTS: sets the extension of this chord
+    public void setExtensions(String ext) {
+        extensions = ext;
     }
 
     // MODIFIES: this
@@ -73,11 +84,28 @@ public class Chord extends MusicalObject implements Serializable {
         return notes.contains(n);
     }
 
+    // EFFECTS: creates a new chord
+    @Override
+    protected void makeMusicalObject(double noteDur) {
+        CreateNewMemo c = new CreateNewMemo();
+        setName(c.getChordName());
+        setQuality(c.getChordQuality());
+        setExtensions(c.getChordExtensions());
+        setDuration(noteDur);
+        int chordNotes = c.getChordNotes();
+        int i = 0;
+        while (i < chordNotes) {
+            Note note = new Note();
+            note.makeMusicalObject(noteDur);
+            addNotes(note);
+            i++;
+        }
+    }
+
     // EFFECTS: produces a composite name with the chord name and quality
     @Override
     protected String getCompositeName() {
-        String compositeName = this.name + this.quality + this.extensions;
-        return compositeName;
+        return this.name + this.quality + this.extensions;
     }
 
     // EFFECTS: prints the chord composite name and returns "Chord: compositeName"

@@ -1,5 +1,8 @@
 package model;
 
+import ui.commands.Command;
+import ui.commands.CreateNewMemo;
+
 import java.io.Serializable;
 
 public class Note extends MusicalObject implements Serializable {
@@ -9,6 +12,8 @@ public class Note extends MusicalObject implements Serializable {
 
     private int degree;
     private int octave;
+
+    public Note() {}
 
     // EFFECTS: constructs a Note with the parameter name, octave, and the degree set to natural
     public Note(String name, int octave, int degree) {
@@ -56,12 +61,20 @@ public class Note extends MusicalObject implements Serializable {
         return accidental;
     }
 
+    // EFFECTS: creates a new note
+    @Override
+    protected void makeMusicalObject(double noteDur) {
+        CreateNewMemo c = new CreateNewMemo();
+        setName(c.getNoteName());
+        setOctave(c.getNoteOctave());
+        setDegree(c.getNoteDegree());
+        setDuration(noteDur);
+    }
+
     // EFFECTS: produces a composite name with the note name and degree symbol
     @Override
     protected String getCompositeName() {
-        String compositeName;
-        compositeName = this.name + this.octave + getDegreeSymbol();
-        return compositeName;
+        return this.name + this.octave + getDegreeSymbol();
     }
 
     // EFFECTS: prints the note composite name and returns "Note: compositeName"
