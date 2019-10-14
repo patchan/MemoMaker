@@ -1,7 +1,7 @@
 package model;
 
-import exceptions.InvalidEntryException;
-import exceptions.QualityException;
+import model.exceptions.NameException;
+import model.exceptions.QualityException;
 import ui.commands.CreateNewMemo;
 
 import java.io.Serializable;
@@ -13,10 +13,12 @@ public class Chord extends MusicalObject implements Serializable {
     protected String extensions;
     protected ArrayList<Note> notes;
 
+    // EFFECTS: default constructor for Chord
     public Chord() {
         notes = new ArrayList<>();
     }
 
+    // EFFECTS: constructs a Chord with name, quality, extensions, and duration
     public Chord(String name, String quality, String extensions, double duration) {
         this.name = name;
         this.quality = quality;
@@ -69,7 +71,7 @@ public class Chord extends MusicalObject implements Serializable {
     }
 
     // EFFECTS: produces a list of notes in this chord
-    public ArrayList<Note> getNotes() {
+    public ArrayList<Note> getChordNotes() {
         return notes;
     }
 
@@ -87,20 +89,52 @@ public class Chord extends MusicalObject implements Serializable {
     @Override
     protected void makeMusicalObject(double noteDur) {
         CreateNewMemo c = new CreateNewMemo();
-        try {
-            setName(c.getChordName());
-            setQuality(c.getChordQuality());
-        } catch (InvalidEntryException e) {
-            e.printStackTrace();
-        }
+        setValidName();
+        setValidQuality();
         setExtensions(c.getChordExtensions());
         setDuration(noteDur);
         int chordNotes = c.getChordNotes();
         int i = 0;
         while (i < chordNotes) {
-            addNotes(new Note(c.getNoteName(), c.getNoteOctave(), c.getNoteDegree(), noteDur));
+            Note mo = new Note();
+            mo.makeMusicalObject(noteDur);
+            addNotes(mo);
             i++;
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the chord name to a valid chord name
+    private void setValidName() {
+        CreateNewMemo c = new CreateNewMemo();
+        while (true) {
+            try {
+                setName(c.getNoteName());
+                break;
+            } catch (NameException e) {
+                System.out.println("Invalid chord name. Please try again.");
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the chord quality to a valid chord quality
+    private void setValidQuality() {
+        CreateNewMemo c = new CreateNewMemo();
+        while (true) {
+            try {
+                setQuality(c.getChordQuality());
+                break;
+            } catch (QualityException e) {
+                System.out.println("Invalid chord quality. Please try again.");
+            }
+        }
+    }
+
+    // EFFECTS: returns "Chord"
+    @Override
+    protected String getType() {
+        return "Chord";
     }
 
     // EFFECTS: produces a composite name with the chord name and quality
@@ -109,11 +143,4 @@ public class Chord extends MusicalObject implements Serializable {
         return this.name + this.quality + this.extensions;
     }
 
-    // EFFECTS: prints the chord composite name and returns "Chord: compositeName"
-    @Override
-    protected String printName() {
-        String compositeName = getCompositeName();
-        System.out.println("Chord: " + compositeName);
-        return "Chord: " + compositeName;
-    }
 }

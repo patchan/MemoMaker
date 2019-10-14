@@ -1,6 +1,8 @@
 package model;
 
-import exceptions.*;
+import model.exceptions.DegreeException;
+import model.exceptions.NameException;
+import model.exceptions.OctaveException;
 import ui.commands.CreateNewMemo;
 
 import java.io.Serializable;
@@ -13,9 +15,10 @@ public class Note extends MusicalObject implements Serializable {
     private int degree;
     private int octave;
 
+    // EFFECTS: default constructor for Note
     public Note() {}
 
-    // EFFECTS: constructs a Note with the parameter name, octave, and the degree set to natural
+    // EFFECTS: constructs a Note with name, octave, degree, and duration
     public Note(String name, int octave, int degree, double duration) {
         this.name = name;
         this.octave = octave;
@@ -23,7 +26,6 @@ public class Note extends MusicalObject implements Serializable {
         this.duration = duration;
     }
 
-    // REQUIRES: octave is a non-negative integer
     // MODIFIES: this
     // EFFECTS: sets the note octave of this note
     public void setOctave(int octave) throws OctaveException {
@@ -34,7 +36,6 @@ public class Note extends MusicalObject implements Serializable {
         }
     }
 
-    // REQUIRES: degree is integer -1, 0, or 1
     // MODIFIES: this
     // EFFECTS: sets the note degree of this note
     public void setDegree(int degree) throws DegreeException {
@@ -73,29 +74,64 @@ public class Note extends MusicalObject implements Serializable {
     // EFFECTS: creates a new note
     @Override
     protected void makeMusicalObject(double noteDur) {
-        CreateNewMemo c = new CreateNewMemo();
-        try {
-            setName(c.getNoteName());
-            setOctave(c.getNoteOctave());
-            setDegree(c.getNoteDegree());
-        } catch (InvalidEntryException e) {
-            System.out.println("Invalid entry.");
-        }
+        setValidName();
+        setValidOctave();
+        setValidDegree();
         setDuration(noteDur);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the note name to a valid note name
+    private void setValidName() {
+        CreateNewMemo c = new CreateNewMemo();
+        while (true) {
+            try {
+                setName(c.getNoteName());
+                break;
+            } catch (NameException e) {
+                System.out.println("Invalid note name. Please try again.");
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the note octave to a valid note octave
+    private void setValidOctave() {
+        CreateNewMemo c = new CreateNewMemo();
+        while (true) {
+            try {
+                setOctave(c.getNoteOctave());
+                break;
+            } catch (OctaveException e) {
+                System.out.println("Invalid octave range. Please try again.");
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the note degree to a valid note degree
+    private void setValidDegree() {
+        CreateNewMemo c = new CreateNewMemo();
+        while (true) {
+            try {
+                setDegree(c.getNoteDegree());
+                break;
+            } catch (DegreeException e) {
+                System.out.println("Invalid note degree. Please try again.");
+            }
+        }
+    }
+
+    // EFFECTS: returns "Note"
+    @Override
+    protected String getType() {
+        return "Note";
     }
 
     // EFFECTS: produces a composite name with the note name and degree symbol
     @Override
     protected String getCompositeName() {
         return this.name + this.octave + getDegreeSymbol();
-    }
-
-    // EFFECTS: prints the note composite name and returns "Note: compositeName"
-    @Override
-    protected String printName() {
-        String compositeName = getCompositeName();
-        System.out.println("Note: " + compositeName);
-        return "Note: " + compositeName;
     }
 
 }

@@ -21,7 +21,7 @@ public class Memo implements Readable, Writeable, Serializable {
     // EFFECTS: adds a Bar to the Memo
     public void addToMemo(Bar bar) {
         bars.add(bar);
-        System.out.println("The bar " + bar.getBar() + " has been added to your memo.");
+//        System.out.println("The bar " + bar.getBar() + " has been added to your memo.");
     }
 
     // EFFECTS: prints list of each Bar in the memo

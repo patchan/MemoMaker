@@ -57,8 +57,8 @@ public class RestTest {
     }
 
     @Test
-    public void testPrintRest() {
-        assertEquals("Rest: W-rest", whole.printName());
+    public void testGetType() {
+        assertEquals("Rest", whole.getType());
     }
 
 }

@@ -1,6 +1,6 @@
 package model;
 
-import exceptions.QualityException;
+import model.exceptions.QualityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -78,6 +78,7 @@ public class ChordTest {
             cmaj.setQuality("");
             fail("Did not expect to set quality to null");
         } catch (QualityException e) {
+            System.out.println("Caught QualityException");
         }
     }
 
@@ -114,7 +115,7 @@ public class ChordTest {
 
     @Test
     public void testGetNotes() {
-        assertEquals(cmaj.notes, cmaj.getNotes());
+        assertEquals(cmaj.notes, cmaj.getChordNotes());
     }
 
     @Test
@@ -129,8 +130,8 @@ public class ChordTest {
     }
 
     @Test
-    public void testPrintName() {
-        assertEquals("Chord: Cmaj6", cmaj.printName());
+    public void testGetType() {
+        assertEquals("Chord", cmaj.getType());
     }
 
 }

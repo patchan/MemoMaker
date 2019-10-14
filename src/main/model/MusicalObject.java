@@ -1,6 +1,6 @@
 package model;
 
-import exceptions.NameException;
+import model.exceptions.NameException;
 
 import java.io.Serializable;
 
@@ -12,9 +12,8 @@ public abstract class MusicalObject implements Serializable {
     public MusicalObject() {
     }
 
-    // REQUIRES: name is single character string
     // MODIFIES: this
-    // EFFECTS: sets the name of this musical object
+    // EFFECTS: sets the name of this musical object if it is a valid note name
     public void setName(String name) throws NameException {
         if (isValidName(name)) {
             this.name = name;
@@ -50,11 +49,16 @@ public abstract class MusicalObject implements Serializable {
         return this.duration;
     }
 
+    // EFFECTS: produces a string with the object type
+    abstract String getType();
+
     // EFFECTS: produces the composite name of this musical object
     abstract String getCompositeName();
 
-    // EFFECTS: prints the name of this musical object
-    abstract String printName();
+    // EFFECTS: returns "Type: CompositeName" of the MusicalObject
+    public String printName() {
+        return getType() + ": " + getCompositeName();
+    }
 
     // MODIFIES: this
     // EFFECTS: creates a musical object of a given type

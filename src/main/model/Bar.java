@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.BarLengthException;
 import ui.commands.CreateNewMemo;
 
 import java.io.Serializable;
@@ -23,25 +24,25 @@ public class Bar implements Serializable {
         while (i < barline) {
             MusicalObject newObject = setObjectType(c.getObjectType());
             double objectLength = c.getObjectDuration();
-            if (withinBarLength(objectLength)) {
-                newObject.makeMusicalObject(objectLength);
+            newObject.makeMusicalObject(objectLength);
+            try {
                 addToBar(newObject);
                 i = i + newObject.getDuration();
-            } else {
+            } catch (BarLengthException e) {
                 System.out.println("That note doesn't fit in the bar. The bar is currently "
-                        + totalObjectLength() + " notes long. Enter another note.");
-                continue;
+                        + totalObjectLength() + " quarter notes long. Please try again.");
+            } finally {
+                printBar();
             }
         }
     }
 
+    // EFFECTS: produce true if the object fits within the bar
     public boolean withinBarLength(double objectLength) {
-        if (barline >= objectLength + totalObjectLength()) {
-            return true;
-        }
-        return false;
+        return barline >= objectLength + totalObjectLength();
     }
 
+    // EFFECTS: returns the total length of the current objects in the bar
     public double totalObjectLength() {
         double totLength = 0;
         for (MusicalObject mo : musicalObjects) {
@@ -51,12 +52,24 @@ public class Bar implements Serializable {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a Note to this Bar
-    public void addToBar(MusicalObject mo) {
-        musicalObjects.add(mo);
-        System.out.println(mo.printName() + " has been added to the bar.");
+    // EFFECTS: adds a MusicalObject to this Bar if it fits in the bar
+    public void addToBar(MusicalObject mo) throws BarLengthException {
+        if (withinBarLength(mo.getDuration())) {
+            musicalObjects.add(mo);
+            System.out.println(mo.printName() + " has been added to the bar.");
+        } else {
+            throw new BarLengthException();
+        }
     }
 
+    // MODIFIES: this
+    // EFFECTS: this method is for creating bars for testing
+    //          inserts a MusicalObject to the Bar
+    public void insertObject(MusicalObject mo) {
+        musicalObjects.add(mo);
+    }
+
+    // EFFECTS: returns the appropriate object type to be created
     public MusicalObject setObjectType(int type) {
         MusicalObject mo = null;
         if (type == 1) {

@@ -4,16 +4,24 @@ import java.io.Serializable;
 
 public class Rest extends MusicalObject implements Serializable {
 
+    // EFFECTS: default constructor for Rest
     public Rest() {}
 
-    public Rest(double restDur) {
-        this.duration = restDur;
+    // EFFECTS: constructs a Rest with duration
+    public Rest(double duration) {
+        this.duration = duration;
     }
 
     // EFFECTS: creates a new rest
     @Override
     protected void makeMusicalObject(double restDur) {
         setDuration(restDur);
+    }
+
+    // EFFECTS: returns "Rest"
+    @Override
+    protected String getType() {
+        return "Rest";
     }
 
     // EFFECTS: returns the composite rest name
@@ -34,11 +42,4 @@ public class Rest extends MusicalObject implements Serializable {
         return compositeName;
     }
 
-    // EFFECTS: prints the rest name and returns "Rest: compositeName"
-    @Override
-    protected String printName() {
-        String compositeName = getCompositeName();
-        System.out.println("Rest: " + compositeName);
-        return "Rest: " + compositeName;
-    }
 }

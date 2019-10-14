@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.BarLengthException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 // unit tests for the Bar class
 public class BarTest {
@@ -25,19 +27,48 @@ public class BarTest {
         bar1 = new Bar();
         bar2 = new Bar();
         bar3 = new Bar();
-        bar2.addToBar(a);
-        bar2.addToBar(b);
-        bar2.addToBar(c);
-        bar3.addToBar(d);
-        bar3.addToBar(e);
-        bar3.addToBar(f);
-        bar3.addToBar(a);
+        bar2.insertObject(a);
+        bar2.insertObject(b);
+        bar2.insertObject(c);
+        bar3.insertObject(d);
+        bar3.insertObject(e);
+        bar3.insertObject(f);
+        bar3.insertObject(a);
     }
 
     @Test
-    public void testAddToBar() {
-        bar1.addToBar(a);
-        bar1.addToBar(b);
+    public void testAddToBarExpectSuccess() {
+        bar1.setBarLength(2);
+        try {
+            bar1.addToBar(a);
+            bar1.addToBar(b);
+        } catch (BarLengthException e) {
+            fail();
+        }
+        assertEquals(2, bar1.barSize());
+        assertTrue(bar1.barContains(a));
+        assertTrue(bar1.barContains(b));
+    }
+
+    @Test
+    public void testAddToBarExpectBarLengthException() {
+        bar1.setBarLength(1);
+        try {
+            bar1.addToBar(a);
+            bar1.addToBar(b);
+            fail();
+        } catch (BarLengthException e) {
+            System.out.println("Caught BarLengthException");
+        }
+        assertEquals(1, bar1.barSize());
+        assertTrue(bar1.barContains(a));
+        assertFalse(bar1.barContains(b));
+    }
+
+    @Test
+    public void testInsertObject() {
+        bar1.insertObject(a);
+        bar1.insertObject(b);
         assertEquals(2, bar1.barSize());
         assertTrue(bar1.barContains(a));
         assertTrue(bar1.barContains(b));

@@ -14,11 +14,11 @@ public class UserInterface {
     // EFFECTS: prints command instructions to the user
     public void askForCommand() {
         System.out.println("What would you like to do?");
-        System.out.println("Enter '1' to create a new memo");
-        System.out.println("Enter '2' to add to the current memo");
-        System.out.println("Enter '3' to load a memo");
-        System.out.println("Enter '4' to save the memo");
-        System.out.println("Enter '5' to quit");
+        System.out.println("\t-> '1' to create a new memo");
+        System.out.println("\t-> '2' to add to the current memo");
+        System.out.println("\t-> '3' to load a memo");
+        System.out.println("\t-> '4' to save the memo");
+        System.out.println("\t-> '5' to quit");
     }
 
     // REQUIRES: scanner input must be Integer[1, 5]

@@ -1,8 +1,8 @@
 package model;
 
-import exceptions.DegreeException;
-import exceptions.NameException;
-import exceptions.OctaveException;
+import model.exceptions.DegreeException;
+import model.exceptions.NameException;
+import model.exceptions.OctaveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -175,6 +175,11 @@ public class NoteTest {
     @Test
     public void testCompositeNameSharp() {
         assertEquals("D4#", dsharp.getCompositeName());
+    }
+
+    @Test
+    public void testGetType() {
+        assertEquals("Note", dsharp.getType());
     }
 
     @Test
