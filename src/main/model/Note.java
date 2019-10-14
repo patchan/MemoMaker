@@ -76,19 +76,19 @@ public class Note extends MusicalObject implements Serializable {
     // EFFECTS: creates a new note
     @Override
     protected void makeMusicalObject(double noteDur) {
-        CreateNewMemo c = new CreateNewMemo();
-        setValidName(c.getNoteName());
-        setValidOctave(c.getNoteOctave());
-        setValidDegree(c.getNoteDegree());
+        setValidName();
+        setValidOctave();
+        setValidDegree();
         setDuration(noteDur);
     }
 
     // MODIFIES: this
     // EFFECTS: sets the note name to a valid note name
-    public void setValidName(String name) {
+    public void setValidName() {
+        CreateNewMemo c = new CreateNewMemo();
         while (true) {
             try {
-                setName(name);
+                setName(c.getNoteName());
                 break;
             } catch (NameException e) {
                 System.out.println("Invalid note name. Please try again.");
@@ -98,10 +98,11 @@ public class Note extends MusicalObject implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: sets the note octave to a valid note octave
-    public void setValidOctave(int octave) {
+    public void setValidOctave() {
+        CreateNewMemo c = new CreateNewMemo();
         while (true) {
             try {
-                setOctave(octave);
+                setOctave(c.getNoteOctave());
                 break;
             } catch (OctaveException e) {
                 System.out.println("Invalid octave range. Please try again.");
@@ -111,10 +112,11 @@ public class Note extends MusicalObject implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: sets the note degree to a valid note degree
-    public void setValidDegree(int degree) {
+    public void setValidDegree() {
+        CreateNewMemo c = new CreateNewMemo();
         while (true) {
             try {
-                setDegree(degree);
+                setDegree(c.getNoteDegree());
                 break;
             } catch (DegreeException e) {
                 System.out.println("Invalid note degree. Please try again.");

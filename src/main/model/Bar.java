@@ -29,8 +29,8 @@ public class Bar implements Serializable {
                 addToBar(newObject);
                 i = i + newObject.getDuration();
             } catch (BarLengthException e) {
-                System.out.println("That note doesn't fit in the bar. The bar is currently "
-                        + totalObjectLength() + " quarter notes long. Please try again.");
+                System.out.println("That note doesn't fit in the bar. \nThe bar is currently "
+                        + totalObjectLength() + " quarter notes long. \nPlease try again.");
             } finally {
                 printBar();
             }

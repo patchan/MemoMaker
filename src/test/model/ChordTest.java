@@ -54,11 +54,11 @@ public class ChordTest {
         assertEquals(null, empty.getName());
     }
 
-    @Test
-    public void testSetValidNameInvalid() {
-        empty.setValidName("C");
-        assertEquals("C", empty.getName());
-    }
+//    @Test
+//    public void testSetValidNameInvalid() {
+//        empty.setValidName("C");
+//        assertEquals("C", empty.getName());
+//    }
 
     @Test
     public void testSetQualityMaj() {
@@ -110,11 +110,11 @@ public class ChordTest {
         }
     }
 
-    @Test
-    public void testSetValidQualityValid() {
-        cmaj.setValidQuality("min");
-        assertEquals("min", cmaj.getQuality());
-    }
+//    @Test
+//    public void testSetValidQualityValid() {
+//        cmaj.setValidQuality("min");
+//        assertEquals("min", cmaj.getQuality());
+//    }
 
     @Test
     public void testSetExtensions() {

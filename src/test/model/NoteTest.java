@@ -47,11 +47,11 @@ public class NoteTest {
         assertEquals("A", a.getName());
     }
 
-    @Test
-    public void testSetValidName() {
-        d.setValidName("A");
-        assertEquals("A", d.getName());
-    }
+//    @Test
+//    public void testSetValidName() {
+//        d.setValidName("A");
+//        assertEquals("A", d.getName());
+//    }
 
     @Test
     public void testSetOctaveMin() {
@@ -94,12 +94,12 @@ public class NoteTest {
         }
         assertEquals(4, a.getOctave());
     }
-
-    @Test
-    public void testSetValidOctave() {
-        d.setValidOctave(7);
-        assertEquals(7, d.getOctave());
-    }
+//
+//    @Test
+//    public void testSetValidOctave() {
+//        d.setValidOctave(7);
+//        assertEquals(7, d.getOctave());
+//    }
 
     @Test
     public void testSetDegreeNatural() {
@@ -153,11 +153,11 @@ public class NoteTest {
         assertEquals(0, a.getDegree());
     }
 
-    @Test
-    public void testSetValidDegree() {
-        d.setValidDegree(1);
-        assertEquals(1, d.getDegree());
-    }
+//    @Test
+//    public void testSetValidDegree() {
+//        d.setValidDegree(1);
+//        assertEquals(1, d.getDegree());
+//    }
 
     @Test
     public void testSetDuration() {
