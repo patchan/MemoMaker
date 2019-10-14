@@ -19,7 +19,7 @@ public class CreateNewMemo implements Command {
         memo.clearMemo();
         while (i < numBars) {
             Bar newBar = new Bar();
-            newBar.makeBar();
+            newBar.makeBar(getBarLength());
             memo.addToMemo(newBar);
             i++;
         }
@@ -114,11 +114,6 @@ public class CreateNewMemo implements Command {
         barLength = scanner.nextInt();
         scanner.nextLine();
         return barLength;
-    }
-
-    @Override
-    public boolean equals(Object command) {
-        return command instanceof CreateNewMemo;
     }
 
 }

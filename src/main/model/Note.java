@@ -76,50 +76,57 @@ public class Note extends MusicalObject implements Serializable {
     // EFFECTS: creates a new note
     @Override
     protected void makeMusicalObject(double noteDur) {
-        setValidName();
-        setValidOctave();
-        setValidDegree();
+        CreateNewMemo c = new CreateNewMemo();
+        setValidName(c.getNoteName());
+        setValidOctave(c.getNoteOctave());
+        setValidDegree(c.getNoteDegree());
         setDuration(noteDur);
     }
 
     // MODIFIES: this
     // EFFECTS: sets the note name to a valid note name
-    public void setValidName() {
+    public void setValidName(String name) {
         CreateNewMemo c = new CreateNewMemo();
+        String newName = name;
         while (true) {
             try {
-                setName(c.getNoteName());
+                setName(newName);
                 break;
             } catch (NameException e) {
                 System.out.println("Invalid note name. Please try again.");
+                newName = c.getNoteName();
             }
         }
     }
 
     // MODIFIES: this
     // EFFECTS: sets the note octave to a valid note octave
-    public void setValidOctave() {
+    public void setValidOctave(int octave) {
         CreateNewMemo c = new CreateNewMemo();
+        int newOctave = octave;
         while (true) {
             try {
-                setOctave(c.getNoteOctave());
+                setOctave(newOctave);
                 break;
             } catch (OctaveException e) {
                 System.out.println("Invalid octave range. Please try again.");
+                newOctave = c.getNoteOctave();
             }
         }
     }
 
     // MODIFIES: this
     // EFFECTS: sets the note degree to a valid note degree
-    public void setValidDegree() {
+    public void setValidDegree(int degree) {
         CreateNewMemo c = new CreateNewMemo();
+        int newDegree = degree;
         while (true) {
             try {
-                setDegree(c.getNoteDegree());
+                setDegree(newDegree);
                 break;
             } catch (DegreeException e) {
                 System.out.println("Invalid note degree. Please try again.");
+                newDegree = c.getNoteDegree();
             }
         }
     }

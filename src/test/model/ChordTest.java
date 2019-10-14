@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 // unit tests for the Chord class
 public class ChordTest {
@@ -51,14 +52,14 @@ public class ChordTest {
         } catch (NameException e) {
             System.out.println("Did not set name to Z");
         }
-        assertEquals(null, empty.getName());
+        assertNull(empty.getName());
     }
 
-//    @Test
-//    public void testSetValidNameInvalid() {
-//        empty.setValidName("C");
-//        assertEquals("C", empty.getName());
-//    }
+    @Test
+    public void testSetValidNameInvalid() {
+        empty.setValidName("C");
+        assertEquals("C", empty.getName());
+    }
 
     @Test
     public void testSetQualityMaj() {
@@ -110,11 +111,11 @@ public class ChordTest {
         }
     }
 
-//    @Test
-//    public void testSetValidQualityValid() {
-//        cmaj.setValidQuality("min");
-//        assertEquals("min", cmaj.getQuality());
-//    }
+    @Test
+    public void testSetValidQualityValid() {
+        cmaj.setValidQuality("min");
+        assertEquals("min", cmaj.getQuality());
+    }
 
     @Test
     public void testSetExtensions() {

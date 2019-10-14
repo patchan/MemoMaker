@@ -17,11 +17,11 @@ public class Bar implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: creates a new bar with musical objects
-    public void makeBar() {
+    public void makeBar(int length) {
         CreateNewMemo c = new CreateNewMemo();
         double i = 0;
-        barline = c.getBarLength();
-        while (i < barline) {
+        setBarLength(length);
+        while (i < length) {
             MusicalObject newObject = setObjectType(c.getObjectType());
             double objectLength = c.getObjectDuration();
             newObject.makeMusicalObject(objectLength);
@@ -29,8 +29,9 @@ public class Bar implements Serializable {
                 addToBar(newObject);
                 i = i + newObject.getDuration();
             } catch (BarLengthException e) {
-                System.out.println("That note doesn't fit in the bar. \nThe bar is currently "
-                        + totalObjectLength() + " quarter notes long. \nPlease try again.");
+                System.out.println("That note doesn't fit in the bar (length: " + barline + ")."
+                        + "\nThe bar current holds " + totalObjectLength()
+                        + " quarter notes. \nPlease try again.");
             } finally {
                 printBar();
             }

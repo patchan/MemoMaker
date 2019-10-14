@@ -27,8 +27,4 @@ public class QuitCommand implements Command {
         }
     }
 
-    @Override
-    public boolean equals(Object command) {
-        return command instanceof QuitCommand;
-    }
 }

@@ -13,9 +13,5 @@ public class SaveCommand implements Command {
     public void executeCommand(Memo memo) throws IOException {
         memo.save();
     }
-
-    @Override
-    public boolean equals(Object command) {
-        return command instanceof SaveCommand;
-    }
+    
 }

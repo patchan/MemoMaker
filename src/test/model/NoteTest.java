@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 // unit tests for the Note class
@@ -47,11 +48,11 @@ public class NoteTest {
         assertEquals("A", a.getName());
     }
 
-//    @Test
-//    public void testSetValidName() {
-//        d.setValidName("A");
-//        assertEquals("A", d.getName());
-//    }
+    @Test
+    public void testSetValidName() {
+        d.setValidName("A");
+        assertEquals("A", d.getName());
+    }
 
     @Test
     public void testSetOctaveMin() {
@@ -94,12 +95,12 @@ public class NoteTest {
         }
         assertEquals(4, a.getOctave());
     }
-//
-//    @Test
-//    public void testSetValidOctave() {
-//        d.setValidOctave(7);
-//        assertEquals(7, d.getOctave());
-//    }
+
+    @Test
+    public void testSetValidOctave() {
+        d.setValidOctave(7);
+        assertEquals(7, d.getOctave());
+    }
 
     @Test
     public void testSetDegreeNatural() {
@@ -153,11 +154,11 @@ public class NoteTest {
         assertEquals(0, a.getDegree());
     }
 
-//    @Test
-//    public void testSetValidDegree() {
-//        d.setValidDegree(1);
-//        assertEquals(1, d.getDegree());
-//    }
+    @Test
+    public void testSetValidDegree() {
+        d.setValidDegree(1);
+        assertEquals(1, d.getDegree());
+    }
 
     @Test
     public void testSetDuration() {
@@ -183,7 +184,7 @@ public class NoteTest {
     @Test
     public void testGetDegreeSymbolNull() {
         Note note = new Note("A", 4, 2, 1);
-        assertEquals(null, note.getDegreeSymbol());
+        assertNull(note.getDegreeSymbol());
     }
 
     @Test

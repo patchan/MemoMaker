@@ -89,44 +89,46 @@ public class Chord extends MusicalObject implements Serializable {
     @Override
     protected void makeMusicalObject(double noteDur) {
         CreateNewMemo c = new CreateNewMemo();
-        setValidName();
-        setValidQuality();
+        setValidName(c.getChordName());
+        setValidQuality(c.getChordQuality());
         setExtensions(c.getChordExtensions());
         setDuration(noteDur);
         int chordNotes = c.getChordNotes();
-        int i = 0;
-        while (i < chordNotes) {
+        for (int i = 0; i < chordNotes; i++) {
             Note mo = new Note();
             mo.makeMusicalObject(noteDur);
             addNotes(mo);
-            i++;
         }
     }
 
     // MODIFIES: this
     // EFFECTS: sets the chord name to a valid chord name
-    public void setValidName() {
+    public void setValidName(String name) {
         CreateNewMemo c = new CreateNewMemo();
+        String newName = name;
         while (true) {
             try {
-                setName(c.getNoteName());
+                setName(newName);
                 break;
             } catch (NameException e) {
-                System.out.println("Invalid chord name. Please try again.");
+                System.out.println("Invalid chord root. Please try again.");
+                newName = c.getChordName();
             }
         }
     }
 
     // MODIFIES: this
     // EFFECTS: sets the chord quality to a valid chord quality
-    public void setValidQuality() {
+    public void setValidQuality(String quality) {
         CreateNewMemo c = new CreateNewMemo();
+        String newQuality = quality;
         while (true) {
             try {
-                setQuality(c.getChordQuality());
+                setQuality(newQuality);
                 break;
             } catch (QualityException e) {
                 System.out.println("Invalid chord quality. Please try again.");
+                newQuality = c.getChordQuality();
             }
         }
     }

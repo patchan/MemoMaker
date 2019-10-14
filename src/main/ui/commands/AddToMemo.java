@@ -16,15 +16,11 @@ public class AddToMemo extends CreateNewMemo {
         int i = 0;
         while (i < numBars) {
             Bar newBar = new Bar();
-            newBar.makeBar();
+            newBar.makeBar(getBarLength());
             memo.addToMemo(newBar);
             i++;
         }
         memo.printMemo();
     }
 
-    @Override
-    public boolean equals(Object command) {
-        return command instanceof AddToMemo;
-    }
 }

@@ -15,8 +15,4 @@ public class LoadCommand implements Command {
         memo.load();
     }
 
-    @Override
-    public boolean equals(Object command) {
-        return command instanceof LoadCommand;
-    }
 }
