@@ -89,8 +89,8 @@ public class Chord extends MusicalObject implements Serializable {
     @Override
     protected void makeMusicalObject(double noteDur) {
         CreateNewMemo c = new CreateNewMemo();
-        setValidName();
-        setValidQuality();
+        setValidName(c.getNoteName());
+        setValidQuality(c.getChordQuality());
         setExtensions(c.getChordExtensions());
         setDuration(noteDur);
         int chordNotes = c.getChordNotes();
@@ -105,11 +105,10 @@ public class Chord extends MusicalObject implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: sets the chord name to a valid chord name
-    private void setValidName() {
-        CreateNewMemo c = new CreateNewMemo();
+    public void setValidName(String name) {
         while (true) {
             try {
-                setName(c.getNoteName());
+                setName(name);
                 break;
             } catch (NameException e) {
                 System.out.println("Invalid chord name. Please try again.");
@@ -119,11 +118,10 @@ public class Chord extends MusicalObject implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: sets the chord quality to a valid chord quality
-    private void setValidQuality() {
-        CreateNewMemo c = new CreateNewMemo();
+    public void setValidQuality(String quality) {
         while (true) {
             try {
-                setQuality(c.getChordQuality());
+                setQuality(quality);
                 break;
             } catch (QualityException e) {
                 System.out.println("Invalid chord quality. Please try again.");

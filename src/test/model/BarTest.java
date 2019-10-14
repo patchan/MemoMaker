@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class BarTest {
     private Note a, b, c, d, e, f;
     private Bar bar1, bar2, bar3;
+    private MusicalObject nullObject;
 
     @BeforeEach
     public void setup() {
@@ -120,5 +121,32 @@ public class BarTest {
     public void testWithinBarLengthFalse() {
         bar2.setBarLength(3);
         assertFalse(bar2.withinBarLength(a.getDuration()));
+    }
+
+    @Test
+    public void testSetObjectTypeNote() {
+        MusicalObject note = new Note();
+        MusicalObject nullObject = bar1.setObjectType(1);
+        assertEquals(note.getType(), nullObject.getType());
+    }
+
+    @Test
+    public void testSetObjectTypeChord() {
+        MusicalObject chord = new Chord();
+        MusicalObject nullObject = bar1.setObjectType(2);
+        assertEquals(chord.getType(), nullObject.getType());
+    }
+
+    @Test
+    public void testSetObjectTypeRest() {
+        MusicalObject rest = new Rest();
+        MusicalObject nullObject = bar1.setObjectType(3);
+        assertEquals(rest.getType(), nullObject.getType());
+    }
+
+    @Test
+    public void testSetObjectTypeNull() {
+        MusicalObject nullObject = bar1.setObjectType(4);
+        assertEquals(null, nullObject);
     }
 }

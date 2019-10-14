@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.NameException;
 import model.exceptions.QualityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,33 @@ public class ChordTest {
         b = new Note("B", 4, 1, 1);
         c = new Note("C", 4, 0, 1);
         d = new Note("D", 4, 0, 1);
+    }
+
+    @Test
+    public void testSetNameValid() {
+        try {
+            empty.setName("C");
+        } catch (NameException e) {
+            fail("Did not set name to C");
+        }
+        assertEquals("C", empty.getName());
+    }
+
+    @Test
+    public void testSetNameInvalid() {
+        try {
+            empty.setName("Z");
+            fail("Set name to Z");
+        } catch (NameException e) {
+            System.out.println("Did not set name to Z");
+        }
+        assertEquals(null, empty.getName());
+    }
+
+    @Test
+    public void testSetValidNameInvalid() {
+        empty.setValidName("C");
+        assertEquals("C", empty.getName());
     }
 
     @Test
@@ -80,6 +108,12 @@ public class ChordTest {
         } catch (QualityException e) {
             System.out.println("Caught QualityException");
         }
+    }
+
+    @Test
+    public void testSetValidQualityValid() {
+        cmaj.setValidQuality("min");
+        assertEquals("min", cmaj.getQuality());
     }
 
     @Test

@@ -71,13 +71,15 @@ public class Bar implements Serializable {
 
     // EFFECTS: returns the appropriate object type to be created
     public MusicalObject setObjectType(int type) {
-        MusicalObject mo = null;
+        MusicalObject mo;
         if (type == 1) {
             mo = new Note();
         } else if (type == 2) {
             mo = new Chord();
         } else if (type == 3) {
             mo = new Rest();
+        } else {
+            mo = null;
         }
         return mo;
     }

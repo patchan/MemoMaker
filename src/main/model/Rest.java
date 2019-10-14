@@ -27,7 +27,7 @@ public class Rest extends MusicalObject implements Serializable {
     // EFFECTS: returns the composite rest name
     @Override
     protected String getCompositeName() {
-        String compositeName = null;
+        String compositeName;
         if (duration == 1) {
             compositeName = "Q-rest";
         } else if (duration == 0.25) {
@@ -38,6 +38,8 @@ public class Rest extends MusicalObject implements Serializable {
             compositeName = "H-rest";
         } else if (duration == 4) {
             compositeName = "W-rest";
+        } else {
+            compositeName = null;
         }
         return compositeName;
     }

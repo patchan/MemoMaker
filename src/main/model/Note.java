@@ -60,13 +60,15 @@ public class Note extends MusicalObject implements Serializable {
     // EFFECTS: produces symbolized note degree where
     //          FLAT = "b", NATURAL = "", and SHARP = "#"
     public String getDegreeSymbol() {
-        String accidental = null;
+        String accidental;
         if (degree == FLAT) {
             accidental = "b";
         } else if (degree == NATURAL) {
             accidental = "";
         } else if (degree == SHARP) {
             accidental = "#";
+        } else {
+            accidental = null;
         }
         return accidental;
     }
@@ -74,19 +76,19 @@ public class Note extends MusicalObject implements Serializable {
     // EFFECTS: creates a new note
     @Override
     protected void makeMusicalObject(double noteDur) {
-        setValidName();
-        setValidOctave();
-        setValidDegree();
+        CreateNewMemo c = new CreateNewMemo();
+        setValidName(c.getNoteName());
+        setValidOctave(c.getNoteOctave());
+        setValidDegree(c.getNoteDegree());
         setDuration(noteDur);
     }
 
     // MODIFIES: this
     // EFFECTS: sets the note name to a valid note name
-    private void setValidName() {
-        CreateNewMemo c = new CreateNewMemo();
+    public void setValidName(String name) {
         while (true) {
             try {
-                setName(c.getNoteName());
+                setName(name);
                 break;
             } catch (NameException e) {
                 System.out.println("Invalid note name. Please try again.");
@@ -96,11 +98,10 @@ public class Note extends MusicalObject implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: sets the note octave to a valid note octave
-    private void setValidOctave() {
-        CreateNewMemo c = new CreateNewMemo();
+    public void setValidOctave(int octave) {
         while (true) {
             try {
-                setOctave(c.getNoteOctave());
+                setOctave(octave);
                 break;
             } catch (OctaveException e) {
                 System.out.println("Invalid octave range. Please try again.");
@@ -110,11 +111,10 @@ public class Note extends MusicalObject implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: sets the note degree to a valid note degree
-    private void setValidDegree() {
-        CreateNewMemo c = new CreateNewMemo();
+    public void setValidDegree(int degree) {
         while (true) {
             try {
-                setDegree(c.getNoteDegree());
+                setDegree(degree);
                 break;
             } catch (DegreeException e) {
                 System.out.println("Invalid note degree. Please try again.");

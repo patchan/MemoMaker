@@ -48,6 +48,12 @@ public class NoteTest {
     }
 
     @Test
+    public void testSetValidName() {
+        d.setValidName("A");
+        assertEquals("A", d.getName());
+    }
+
+    @Test
     public void testSetOctaveMin() {
         try {
             a.setOctave(0);
@@ -87,6 +93,12 @@ public class NoteTest {
             System.out.println("Invalid octave entry");
         }
         assertEquals(4, a.getOctave());
+    }
+
+    @Test
+    public void testSetValidOctave() {
+        d.setValidOctave(7);
+        assertEquals(7, d.getOctave());
     }
 
     @Test
@@ -142,6 +154,12 @@ public class NoteTest {
     }
 
     @Test
+    public void testSetValidDegree() {
+        d.setValidDegree(1);
+        assertEquals(1, d.getDegree());
+    }
+
+    @Test
     public void testSetDuration() {
         a.setDuration(2);
         assertEquals(2, a.getDuration());
@@ -160,6 +178,12 @@ public class NoteTest {
     @Test
     public void testGetDegreeSymbolFlat() {
         assertEquals("b", dflat.getDegreeSymbol());
+    }
+
+    @Test
+    public void testGetDegreeSymbolNull() {
+        Note note = new Note("A", 4, 2, 1);
+        assertEquals(null, note.getDegreeSymbol());
     }
 
     @Test

@@ -57,6 +57,12 @@ public class RestTest {
     }
 
     @Test
+    public void testGetCompositeNameNull() {
+        whole.setDuration(5);
+        assertEquals(null, whole.getCompositeName());
+    }
+
+    @Test
     public void testGetType() {
         assertEquals("Rest", whole.getType());
     }
