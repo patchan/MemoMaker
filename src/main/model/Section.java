@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Section {
+public class Section implements Serializable {
     private String name;
     private ArrayList<Bar> bars;
 

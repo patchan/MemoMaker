@@ -14,7 +14,7 @@ public class Bar implements Serializable {
 
     // EFFECTS: constructs an empty bar
     public Bar() {
-        section = null;
+        section = new Section("Default");
         this.musicalObjects = new ArrayList<>();
     }
 
@@ -30,10 +30,9 @@ public class Bar implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: removes Section s from the bar
-    //          if current section is null, does nothing
     public void removeSection(Section s) {
-        if (!(section == null) && section.equals(s)) {
-            section = null;
+        if (section.equals(s)) {
+            section = new Section("Default");
         }
     }
 
