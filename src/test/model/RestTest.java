@@ -25,6 +25,12 @@ public class RestTest {
     }
 
     @Test
+    public void testRestConstructor() {
+        Rest r = new Rest(1);
+        assertEquals(1, r.getDuration());
+    }
+
+    @Test
     public void testMakeMusicalObject() {
         blank.makeMusicalObject(1);
         assertEquals(1, blank.getDuration());

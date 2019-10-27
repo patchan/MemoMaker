@@ -4,16 +4,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 // unit tests for the Memo class
 public class MemoTest {
     private Note a, b, c, d, e, f;
     private Bar bar1, bar2;
     private Memo emptyMemo, memo;
+    private Section sec1, sec2;
 
     @BeforeEach
     public void setup() {
@@ -34,6 +34,45 @@ public class MemoTest {
         emptyMemo = new Memo();
         memo = new Memo();
         memo.addToMemo(bar1);
+        sec1 = new Section("1");
+        sec2 = new Section( "2");
+    }
+
+    @Test
+    public void testAddSection() {
+        memo.addSection(sec1);
+        assertTrue(memo.getSections().contains(sec1));
+        assertEquals(1, memo.countSections());
+    }
+
+    @Test
+    public void testAddSectionDuplicate() {
+        memo.addSection(sec1);
+        memo.addSection(sec1);
+        assertTrue(memo.getSections().contains(sec1));
+        assertEquals(1, memo.countSections());
+    }
+
+    @Test
+    public void testRemoveSection() {
+        memo.addSection(sec1);
+        memo.removeSection(sec1);
+        assertFalse(memo.getSections().contains(sec1));
+        assertEquals(0, memo.countSections());
+    }
+
+    @Test
+    public void testRemoveSectionDoNothing() {
+        assertEquals(0, memo.countSections());
+        memo.removeSection(sec1);
+        assertFalse(memo.getSections().contains(sec1));
+        assertEquals(0, memo.countSections());
+    }
+
+    @Test
+    public void testGetBars() {
+        ArrayList<Bar> result = memo.getBars();
+        assertTrue(result.contains(bar1));
     }
 
     @Test

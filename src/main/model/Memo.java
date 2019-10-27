@@ -2,13 +2,16 @@ package model;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Memo implements Readable, Writeable, Serializable {
     private ArrayList<Bar> bars;
+    private HashSet<Section> sections;
 
     // EFFECTS: constructs an empty memo
     public Memo() {
         this.bars = new ArrayList<>();
+        this.sections = new HashSet<>();
     }
 
     // MODIFIES: this
@@ -23,6 +26,37 @@ public class Memo implements Readable, Writeable, Serializable {
         bars.add(bar);
 //        System.out.println("The bar " + bar.getBar() + " has been added to your memo.");
     }
+
+    // MODIFIES: this
+    // EFFECTS: adds a section the memo if it is not already in the memo
+    public void addSection(Section s) {
+        if (!sections.contains(s)) {
+            sections.add(s);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes a section from the memo
+    //          removes the section from all bars assigned to the section
+    public void removeSection(Section s) {
+        if (sections.contains(s)) {
+            for (Bar b : bars) {
+                b.removeSection(s);
+            }
+            sections.remove(s);
+        }
+    }
+
+    // EFFECTS: returns the set of sections in the memo
+    public HashSet<Section> getSections() {
+        return sections;
+    }
+
+    // EFFECTS: returns how many sections are in the memo
+    public int countSections() {
+        return sections.size();
+    }
+
 
     // EFFECTS: prints list of each Bar in the memo
     public void printMemo() {
@@ -52,6 +86,11 @@ public class Memo implements Readable, Writeable, Serializable {
             }
         }
         return false;
+    }
+
+    // EFFECTS: returns a list of bars in the memo
+    public ArrayList<Bar> getBars() {
+        return bars;
     }
 
     // EFFECTS: returns the number of bars in the memo i.e. the size of the memo

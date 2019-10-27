@@ -6,16 +6,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 // unit tests for the Bar class
 public class BarTest {
     private Note a, b, c, d, e, f;
-    private Bar bar1, bar2, bar3;
+    private Bar bar1, bar2, bar3, bar4;
     private MusicalObject nullObject;
+    private Section sec1, sec2;
 
     @BeforeEach
     public void setup() {
@@ -28,6 +26,7 @@ public class BarTest {
         bar1 = new Bar();
         bar2 = new Bar();
         bar3 = new Bar();
+        bar4 = null;
         bar2.insertObject(a);
         bar2.insertObject(b);
         bar2.insertObject(c);
@@ -35,6 +34,40 @@ public class BarTest {
         bar3.insertObject(e);
         bar3.insertObject(f);
         bar3.insertObject(a);
+        sec1 = new Section("A");
+        sec2 = new Section("B");
+    }
+
+    @Test
+    public void testSetSection() {
+        bar1.setSection(sec1);
+        assertTrue(sec1.equals(bar1.getSection()));
+    }
+
+    @Test
+    public void testSetSameSection() {
+        bar1.setSection(sec1);
+        assertFalse(bar1.setSection(sec1));
+    }
+
+    @Test
+    public void testRemoveSection() {
+        bar1.setSection(sec1);
+        bar1.removeSection(sec1);
+        assertNull(bar1.getSection());
+    }
+
+    @Test
+    public void testRemoveBarSectionNull() {
+        bar1.removeSection(sec1);
+        assertNull(bar1.getSection());
+    }
+
+    @Test
+    public void testRemoveWrongSection() {
+        bar1.setSection(sec1);
+        bar1.removeSection(sec2);
+        assertEquals(sec1, bar1.getSection());
     }
 
     @Test
@@ -124,6 +157,12 @@ public class BarTest {
     }
 
     @Test
+    public void testSetGetBarLength() {
+        bar1.setBarLength(2);
+        assertEquals(2, bar1.getBarLength());
+    }
+
+    @Test
     public void testSetObjectTypeNote() {
         MusicalObject note = new Note();
         MusicalObject nullObject = bar1.setObjectType(1);
@@ -148,5 +187,28 @@ public class BarTest {
     public void testSetObjectTypeNull() {
         MusicalObject nullObject = bar1.setObjectType(4);
         assertEquals(null, nullObject);
+    }
+
+    @Test
+    public void testEqualsTrue() {
+        bar1.insertObject(a);
+        bar1.insertObject(b);
+        bar1.insertObject(c);
+        assertTrue(bar2.equals(bar1));
+    }
+
+    @Test
+    public void testEqualsDifferentType() {
+        assertFalse(bar2.equals(a));
+    }
+
+    @Test
+    public void testEqualsNull() {
+        assertFalse(bar2.equals(bar4));
+    }
+
+    @Test
+    public void testEqualsFalse() {
+        assertFalse(bar2.equals(bar1));
     }
 }
