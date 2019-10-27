@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class UserInterface {
 
+    private static Command command;
     // the implementation of the Scanner to receive user input was adapted from the B04 SimpleCalculator
     private Scanner scanner = new Scanner(System.in);
 
@@ -23,7 +24,7 @@ public class UserInterface {
 
     // REQUIRES: scanner input must be Integer[1, 5]
     // EFFECTS: gets command from user
-    public Command getUserCommand() {
+    public Command returnUserCommand() {
         int userCommand = scanner.nextInt();
         scanner.nextLine();
         return parseUserCommand(userCommand);
@@ -31,20 +32,19 @@ public class UserInterface {
 
     // REQUIRES: userInput is Integer[1, 5]
     // EFFECTS: returns the appropriate Command subtype for command input
-    public static Command parseUserCommand(int userInput) {
-        Command userCommand = null;
+    private static Command parseUserCommand(int userInput) {
         if (userInput == 1) {
-            userCommand = new CreateNewMemo();
+            command = new CreateNewMemo();
         } else if (userInput == 2) {
-            userCommand = new AddToMemo();
+            command = new AddToMemo();
         } else if (userInput == 3) {
-            userCommand = new LoadCommand();
+            command = new LoadCommand();
         } else if (userInput == 4) {
-            userCommand = new SaveCommand();
+            command = new SaveCommand();
         } else if (userInput == 5) {
-            userCommand = new QuitCommand();
+            command = new QuitCommand();
         }
-        return userCommand;
+        return command;
     }
 
 }

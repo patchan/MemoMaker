@@ -14,7 +14,7 @@ public class MemoMaker {
         memo = new Memo();
         while (true) {
             ui.askForCommand();
-            Command command = ui.getUserCommand();
+            Command command = ui.returnUserCommand();
             command.executeCommand(memo);
         }
     }

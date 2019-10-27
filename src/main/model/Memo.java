@@ -45,7 +45,7 @@ public class Memo implements Readable, Writeable, Serializable {
     }
 
     // EFFECTS: returns true if Note n is in the memo
-    public Boolean memoContains(MusicalObject mo) {
+    public boolean memoContains(MusicalObject mo) {
         for (Bar b : bars) {
             if (b.barContains(mo)) {
                 return true;

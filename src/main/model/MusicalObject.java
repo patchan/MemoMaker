@@ -50,10 +50,10 @@ public abstract class MusicalObject implements Serializable {
     }
 
     // EFFECTS: produces a string with the object type
-    abstract String getType();
+    protected abstract String getType();
 
     // EFFECTS: produces the composite name of this musical object
-    abstract String getCompositeName();
+    protected abstract String getCompositeName();
 
     // EFFECTS: returns "Type: CompositeName" of the MusicalObject
     public String printName() {
@@ -62,5 +62,5 @@ public abstract class MusicalObject implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: creates a musical object of a given type
-    abstract void makeMusicalObject(double duration);
+    protected abstract void makeMusicalObject(double duration);
 }
