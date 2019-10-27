@@ -69,6 +69,7 @@ public class SectionTest {
     public void testEqualsTrue() {
         sec2.setName("1");
         assertTrue(sec1.equals(sec2));
+        assertTrue(sec1.hashCode()==sec2.hashCode());
     }
 
     @Test
@@ -89,11 +90,7 @@ public class SectionTest {
     @Test
     public void testEqualsFalse() {
         assertFalse(sec1.equals(sec2));
+        assertFalse(sec1.hashCode()==sec2.hashCode());
     }
 
-//    @Test
-//    public void testHashCode() {
-//        int result = sec1.hashCode();
-//        assertEquals(sec1.getName().hashCode(), result);
-//    }
 }

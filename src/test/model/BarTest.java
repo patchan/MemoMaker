@@ -195,6 +195,7 @@ public class BarTest {
         bar1.insertObject(b);
         bar1.insertObject(c);
         assertTrue(bar2.equals(bar1));
+        assertTrue(bar2.hashCode()==bar1.hashCode());
     }
 
     @Test
@@ -210,5 +211,6 @@ public class BarTest {
     @Test
     public void testEqualsFalse() {
         assertFalse(bar2.equals(bar1));
+        assertFalse(bar2.hashCode()==bar1.hashCode());
     }
 }
