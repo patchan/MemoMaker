@@ -23,9 +23,9 @@ public class BarTest {
         d = new Note("D", 4, 0, 1);
         e = new Note("E", 4, 0, 1);
         f = new Note("F", 4, 0, 1);
-        bar1 = new Bar();
-        bar2 = new Bar();
-        bar3 = new Bar();
+        bar1 = new Bar(1);
+        bar2 = new Bar(2);
+        bar3 = new Bar(3);
         bar4 = null;
         bar2.insertObject(a);
         bar2.insertObject(b);
@@ -164,6 +164,12 @@ public class BarTest {
     }
 
     @Test
+    public void testSetGetBarNum() {
+        bar1.setBarNum(2);
+        assertEquals(2, bar1.getBarNum());
+    }
+
+    @Test
     public void testSetObjectTypeNote() {
         MusicalObject note = new Note();
         MusicalObject nullObject = bar1.setObjectType(1);
@@ -187,7 +193,7 @@ public class BarTest {
     @Test
     public void testSetObjectTypeNull() {
         MusicalObject nullObject = bar1.setObjectType(4);
-        assertEquals(null, nullObject);
+        assertNull(nullObject);
     }
 
     @Test
@@ -196,7 +202,7 @@ public class BarTest {
         bar1.insertObject(b);
         bar1.insertObject(c);
         assertTrue(bar2.equals(bar1));
-        assertTrue(bar2.hashCode()==bar1.hashCode());
+        assertTrue(bar2.hashCode() == bar1.hashCode());
     }
 
     @Test
@@ -212,6 +218,6 @@ public class BarTest {
     @Test
     public void testEqualsFalse() {
         assertFalse(bar2.equals(bar1));
-        assertFalse(bar2.hashCode()==bar1.hashCode());
+        assertFalse(bar2.hashCode() == bar1.hashCode());
     }
 }

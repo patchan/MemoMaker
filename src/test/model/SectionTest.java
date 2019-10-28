@@ -19,7 +19,7 @@ public class SectionTest {
         sec1 = new Section("1");
         sec2 = new Section("2");
         sec3 = null;
-        bar1 = new Bar();
+        bar1 = new Bar(1);
         a = new Note("A", 4, 0, 1);
         b = new Note("B", 4, 0, 1);
         c = new Note("C", 4, 0, 1);
@@ -69,7 +69,7 @@ public class SectionTest {
     public void testEqualsTrue() {
         sec2.setName("1");
         assertTrue(sec1.equals(sec2));
-        assertTrue(sec1.hashCode()==sec2.hashCode());
+        assertTrue(sec1.hashCode() == sec2.hashCode());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class SectionTest {
     @Test
     public void testEqualsFalse() {
         assertFalse(sec1.equals(sec2));
-        assertFalse(sec1.hashCode()==sec2.hashCode());
+        assertFalse(sec1.hashCode() == sec2.hashCode());
     }
 
 }

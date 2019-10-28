@@ -1,6 +1,6 @@
 package ui.commands;
 
-import model.Memo;
+import model.Library;
 
 import java.io.IOException;
 
@@ -11,8 +11,11 @@ public class LoadCommand implements Command {
     // REQUIRES: an existing file containing a memo to load
     // EFFECTS: loads a memo
     @Override
-    public void executeCommand(Memo memo) throws IOException, ClassNotFoundException {
-        memo.load();
+    public void executeCommand(Library library) throws IOException, ClassNotFoundException {
+        library.load();
+        System.out.println("Your library has been loaded.");
+        System.out.println("Memos:");
+        library.printLibraryMemos();
     }
 
 }

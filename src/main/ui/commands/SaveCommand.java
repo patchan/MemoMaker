@@ -1,6 +1,6 @@
 package ui.commands;
 
-import model.Memo;
+import model.Library;
 
 import java.io.IOException;
 
@@ -10,8 +10,9 @@ public class SaveCommand implements Command {
 
     // EFFECTS: saves the memo
     @Override
-    public void executeCommand(Memo memo) throws IOException {
-        memo.save();
+    public void executeCommand(Library library) throws IOException {
+        library.save();
+        System.out.println("Library successfully saved.");
     }
     
 }

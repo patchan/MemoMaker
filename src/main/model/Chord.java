@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public class Chord extends MusicalObject implements Serializable {
 
-    protected String quality;
-    protected String extensions;
-    protected ArrayList<Note> notes;
+    private String quality;
+    private String extensions;
+    private ArrayList<Note> notes;
 
     // EFFECTS: default constructor for Chord
     public Chord() {

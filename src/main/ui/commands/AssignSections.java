@@ -1,6 +1,7 @@
 package ui.commands;
 
 import model.Bar;
+import model.Library;
 import model.Memo;
 import model.Section;
 
@@ -12,18 +13,29 @@ public class AssignSections implements Command {
     private Section section;
 
     @Override
-    public void executeCommand(Memo memo) {
+    public void executeCommand(Library library) {
+        library.printLibraryMemos();
+        Memo memo = library.getMemo(getMemoToEdit());
         section = new Section(getSectionName());
-        memo.addSection(section);
         for (Bar b : memo.getBars()) {
-            b.printBar();
-            System.out.println("Would you like to assign this bar to Section: " + section.getName() + "?");
+            int barNum = b.getBarNum();
+            String secName = section.getName();
+            System.out.println("Would you like to assign bar" + barNum + " to Section: " + secName + "?");
+            System.out.println("Enter 'Y' or 'N'");
             if (assignToSection()) {
                 b.setSection(section);
-                System.out.println("The bar has been added to Section: " + section.getName());
+                System.out.println("Bar " + barNum + " has been added to Section: " + secName);
+                memo.addSection(section);
             }
         }
-        System.out.println("Your memo has " + memo.countSections() + " sections");
+        System.out.println("Your memo has " + memo.countSections() + " sections:");
+        System.out.println(memo.listSectionNames());
+    }
+
+    // EFFECTS: returns user input for memo name to edit
+    public String getMemoToEdit() {
+        System.out.println("Enter the memo name you would like to assign sections to:");
+        return scanner.nextLine();
     }
 
     private String getSectionName() {
@@ -33,10 +45,6 @@ public class AssignSections implements Command {
 
     private boolean assignToSection() {
         String input = scanner.nextLine();
-        if (input == "Y") {
-            return true;
-        } else {
-            return false;
-        }
+        return input.equals("Y");
     }
 }

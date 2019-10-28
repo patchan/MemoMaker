@@ -5,6 +5,8 @@ import model.exceptions.QualityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,6 +23,7 @@ public class ChordTest {
     private Note b;
     private Note c;
     private Note d;
+    private ArrayList<Note> notes;
 
     @BeforeEach
     public void setup() {
@@ -32,6 +35,8 @@ public class ChordTest {
         b = new Note("B", 4, 1, 1);
         c = new Note("C", 4, 0, 1);
         d = new Note("D", 4, 0, 1);
+        notes = new ArrayList<>();
+        notes.add(c);
     }
 
     @Test
@@ -150,7 +155,8 @@ public class ChordTest {
 
     @Test
     public void testGetNotes() {
-        assertEquals(cmaj.notes, cmaj.getChordNotes());
+        cmaj.addNotes(c);
+        assertEquals(notes, cmaj.getChordNotes());
     }
 
     @Test

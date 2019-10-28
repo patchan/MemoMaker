@@ -3,8 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MemoTest {
     private Note a, b, c, d, e, f;
     private Bar bar1, bar2;
-    private Memo emptyMemo, memo;
+    private Memo emptyMemo, memo1, memo2;
     private Section sec1, sec2;
 
     @BeforeEach
@@ -23,55 +23,64 @@ public class MemoTest {
         d = new Note("D", 4, 0, 1);
         e = new Note("E", 4, 0, 1);
         f = new Note("F", 4, 0, 1);
-        bar1 = new Bar();
+        bar1 = new Bar(1);
         bar1.insertObject(a);
         bar1.insertObject(b);
         bar1.insertObject(c);
         bar1.insertObject(d);
-        bar2 = new Bar();
+        bar2 = new Bar(2);
         bar2.insertObject(e);
         bar2.insertObject(d);
         emptyMemo = new Memo();
-        memo = new Memo();
-        memo.addToMemo(bar1);
+        memo1 = new Memo();
+        memo2 = null;
+        memo1.addToMemo(bar1);
         sec1 = new Section("1");
         sec2 = new Section( "2");
     }
 
     @Test
     public void testAddSection() {
-        memo.addSection(sec1);
-        assertTrue(memo.getSections().contains(sec1));
-        assertEquals(1, memo.countSections());
+        memo1.addSection(sec1);
+        assertTrue(memo1.getSections().contains(sec1));
+        assertEquals(1, memo1.countSections());
     }
 
     @Test
     public void testAddSectionDuplicate() {
-        memo.addSection(sec1);
-        memo.addSection(sec1);
-        assertTrue(memo.getSections().contains(sec1));
-        assertEquals(1, memo.countSections());
+        memo1.addSection(sec1);
+        memo1.addSection(sec1);
+        assertTrue(memo1.getSections().contains(sec1));
+        assertEquals(1, memo1.countSections());
     }
 
     @Test
     public void testRemoveSection() {
-        memo.addSection(sec1);
-        memo.removeSection(sec1);
-        assertFalse(memo.getSections().contains(sec1));
-        assertEquals(0, memo.countSections());
+        memo1.addSection(sec1);
+        memo1.removeSection(sec1);
+        assertFalse(memo1.getSections().contains(sec1));
+        assertEquals(0, memo1.countSections());
     }
 
     @Test
     public void testRemoveSectionDoNothing() {
-        assertEquals(0, memo.countSections());
-        memo.removeSection(sec1);
-        assertFalse(memo.getSections().contains(sec1));
-        assertEquals(0, memo.countSections());
+        assertEquals(0, memo1.countSections());
+        memo1.removeSection(sec1);
+        assertFalse(memo1.getSections().contains(sec1));
+        assertEquals(0, memo1.countSections());
+    }
+
+    @Test
+    public void testListSectionNames() {
+        memo1.addSection(sec1);
+        List<String> result = new ArrayList<>();
+        result.add(sec1.getName());
+        assertEquals(result, memo1.listSectionNames());
     }
 
     @Test
     public void testGetBars() {
-        ArrayList<Bar> result = memo.getBars();
+        ArrayList<Bar> result = memo1.getBars();
         assertTrue(result.contains(bar1));
     }
 
@@ -82,7 +91,7 @@ public class MemoTest {
 
     @Test
     public void testBarCountOne() {
-        assertEquals(1, memo.barCount());
+        assertEquals(1, memo1.barCount());
     }
 
     @Test
@@ -92,13 +101,13 @@ public class MemoTest {
 
     @Test
     public void testNoteCount() {
-        assertEquals(4, memo.noteCount());
+        assertEquals(4, memo1.noteCount());
     }
 
     @Test
     public void testMemoContains() {
-        assertTrue(memo.memoContains(a));
-        assertFalse(memo.memoContains(e));
+        assertTrue(memo1.memoContains(a));
+        assertFalse(memo1.memoContains(e));
     }
 
     @Test
@@ -113,19 +122,40 @@ public class MemoTest {
 
     @Test
     public void testAddToMemo() {
-        memo.addToMemo(bar2);
-        assertTrue(memo.memoContains(e));
-        assertTrue(memo.memoContains(d));
-        assertFalse(memo.memoContains(f));
+        memo1.addToMemo(bar2);
+        assertTrue(memo1.memoContains(e));
+        assertTrue(memo1.memoContains(d));
+        assertFalse(memo1.memoContains(f));
     }
 
     @Test
-    public void testLoadAndSave() throws IOException, ClassNotFoundException {
-        memo.save();
-        Memo savedMemo = memo;
-        emptyMemo.load();
-        Memo loadedMemo = memo;
-        assertEquals(loadedMemo.returnMemo(), savedMemo.returnMemo());
+    public void testEqualsTrue() {
+        memo2 = new Memo();
+        memo2.addToMemo(bar1);
+        assertTrue(memo1.equals(memo2));
+        assertTrue(memo1.hashCode() == memo2.hashCode());
+    }
+
+    @Test
+    public void testEqualsSame() {
+        assertTrue(memo1.equals(memo1));
+    }
+
+    @Test
+    public void testEqualsNull() {
+        assertFalse(memo1.equals(memo2));
+    }
+
+    @Test
+    public void testEqualsDifferentType() {
+        assertFalse(memo1.equals(bar1));
+    }
+
+    @Test
+    public void testEqualsFalse() {
+        memo2 = new Memo();
+        assertFalse(memo1.equals(memo2));
+        assertFalse(memo1.hashCode() == memo2.hashCode());
     }
 
 }

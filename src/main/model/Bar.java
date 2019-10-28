@@ -10,10 +10,12 @@ import java.util.Objects;
 public class Bar implements Serializable {
     private ArrayList<MusicalObject> musicalObjects;
     private Section section;
-    private int barline;
+    private double barline;
+    private int barNum;
 
     // EFFECTS: constructs an empty bar
-    public Bar() {
+    public Bar(int barNum) {
+        this.barNum = barNum;
         section = new Section("Default");
         this.musicalObjects = new ArrayList<>();
     }
@@ -122,13 +124,26 @@ public class Bar implements Serializable {
         return objectList;
     }
 
-    // EFFECTS: produces a list of all the musical objects in the bar
-    public void setBarLength(int length) {
+    // MODIFIES: this
+    // EFFECTS: sets the bar length
+    public void setBarLength(double length) {
         this.barline = length;
     }
 
-    public int getBarLength() {
+    // EFFECTS: returns the bar length
+    public double getBarLength() {
         return this.barline;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the bar number
+    public void setBarNum(int i) {
+        this.barNum = i;
+    }
+
+    // EFFECTS: produces the bar number
+    public int getBarNum() {
+        return this.barNum;
     }
 
     // EFFECTS: prints the composite names of all the musical objects in the bar as a list
