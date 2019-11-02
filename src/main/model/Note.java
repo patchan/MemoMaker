@@ -131,11 +131,11 @@ public class Note extends MusicalObject implements Serializable {
         }
     }
 
-    // EFFECTS: returns "Note"
-    @Override
-    protected String getType() {
-        return "Note";
-    }
+//    // EFFECTS: returns "Note"
+//    @Override
+//    protected String getType() {
+//        return "Note";
+//    }
 
     // EFFECTS: produces a composite name with the note name and degree symbol
     @Override
