@@ -18,11 +18,11 @@ public class Rest extends MusicalObject implements Serializable {
         setDuration(restDur);
     }
 
-    // EFFECTS: returns "Rest"
-    @Override
-    protected String getType() {
-        return "Rest";
-    }
+//    // EFFECTS: returns "Rest"
+//    @Override
+//    protected String getType() {
+//        return "Rest";
+//    }
 
     // EFFECTS: returns the composite rest name
     @Override

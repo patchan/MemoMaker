@@ -23,7 +23,7 @@ public abstract class MusicalObject implements Serializable {
     }
 
     // EFFECTS: produces true if the string is a valid note name, false otherwise
-    private boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         for (NoteName n : NoteName.values()) {
             if (n.getNoteName().equals(name)) {
                 return true;
@@ -50,7 +50,9 @@ public abstract class MusicalObject implements Serializable {
     }
 
     // EFFECTS: produces a string with the object type
-    protected abstract String getType();
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
 
     // EFFECTS: produces the composite name of this musical object
     protected abstract String getCompositeName();

@@ -1,7 +1,6 @@
 package ui.commands;
 
 import model.Library;
-import model.Memo;
 
 import java.io.IOException;
 

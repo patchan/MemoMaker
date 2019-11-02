@@ -13,7 +13,7 @@ public class BarTest {
     private Note a, b, c, d, e, f;
     private Bar bar1, bar2, bar3, bar4;
     private MusicalObject nullObject;
-    private Section sec1, sec2, def;
+    private Section sec1, sec2, defaultSection;
 
     @BeforeEach
     public void setup() {
@@ -36,7 +36,14 @@ public class BarTest {
         bar3.insertObject(a);
         sec1 = new Section("A");
         sec2 = new Section("B");
-        def = new Section("Default");
+        defaultSection = new Section("None");
+    }
+
+    @Test
+    public void testInitializeSection() {
+        bar1.setSection(sec1);
+        bar1.initializeSection();
+        assertTrue(defaultSection.equals(bar1.getSection()));
     }
 
     @Test
@@ -55,13 +62,13 @@ public class BarTest {
     public void testRemoveSection() {
         bar1.setSection(sec1);
         bar1.removeSection(sec1);
-        assertEquals(def, bar1.getSection());
+        assertEquals(defaultSection, bar1.getSection());
     }
 
     @Test
     public void testRemoveBarSectionDoNothing() {
         bar1.removeSection(sec1);
-        assertEquals(def, bar1.getSection());
+        assertEquals(defaultSection, bar1.getSection());
     }
 
     @Test

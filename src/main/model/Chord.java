@@ -133,11 +133,11 @@ public class Chord extends MusicalObject implements Serializable {
         }
     }
 
-    // EFFECTS: returns "Chord"
-    @Override
-    protected String getType() {
-        return "Chord";
-    }
+//    // EFFECTS: returns "Chord"
+//    @Override
+//    protected String getType() {
+//        return "Chord";
+//    }
 
     // EFFECTS: produces a composite name with the chord name and quality
     @Override
