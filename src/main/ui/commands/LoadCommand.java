@@ -15,7 +15,7 @@ public class LoadCommand implements Command {
         library.load();
         System.out.println("Your library has been loaded.");
         System.out.println("Memos:");
-        library.printLibraryMemos();
+        library.printMemosInLibrary();
     }
 
 }

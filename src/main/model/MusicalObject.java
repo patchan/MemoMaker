@@ -14,11 +14,6 @@ public abstract class MusicalObject implements Serializable {
     // EFFECTS: sets the name of this musical object if it is a valid note name
     public void setName(String name) {
         this.name = name;
-//        if (isValidName(name)) {
-//            this.name = name;
-//        } else {
-//            throw new NameException();
-//        }
     }
 
     // EFFECTS: produces true if the string is a valid note name, false otherwise
@@ -61,7 +56,4 @@ public abstract class MusicalObject implements Serializable {
         return getType() + ": " + getCompositeName();
     }
 
-//    // MODIFIES: this
-//    // EFFECTS: creates a musical object of a given type
-//    protected abstract void makeMusicalObject(double duration);
 }

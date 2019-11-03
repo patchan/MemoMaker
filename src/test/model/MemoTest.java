@@ -158,4 +158,8 @@ public class MemoTest {
         assertFalse(memo1.hashCode() == memo2.hashCode());
     }
 
+    @Test
+    public void testPrintMemo() {
+        memo1.printMemo();
+    }
 }

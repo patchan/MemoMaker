@@ -73,6 +73,14 @@ public class Memo implements Serializable {
         return bars;
     }
 
+    // EFFECTS: prints the memo with the given name
+    public void printMemo() {
+        System.out.println("Your memo contains " + barCount() + " bars:");
+        for (Bar b : bars) {
+            b.printBar();
+        }
+    }
+
     // EFFECTS: returns the number of bars in the memo i.e. the size of the memo
     public int barCount() {
         return bars.size();

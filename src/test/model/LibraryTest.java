@@ -58,4 +58,14 @@ public class LibraryTest {
         Library loadedLibrary = library;
         assertEquals(loadedLibrary.returnLibrary(), savedLibrary.returnLibrary());
     }
+
+    @Test
+    public void testPrintMemo() {
+        library.printMemo("1");
+    }
+
+    @Test
+    public void testPrintMemosInLibrary() {
+        library.printMemosInLibrary();
+    }
 }

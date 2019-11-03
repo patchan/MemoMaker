@@ -14,7 +14,7 @@ public class AssignSections implements Command {
 
     @Override
     public void executeCommand(Library library) {
-        library.printLibraryMemos();
+        library.printMemosInLibrary();
         Memo memo = library.getMemo(getMemoToEdit());
         section = new Section(getSectionName());
         for (Bar b : memo.getBars()) {

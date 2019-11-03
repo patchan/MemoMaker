@@ -1,7 +1,7 @@
 package model;
 
 import model.exceptions.BarLengthException;
-import ui.Creator;
+import ui.CreatorTool;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class Bar implements Serializable {
         double i = 0;
         setBarLength(length);
         while (i < length) {
-            MusicalObject newObject = new Creator().makeNewObject();
+            MusicalObject newObject = new CreatorTool().makeNewObject();
             try {
                 addToBar(newObject);
                 i = i + newObject.getDuration();
@@ -97,21 +97,6 @@ public class Bar implements Serializable {
     //          inserts a MusicalObject to the Bar
     public void insertObject(MusicalObject mo) {
         musicalObjects.add(mo);
-    }
-
-    // EFFECTS: returns the appropriate object type to be created
-    public MusicalObject setObjectType(int type) {
-        MusicalObject mo;
-        if (type == 1) {
-            mo = new Note();
-        } else if (type == 2) {
-            mo = new Chord();
-        } else if (type == 3) {
-            mo = new Rest();
-        } else {
-            mo = null;
-        }
-        return mo;
     }
 
     // EFFECTS: produces a list of all the musical objects in the bar

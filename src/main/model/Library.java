@@ -47,14 +47,11 @@ public class Library implements Serializable, Readable, Writeable {
     // EFFECTS: prints the memo with the given name
     public void printMemo(String name) {
         Memo memo = memos.get(name);
-        System.out.println("Your memo contains " + memo.barCount() + " bars:");
-        for (Bar b : memo.getBars()) {
-            b.printBar();
-        }
+        memo.printMemo();
     }
 
     // EFFECTS: prints the name of all memos in the library
-    public void printLibraryMemos() {
+    public void printMemosInLibrary() {
         Set<String> memoNames = memos.keySet();
         System.out.println(memoNames);
     }

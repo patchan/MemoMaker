@@ -8,12 +8,9 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 // unit tests for the Chord class
 public class ChordTest {
-    private Chord empty;
     private Chord cmaj;
     private Chord fmin;
     private Chord gmaj;
@@ -25,7 +22,6 @@ public class ChordTest {
 
     @BeforeEach
     public void setup() {
-        empty = new Chord();
         cmaj = new Chord("C", "maj", "6", 1);
         fmin = new Chord("F", "min", "9", 1);
         gmaj = new Chord("G", "maj", "7", 1);
@@ -36,89 +32,6 @@ public class ChordTest {
         notes = new ArrayList<>();
         notes.add(c);
     }
-
-//    @Test
-//    public void testSetNameValid() {
-//        try {
-//            empty.setName("C");
-//        } catch (NameException e) {
-//            fail("Did not set name to C");
-//        }
-//        assertEquals("C", empty.getName());
-//    }
-//
-//    @Test
-//    public void testSetNameInvalid() {
-//        try {
-//            empty.setName("Z");
-//            fail("Set name to Z");
-//        } catch (NameException e) {
-//            System.out.println("Did not set name to Z");
-//        }
-//        assertNull(empty.getName());
-//    }
-//
-////    @Test
-////    public void testSetValidNameInvalid() {
-////        empty.setValidName("C");
-////        assertEquals("C", empty.getName());
-////    }
-//
-//    @Test
-//    public void testSetQualityMaj() {
-//        try {
-//            empty.setQuality("maj");
-//        } catch (QualityException e) {
-//            fail("Did not set to major");
-//        }
-//        assertEquals("maj", empty.getQuality());
-//    }
-//
-//    @Test
-//    public void testSetQualityMin() {
-//        try {
-//            cmaj.setQuality("min");
-//        } catch (QualityException e) {
-//            fail("Did not set to minor");
-//        }
-//        assertEquals("min", cmaj.getQuality());
-//    }
-//
-//    @Test
-//    public void testSetQualityAug() {
-//        try {
-//            cmaj.setQuality("aug");
-//        } catch (QualityException e) {
-//            fail("Did not set to augmented");
-//        }
-//        assertEquals("aug", cmaj.getQuality());
-//    }
-//
-//    @Test
-//    public void testSetQualityDim() {
-//        try {
-//            cmaj.setQuality("dim");
-//        } catch (QualityException e) {
-//            fail("Did not set to diminished");
-//        }
-//        assertEquals("dim", cmaj.getQuality());
-//    }
-//
-//    @Test
-//    public void testSetQualityNull() {
-//        try {
-//            cmaj.setQuality("");
-//            fail("Did not expect to set quality to null");
-//        } catch (QualityException e) {
-//            System.out.println("Caught QualityException");
-//        }
-//    }
-//
-//    @Test
-//    public void testSetValidQualityValid() {
-//        cmaj.setValidQuality("min");
-//        assertEquals("min", cmaj.getQuality());
-//    }
 
     @Test
     public void testSetQuality() {

@@ -9,11 +9,6 @@ public class Chord extends MusicalObject implements Serializable {
     private String extensions;
     private ArrayList<Note> notes;
 
-    // EFFECTS: default constructor for Chord
-    public Chord() {
-        notes = new ArrayList<>();
-    }
-
     // EFFECTS: constructs a Chord with name, quality, extensions, and duration
     public Chord(String name, String quality, String extensions, double duration) {
         this.name = name;
@@ -27,17 +22,6 @@ public class Chord extends MusicalObject implements Serializable {
     // EFFECTS: sets the quality of this chord
     public void setQuality(String quality) {
         this.quality = quality;
-//        if (s.equalsIgnoreCase("maj")) {
-//            quality = ChordQuality.MAJ.getValue();
-//        } else if (s.equalsIgnoreCase("min")) {
-//            quality = ChordQuality.MIN.getValue();
-//        } else if (s.equalsIgnoreCase("aug")) {
-//            quality = ChordQuality.AUG.getValue();
-//        } else if (s.equalsIgnoreCase("dim")) {
-//            quality = ChordQuality.DIM.getValue();
-//        } else {
-//            throw new QualityException();
-//        }
     }
 
     public static boolean isValidQuality(String quality) {
@@ -90,60 +74,6 @@ public class Chord extends MusicalObject implements Serializable {
     public boolean contains(Note n) {
         return notes.contains(n);
     }
-
-//    // EFFECTS: creates a new chord
-//    @Override
-//    protected void makeMusicalObject(double noteDur) {
-//        CreateNewMemo c = new CreateNewMemo();
-//        setValidName(c.getChordName());
-//        setValidQuality(c.getChordQuality());
-//        setExtensions(c.getChordExtensions());
-//        setDuration(noteDur);
-//        int chordNotes = c.getChordNotes();
-//        for (int i = 0; i < chordNotes; i++) {
-//            Note mo = new Note();
-//            mo.makeMusicalObject(noteDur);
-//            addNotes(mo);
-//        }
-//    }
-
-//    // MODIFIES: this
-//    // EFFECTS: sets the chord name to a valid chord name
-//    public void setValidName(String name) {
-//        CreateNewMemo c = new CreateNewMemo();
-//        String newName = name;
-//        while (true) {
-//            try {
-//                setName(newName);
-//                break;
-//            } catch (NameException e) {
-//                System.out.println("Invalid chord root. Please try again.");
-//                newName = c.getChordName();
-//            }
-//        }
-//    }
-//
-//    // MODIFIES: this
-//    // EFFECTS: sets the chord quality to a valid chord quality
-//    public void setValidQuality(String quality) {
-//        CreateNewMemo c = new CreateNewMemo();
-//        String newQuality = quality;
-//        while (true) {
-//            try {
-//                setQuality(newQuality);
-//                break;
-//            } catch (QualityException e) {
-//                System.out.println("Invalid chord quality. Please try again.");
-//                newQuality = c.getChordQuality();
-//            }
-//        }
-//    }
-
-//    // EFFECTS: returns "Chord"
-//    @Override
-//    protected String getType() {
-//        return "Chord";
-//    }
 
     // EFFECTS: produces a composite name with the chord name and quality
     @Override

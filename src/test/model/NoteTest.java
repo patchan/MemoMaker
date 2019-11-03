@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 // unit tests for the Note class
 public class NoteTest {
-    private Note blank;
     private Note a;
     private Note d;
     private Note dsharp;
@@ -16,7 +15,6 @@ public class NoteTest {
 
     @BeforeEach
     public void setup() {
-        blank = new Note();
         a = new Note("A", 4, 0, 1);
         d = new Note("D", 4, 0, 1);
         dsharp = new Note("D", 4, 1, 1);

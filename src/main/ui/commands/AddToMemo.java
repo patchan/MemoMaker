@@ -17,7 +17,7 @@ public class AddToMemo extends CreateNewMemo {
     // EFFECT: adds a new bar to memo
     @Override
     public void executeCommand(Library library) {
-        library.printLibraryMemos();
+        library.printMemosInLibrary();
         String name = getMemoToEdit();
         Memo memo = library.getMemo(name);
         if (!(memo == null)) {

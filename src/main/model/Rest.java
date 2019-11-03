@@ -4,25 +4,10 @@ import java.io.Serializable;
 
 public class Rest extends MusicalObject implements Serializable {
 
-    // EFFECTS: default constructor for Rest
-    public Rest() {}
-
     // EFFECTS: constructs a Rest with duration
     public Rest(double duration) {
         this.duration = duration;
     }
-
-//    // EFFECTS: creates a new rest
-//    @Override
-//    protected void makeMusicalObject(double restDur) {
-//        setDuration(restDur);
-//    }
-
-//    // EFFECTS: returns "Rest"
-//    @Override
-//    protected String getType() {
-//        return "Rest";
-//    }
 
     // EFFECTS: returns the composite rest name
     @Override

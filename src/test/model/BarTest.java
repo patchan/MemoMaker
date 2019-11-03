@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BarTest {
     private Note a, b, c, d, e, f;
     private Bar bar1, bar2, bar3, bar4;
-    private MusicalObject nullObject;
     private Section sec1, sec2, defaultSection;
 
     @BeforeEach
@@ -177,33 +176,6 @@ public class BarTest {
     }
 
     @Test
-    public void testSetObjectTypeNote() {
-        MusicalObject note = new Note();
-        MusicalObject nullObject = bar1.setObjectType(1);
-        assertEquals(note.getType(), nullObject.getType());
-    }
-
-    @Test
-    public void testSetObjectTypeChord() {
-        MusicalObject chord = new Chord();
-        MusicalObject nullObject = bar1.setObjectType(2);
-        assertEquals(chord.getType(), nullObject.getType());
-    }
-
-    @Test
-    public void testSetObjectTypeRest() {
-        MusicalObject rest = new Rest();
-        MusicalObject nullObject = bar1.setObjectType(3);
-        assertEquals(rest.getType(), nullObject.getType());
-    }
-
-    @Test
-    public void testSetObjectTypeNull() {
-        MusicalObject nullObject = bar1.setObjectType(4);
-        assertNull(nullObject);
-    }
-
-    @Test
     public void testEqualsTrue() {
         bar1.insertObject(a);
         bar1.insertObject(b);
@@ -227,4 +199,10 @@ public class BarTest {
         assertFalse(bar2.equals(bar1));
         assertFalse(bar2.hashCode() == bar1.hashCode());
     }
+
+    @Test
+    public void testPrintBar() {
+        bar1.printBar();
+    }
+
 }
