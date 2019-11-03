@@ -12,11 +12,11 @@ public class Rest extends MusicalObject implements Serializable {
         this.duration = duration;
     }
 
-    // EFFECTS: creates a new rest
-    @Override
-    protected void makeMusicalObject(double restDur) {
-        setDuration(restDur);
-    }
+//    // EFFECTS: creates a new rest
+//    @Override
+//    protected void makeMusicalObject(double restDur) {
+//        setDuration(restDur);
+//    }
 
 //    // EFFECTS: returns "Rest"
 //    @Override

@@ -30,11 +30,11 @@ public class RestTest {
         assertEquals(1, r.getDuration());
     }
 
-    @Test
-    public void testMakeMusicalObject() {
-        blank.makeMusicalObject(1);
-        assertEquals(1, blank.getDuration());
-    }
+//    @Test
+//    public void testMakeMusicalObject() {
+//        blank.makeMusicalObject(1);
+//        assertEquals(1, blank.getDuration());
+//    }
 
     @Test
     public void testGetCompositeNameQuarter() {

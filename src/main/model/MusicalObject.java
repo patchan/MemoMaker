@@ -1,7 +1,5 @@
 package model;
 
-import model.exceptions.NameException;
-
 import java.io.Serializable;
 
 public abstract class MusicalObject implements Serializable {
@@ -14,16 +12,17 @@ public abstract class MusicalObject implements Serializable {
 
     // MODIFIES: this
     // EFFECTS: sets the name of this musical object if it is a valid note name
-    public void setName(String name) throws NameException {
-        if (isValidName(name)) {
-            this.name = name;
-        } else {
-            throw new NameException();
-        }
+    public void setName(String name) {
+        this.name = name;
+//        if (isValidName(name)) {
+//            this.name = name;
+//        } else {
+//            throw new NameException();
+//        }
     }
 
     // EFFECTS: produces true if the string is a valid note name, false otherwise
-    public boolean isValidName(String name) {
+    public static boolean isValidName(String name) {
         for (NoteName n : NoteName.values()) {
             if (n.getNoteName().equals(name)) {
                 return true;
@@ -62,7 +61,7 @@ public abstract class MusicalObject implements Serializable {
         return getType() + ": " + getCompositeName();
     }
 
-    // MODIFIES: this
-    // EFFECTS: creates a musical object of a given type
-    protected abstract void makeMusicalObject(double duration);
+//    // MODIFIES: this
+//    // EFFECTS: creates a musical object of a given type
+//    protected abstract void makeMusicalObject(double duration);
 }

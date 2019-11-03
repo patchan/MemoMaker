@@ -1,7 +1,7 @@
 package model;
 
 import model.exceptions.BarLengthException;
-import ui.commands.CreateNewMemo;
+import ui.Creator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,15 +48,12 @@ public class Bar implements Serializable {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a new bar with musical objects
+    // EFFECTS: creates a full bar with musical objects
     public void makeBar(int length) {
-        CreateNewMemo c = new CreateNewMemo();
         double i = 0;
         setBarLength(length);
         while (i < length) {
-            MusicalObject newObject = setObjectType(c.getObjectType());
-            double objectLength = c.getObjectDuration();
-            newObject.makeMusicalObject(objectLength);
+            MusicalObject newObject = new Creator().makeNewObject();
             try {
                 addToBar(newObject);
                 i = i + newObject.getDuration();

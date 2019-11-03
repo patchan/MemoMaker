@@ -1,7 +1,5 @@
 package model;
 
-import model.exceptions.NameException;
-import model.exceptions.QualityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,87 +37,123 @@ public class ChordTest {
         notes.add(c);
     }
 
-    @Test
-    public void testSetNameValid() {
-        try {
-            empty.setName("C");
-        } catch (NameException e) {
-            fail("Did not set name to C");
-        }
-        assertEquals("C", empty.getName());
-    }
+//    @Test
+//    public void testSetNameValid() {
+//        try {
+//            empty.setName("C");
+//        } catch (NameException e) {
+//            fail("Did not set name to C");
+//        }
+//        assertEquals("C", empty.getName());
+//    }
+//
+//    @Test
+//    public void testSetNameInvalid() {
+//        try {
+//            empty.setName("Z");
+//            fail("Set name to Z");
+//        } catch (NameException e) {
+//            System.out.println("Did not set name to Z");
+//        }
+//        assertNull(empty.getName());
+//    }
+//
+////    @Test
+////    public void testSetValidNameInvalid() {
+////        empty.setValidName("C");
+////        assertEquals("C", empty.getName());
+////    }
+//
+//    @Test
+//    public void testSetQualityMaj() {
+//        try {
+//            empty.setQuality("maj");
+//        } catch (QualityException e) {
+//            fail("Did not set to major");
+//        }
+//        assertEquals("maj", empty.getQuality());
+//    }
+//
+//    @Test
+//    public void testSetQualityMin() {
+//        try {
+//            cmaj.setQuality("min");
+//        } catch (QualityException e) {
+//            fail("Did not set to minor");
+//        }
+//        assertEquals("min", cmaj.getQuality());
+//    }
+//
+//    @Test
+//    public void testSetQualityAug() {
+//        try {
+//            cmaj.setQuality("aug");
+//        } catch (QualityException e) {
+//            fail("Did not set to augmented");
+//        }
+//        assertEquals("aug", cmaj.getQuality());
+//    }
+//
+//    @Test
+//    public void testSetQualityDim() {
+//        try {
+//            cmaj.setQuality("dim");
+//        } catch (QualityException e) {
+//            fail("Did not set to diminished");
+//        }
+//        assertEquals("dim", cmaj.getQuality());
+//    }
+//
+//    @Test
+//    public void testSetQualityNull() {
+//        try {
+//            cmaj.setQuality("");
+//            fail("Did not expect to set quality to null");
+//        } catch (QualityException e) {
+//            System.out.println("Caught QualityException");
+//        }
+//    }
+//
+//    @Test
+//    public void testSetValidQualityValid() {
+//        cmaj.setValidQuality("min");
+//        assertEquals("min", cmaj.getQuality());
+//    }
 
     @Test
-    public void testSetNameInvalid() {
-        try {
-            empty.setName("Z");
-            fail("Set name to Z");
-        } catch (NameException e) {
-            System.out.println("Did not set name to Z");
-        }
-        assertNull(empty.getName());
-    }
-
-    @Test
-    public void testSetValidNameInvalid() {
-        empty.setValidName("C");
-        assertEquals("C", empty.getName());
-    }
-
-    @Test
-    public void testSetQualityMaj() {
-        try {
-            empty.setQuality("maj");
-        } catch (QualityException e) {
-            fail("Did not set to major");
-        }
-        assertEquals("maj", empty.getQuality());
-    }
-
-    @Test
-    public void testSetQualityMin() {
-        try {
-            cmaj.setQuality("min");
-        } catch (QualityException e) {
-            fail("Did not set to minor");
-        }
+    public void testSetQuality() {
+        cmaj.setQuality("min");
         assertEquals("min", cmaj.getQuality());
     }
 
     @Test
-    public void testSetQualityAug() {
-        try {
-            cmaj.setQuality("aug");
-        } catch (QualityException e) {
-            fail("Did not set to augmented");
-        }
-        assertEquals("aug", cmaj.getQuality());
+    public void testGetQuality() {
+        assertEquals("maj", cmaj.getQuality());
     }
 
     @Test
-    public void testSetQualityDim() {
-        try {
-            cmaj.setQuality("dim");
-        } catch (QualityException e) {
-            fail("Did not set to diminished");
-        }
-        assertEquals("dim", cmaj.getQuality());
+    public void testIsValidQualityTrueMaj() {
+        assertTrue(cmaj.isValidQuality("maj"));
     }
 
     @Test
-    public void testSetQualityNull() {
-        try {
-            cmaj.setQuality("");
-            fail("Did not expect to set quality to null");
-        } catch (QualityException e) {
-            System.out.println("Caught QualityException");
-        }
+    public void testIsValidQualityTrueMin() {
+        assertTrue(cmaj.isValidQuality("min"));
     }
 
     @Test
-    public void testSetValidQualityValid() {
-        cmaj.setValidQuality("min");
-        assertEquals("min", cmaj.getQuality());
+    public void testIsValidQualityTrueAug() {
+        assertTrue(cmaj.isValidQuality("aug"));
+    }
+
+    @Test
+    public void testIsValidQualityTrueDim() {
+        assertTrue(cmaj.isValidQuality("dim"));
+    }
+
+    @Test
+    public void testIsValidQualityFalse() {
+        assertFalse(cmaj.isValidQuality("none"));
     }
 
     @Test

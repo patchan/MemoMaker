@@ -1,8 +1,14 @@
 package ui.commands;
 
 import model.*;
+import model.exceptions.DegreeException;
+import model.exceptions.NameException;
+import model.exceptions.OctaveException;
+import model.exceptions.QualityException;
 
 import java.util.Scanner;
+
+import static model.Note.*;
 
 
 public class CreateNewMemo implements Command {
@@ -46,9 +52,18 @@ public class CreateNewMemo implements Command {
 
     // REQUIRES: input is single character string
     // EFFECTS: returns user input for note name as string
-    public String getNoteName() {
+    public String getNoteName() throws NameException {
         System.out.println("Enter a note name:");
-        return scanner.nextLine();
+        return getName();
+    }
+
+    public String getName() throws NameException {
+        String result = scanner.nextLine();
+        if (MusicalObject.isValidName(result)) {
+            return result;
+        } else {
+            throw new NameException();
+        }
     }
 
     // REQUIRES: input is single character string
@@ -63,34 +78,47 @@ public class CreateNewMemo implements Command {
 
     // REQUIRES: input is single character string
     // EFFECTS: returns user input for note name as string
-    public int getNoteOctave() {
+    public int getNoteOctave() throws OctaveException {
         System.out.println("Enter the octave of the note:");
         int octave = scanner.nextInt();
         scanner.nextLine();
-        return octave;
+        if (isValidOctave(octave)) {
+            return octave;
+        } else {
+            throw new OctaveException();
+        }
     }
 
     // REQUIRES: input is integer -1, 0, or 1
     // EFFECTS: returns user input for note degree as an integer
-    public int getNoteDegree() {
+    public int getNoteDegree() throws DegreeException {
         System.out.println("Enter an accidental (-1 for flat, 0 for natural, 1 for sharp):");
         int degree = scanner.nextInt();
         scanner.nextLine();
-        return degree;
+        if (Note.isValidDegree(degree)) {
+            return degree;
+        } else {
+            throw new DegreeException();
+        }
     }
 
     // REQUIRES: input is single character string
     // EFFECTS: returns user input for chord name as string
-    public String getChordName() {
+    public String getChordName() throws NameException {
         System.out.println("Enter a chord root:");
-        return scanner.nextLine();
+        return getName();
     }
 
     // REQUIRES: input must be one of "maj" "min" "aug" or "dim"
     // EFFECTS: returns user input for chord quality as string
-    public String getChordQuality() {
+    public String getChordQuality() throws QualityException {
         System.out.println("Enter (maj, min, aug, or dim) as the chord quality:");
-        return scanner.nextLine();
+        String result = scanner.nextLine();
+        if (Chord.isValidQuality(result)) {
+            return result;
+        } else {
+            throw new QualityException();
+        }
     }
 
     // EFFECTS: returns user input for chord extensions as string

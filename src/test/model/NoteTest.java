@@ -1,14 +1,10 @@
 package model;
 
-import model.exceptions.DegreeException;
-import model.exceptions.NameException;
-import model.exceptions.OctaveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 // unit tests for the Note class
 public class NoteTest {
@@ -28,140 +24,94 @@ public class NoteTest {
     }
 
     @Test
-    public void testSetNote() {
-        try {
-            blank.setName("B");
-        } catch (NameException e) {
-            fail();
-        }
-        assertEquals("B", blank.getName());
+    public void testSetGetName() {
+        a.setName("B");
+        assertEquals("B",a.getName());
     }
 
     @Test
-    public void testSetNoteInvalid() {
-        try {
-            a.setName("Z");
-            fail();
-        } catch (NameException e) {
-            System.out.println("Invalid note name");
-        }
-        assertEquals("A", a.getName());
+    public void testIsValidNameTrue() {
+        assertTrue(a.isValidName("A"));
     }
 
     @Test
-    public void testSetValidName() {
-        d.setValidName("A");
-        assertEquals("A", d.getName());
+    public void testIsValidNameFalse() {
+        assertFalse(a.isValidName("T"));
     }
 
     @Test
-    public void testSetOctaveMin() {
-        try {
-            a.setOctave(0);
-        } catch (OctaveException e) {
-            fail();
-        }
-        assertEquals(0, a.getOctave());
+    public void testIsValidOctaveTrueLowBoundary() {
+        assertTrue(a.isValidOctave(0));
     }
 
     @Test
-    public void testSetOctaveMax() {
-        try {
-            a.setOctave(8);
-        } catch (OctaveException e) {
-            fail();
-        }
-        assertEquals(8, a.getOctave());
+    public void testIsValidOctaveTrue() {
+        assertTrue(a.isValidOctave(4));
+    }
+    @Test
+    public void testIsValidOctaveTrueHighBoundary() {
+        assertTrue(a.isValidOctave(8));
     }
 
     @Test
-    public void testSetOctaveInvalidOver() {
-        try {
-            a.setOctave(10);
-            fail();
-        } catch (OctaveException e) {
-            System.out.println("Invalid octave entry");
-        }
+    public void testIsValidOctaveFalseLow() {
+        assertFalse(a.isValidOctave(-1));
+    }
+
+    @Test
+    public void testIsValidOctaveFalseHigh() {
+        assertFalse(a.isValidOctave(10));
+    }
+
+    @Test
+    public void testIsValidQDegreeTrueFlat() {
+        assertTrue(a.isValidDegree(-1));
+    }
+
+    @Test
+    public void testIsValidQDegreeTrueNatural() {
+        assertTrue(a.isValidDegree(0));
+    }
+
+    @Test
+    public void testIsValidQDegreeTrueSharp() {
+        assertTrue(a.isValidDegree(1));
+    }
+
+    @Test
+    public void testIsValidQDegreeFalseLow() {
+        assertFalse(a.isValidDegree(-2));
+    }
+
+    @Test
+    public void testIsValidQDegreeFalseHigh() {
+        assertFalse(a.isValidDegree(2));
+    }
+
+    @Test
+    public void testSetOctave() {
+        a.setOctave(2);
+        assertEquals(2, a.getOctave());
+    }
+
+    @Test
+    public void testGetOctave() {
         assertEquals(4, a.getOctave());
     }
 
     @Test
-    public void testSetOctaveInvalidUnder() {
-        try {
-            a.setOctave(-1);
-            fail();
-        } catch (OctaveException e) {
-            System.out.println("Invalid octave entry");
-        }
-        assertEquals(4, a.getOctave());
-    }
-
-    @Test
-    public void testSetValidOctave() {
-        d.setValidOctave(7);
-        assertEquals(7, d.getOctave());
-    }
-
-    @Test
-    public void testSetDegreeNatural() {
-        try {
-            a.setDegree(0);
-        } catch (DegreeException e) {
-            fail();
-        }
-        assertEquals(0, a.getDegree());
-    }
-
-    @Test
-    public void testSetDegreeSharp() {
-        try {
-            a.setDegree(1);
-        } catch (DegreeException e) {
-            fail();
-        }
+    public void testSetDegree() {
+        a.setDegree(1);
         assertEquals(1, a.getDegree());
     }
 
     @Test
-    public void testSetDegreeFlat() {
-        try {
-            a.setDegree(-1);
-        } catch (DegreeException e) {
-            fail();
-        }
-        assertEquals(-1, a.getDegree());
-    }
-
-    @Test
-    public void testSetDegreeInvalidOver() {
-        try {
-            a.setDegree(2);
-            fail();
-        } catch (DegreeException e) {
-            System.out.println("Could not set to invalid degree");
-        }
+    public void testGetDegree() {
         assertEquals(0, a.getDegree());
     }
 
     @Test
-    public void testSetDegreeInvalidUnder() {
-        try {
-            a.setDegree(-2);
-            fail();
-        } catch (DegreeException e) {
-            System.out.println("Could not set to invalid degree");
-        }
-        assertEquals(0, a.getDegree());
-    }
-
-    @Test
-    public void testSetValidDegree() {
-        d.setValidDegree(1);
-        assertEquals(1, d.getDegree());
-    }
-
-    @Test
-    public void testSetDuration() {
+    public void testSetGetDuration() {
         a.setDuration(2);
         assertEquals(2, a.getDuration());
     }
