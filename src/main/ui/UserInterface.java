@@ -29,6 +29,7 @@ public class UserInterface {
 
     // EFFECTS: prints command instructions to the user
     public void askForCommand() {
+        System.out.println("\n-----------------------------------------");
         System.out.println("What would you like to do?");
         System.out.println("\t-> '1' to create a new memo");
         System.out.println("\t-> '2' to add a current memo");

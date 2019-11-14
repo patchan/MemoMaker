@@ -1,6 +1,7 @@
 package ui;
 
 import model.Library;
+import network.WebReader;
 import ui.commands.Command;
 
 import java.io.IOException;
@@ -11,6 +12,8 @@ public class MemoMaker {
 
 
     public MemoMaker() throws IOException, ClassNotFoundException {
+        System.out.println("Welcome to MemoMaker!");
+        WebReader.main(new String[]{});
         library = new Library();
         while (true) {
             ui.askForCommand();
