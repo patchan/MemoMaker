@@ -174,10 +174,4 @@ public class Bar extends Subject implements Serializable {
         return Objects.hash(musicalObjects);
     }
 
-    @Override
-    public void notifyObservers() {
-        for (Observer o : observers) {
-            o.update();
-        }
-    }
 }

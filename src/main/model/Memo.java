@@ -114,10 +114,4 @@ public class Memo extends Subject implements Serializable {
         return Objects.hash(bars);
     }
 
-    @Override
-    public void notifyObservers() {
-        for (Observer o : observers) {
-            o.update();
-        }
-    }
 }

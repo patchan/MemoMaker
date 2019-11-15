@@ -11,5 +11,9 @@ public abstract class Subject {
         }
     }
 
-    public abstract void notifyObservers();
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.update();
+        }
+    }
 }
