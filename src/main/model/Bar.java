@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Bar implements Serializable {
+public class Bar extends Subject implements Serializable {
     private ArrayList<MusicalObject> musicalObjects;
     private Section section;
     private double barline;
@@ -52,6 +52,7 @@ public class Bar implements Serializable {
     public void makeBar(int length) {
         double i = 0;
         setBarLength(length);
+        addObserver(new NoteCounter());
         while (i < length) {
             MusicalObject newObject = new CreatorTool().makeNewObject();
             try {
@@ -72,6 +73,7 @@ public class Bar implements Serializable {
     public void addToBar(MusicalObject mo) throws BarLengthException {
         if (withinBarLength(mo.getDuration())) {
             musicalObjects.add(mo);
+            notifyObservers();
             System.out.println(mo.printName() + " has been added to the bar.");
         } else {
             throw new BarLengthException();
@@ -170,5 +172,12 @@ public class Bar implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(musicalObjects);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.update();
+        }
     }
 }

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-public class Memo implements Serializable {
+public class Memo extends Subject implements Serializable {
     private ArrayList<Bar> bars;
     private HashSet<Section> sections;
 
@@ -14,12 +14,14 @@ public class Memo implements Serializable {
     public Memo() {
         this.bars = new ArrayList<>();
         this.sections = new HashSet<>();
+        addObserver(new BarCounter());
     }
 
     // MODIFIES: this
     // EFFECTS: adds a Bar to the Memo
     public void addToMemo(Bar bar) {
         bars.add(bar);
+        notifyObservers();
     }
 
     // MODIFIES: this
@@ -75,7 +77,6 @@ public class Memo implements Serializable {
 
     // EFFECTS: prints the memo with the given name
     public void printMemo() {
-        System.out.println("Your memo contains " + barCount() + " bars:");
         for (Bar b : bars) {
             b.printBar();
         }
@@ -111,5 +112,12 @@ public class Memo implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(bars);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.update();
+        }
     }
 }
