@@ -6,7 +6,9 @@ public abstract class Subject {
     ArrayList<Observer> observers = new ArrayList<>();
 
     public void addObserver(Observer o) {
-        observers.add(o);
+        if (!observers.contains(o)) {
+            observers.add(o);
+        }
     }
 
     public abstract void notifyObservers();

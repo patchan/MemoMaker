@@ -25,6 +25,14 @@ public class NoteCounterTest {
     }
 
     @Test
+    public void updateTestAddCounterTwice() {
+        b.addObserver(noteCounter);
+        b.addObserver(noteCounter);
+        b.notifyObservers();
+        assertEquals(1, noteCounter.getCount());
+    }
+
+    @Test
     public void updateTestTwoCounter() {
         b.addObserver(noteCounter);
         b.addObserver(noteCounter2);
