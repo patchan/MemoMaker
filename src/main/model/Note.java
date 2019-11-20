@@ -67,8 +67,8 @@ public class Note extends MusicalObject implements Serializable {
 
     // EFFECTS: produces a composite name with the note name and degree symbol
     @Override
-    protected String getCompositeName() {
-        return this.name + this.octave + getDegreeSymbol();
+    public String getCompositeName() {
+        return this.name + getDegreeSymbol() + this.octave;
     }
 
 }

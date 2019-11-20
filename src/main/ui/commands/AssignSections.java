@@ -38,11 +38,13 @@ public class AssignSections implements Command {
         return scanner.nextLine();
     }
 
+    // EFFECTS: returns user input for the section name
     private String getSectionName() {
         System.out.println("Enter a new section name:");
         return scanner.nextLine();
     }
 
+    // EFFECTS: produces true user input is "Y"
     private boolean assignToSection() {
         String input = scanner.nextLine();
         return input.equals("Y");

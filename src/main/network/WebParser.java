@@ -8,7 +8,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class WebParser {
+
+    public HashMap<Integer, ArrayList<String>> result;
 
     /**
      * Prints library parsed from JSON data to console
@@ -16,10 +21,12 @@ public class WebParser {
      * @throws JSONException when jsonData cannot be parsed as a JSONArray
      */
 
+    // EFFECTS: parses jsonObj for album rank, album name, and artist name
     public void parseChart(String jsonObj) throws JSONException {
         JSONObject chart = new JSONObject(jsonObj);
         JSONArray albums = chart.optJSONArray("data");
         System.out.println("The top 3 albums of the day are: \n");
+        result = new HashMap<>();
 
         for (int i = 0; i < 3; i++) {
             JSONObject album = albums.getJSONObject(i);
@@ -27,17 +34,27 @@ public class WebParser {
         }
     }
 
-    public void parseAlbum(JSONObject album) throws JSONException {
+    private void parseAlbum(JSONObject album) throws JSONException {
         int position = album.getInt("position");
         String albumName = album.getString("title");
         JSONObject artist = album.getJSONObject("artist");
         String artistName = artist.getString("name");
         String link = album.getString("link");
-        System.out.println("--- Rank " + position + " ---");
-        System.out.println("Album: " + albumName);
-        System.out.println("Artist: " + artistName);
-        System.out.println("Click here to listen: " + link);
-        System.out.println();
+        String albumPos = "--- Rank " + position + "---";
+        String albumTitle = "Album: " + albumName;
+        String albumArtist = "Artist: " + artistName;
+        String albumLink = "Click here to listen: " + link;
+        ArrayList<String> albums = new ArrayList<>();
+        albums.add(albumPos);
+        albums.add(albumTitle);
+        albums.add(albumArtist);
+        albums.add(albumLink);
+        result.put(position, albums);
+    }
+
+    // EFFECTS: gets the album information at position i
+    public ArrayList<String> getAlbum(int i) {
+        return result.get(i);
     }
 
 }

@@ -75,6 +75,11 @@ public class Memo extends Subject implements Serializable {
         return bars;
     }
 
+    // EFFECTS: returns the bar at barNum
+    public Bar getBar(int barNum) {
+        return bars.get(barNum - 1);
+    }
+
     // EFFECTS: prints the memo with the given name
     public void printMemo() {
         for (Bar b : bars) {

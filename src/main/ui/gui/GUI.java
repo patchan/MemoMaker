@@ -10,16 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI {
-    private JPanel panel1;
+    private JPanel welcomePanel;
     private JPanel editorPanel;
     private JPanel topPanel;
     private JPanel mainPanel;
     private JMenuBar menuBar;
     private JFrame mainFrame = new JFrame("MemoMaker");
-    private JFrame memoEditor = new JFrame("MemoMaker");
+    private JFrame memoEditor;
     private Library library = new Library();
     private Memo activeMemo;
     private int barNum;
+    private Bar activeBar;
 
     public GUI() {
         initializeMainFrame();
@@ -34,7 +35,6 @@ public class GUI {
         JMenuItem load = new JMenuItem("Load");
         JMenuItem save = new JMenuItem("Save");
         JMenuItem quit = new JMenuItem("Quit");
-
         menuBar.add(file);
         file.add(newMemo);
         file.add(load);
@@ -42,36 +42,41 @@ public class GUI {
         file.add(quit);
     }
 
-    private void initializePanelOne() {
-        panel1 = new JPanel();
-        JButton addToMemo = new JButton("Add to Memo");
-        panel1.add(addToMemo);
-        mainFrame.getContentPane().add(BorderLayout.SOUTH, panel1);
+    private void initializeWelcomePanel() {
+        welcomePanel = new JPanel();
+        JTextArea welcome = new JTextArea("Welcome to MemoMaker!");
+        welcomePanel.add(welcome);
+//        WebReader webReader = new WebReader();
+//        String deezerInfo = webReader.getAlbum(1);
+//        JTextArea deezerInfo = new JTextArea();
+//        welcomePanel.add(deezerInfo);
+        mainFrame.getContentPane().add(BorderLayout.CENTER, welcomePanel);
     }
 
-//    private void initializeMainPanel() {
+//    private void initializeEditorPanel() {
+//        editorPanel = new JPanel();
+//        topPanel = new JPanel();
 //        mainPanel = new JPanel();
-//        mainFrame.getContentPane().add(BorderLayout.CENTER, mainPanel);
+//        JButton note = new JButton("Note");
+//        note.addActionListener(new NoteHandler());
+//        editorPanel.add(note);
+//        JButton chord = new JButton("Chord");
+//        chord.addActionListener(new ChordHandler());
+//        editorPanel.add(chord);
+//        JButton rest = new JButton("Rest");
+//        rest.addActionListener(new RestHandler());
+//        editorPanel.add(rest);
+//        JButton addBar = new JButton("Add Bar");
+//        addBar.addActionListener(new AddBarHandler());
+//        topPanel.add(addBar);
+//        memoEditor.getContentPane().add(BorderLayout.PAGE_END, editorPanel);
+//        memoEditor.getContentPane().add(BorderLayout.PAGE_START, topPanel);
+//        memoEditor.getContentPane().add(BorderLayout.CENTER, mainPanel);
 //    }
-
-    private void initializeEditorPanel() {
-        editorPanel = new JPanel();
-        topPanel = new JPanel();
-        mainPanel = new JPanel();
-        editorPanel.add(new JButton("Note"));
-        editorPanel.add(new JButton("Chord"));
-        editorPanel.add(new JButton("Rest"));
-        JButton addBar = new JButton("Add Bar");
-        addBar.addActionListener(new AddBarHandler());
-        topPanel.add(addBar);
-        memoEditor.getContentPane().add(BorderLayout.PAGE_END, editorPanel);
-        memoEditor.getContentPane().add(BorderLayout.PAGE_START, topPanel);
-        memoEditor.getContentPane().add(BorderLayout.CENTER, mainPanel);
-    }
 
     private void initializeMainFrame() {
         initializeMenuBar();
-        initializePanelOne();
+        initializeWelcomePanel();
         initializeFrame(mainFrame);
         mainFrame.setVisible(true);
     }
@@ -84,8 +89,8 @@ public class GUI {
 
     private void initializeMemoEditor() {
         if (!memoEditor.isVisible()) {
-            initializeEditorPanel();
-            initializeFrame(memoEditor);
+//            initializeEditorPanel();
+//            initializeFrame(memoEditor);
             mainFrame.setVisible(false);
             memoEditor.setVisible(true);
         }
@@ -101,23 +106,49 @@ public class GUI {
             String name = JOptionPane.showInputDialog(mainFrame, "Enter the memo name", null);
             library.addNewMemo(name);
             activeMemo = library.getMemo(name);
+            memoEditor = new MemoEditor(activeMemo);
             initializeMemoEditor();
             memoEditor.setTitle("MemoMaker - " + name);
         }
-
     }
 
     private class AddBarHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             activeMemo.addToMemo(new Bar(barNum));
+            activeBar = activeMemo.getBar(barNum);
             mainPanel.add(new JLabel("Bar" + barNum));
             barNum++;
             memoEditor.revalidate();
             memoEditor.repaint();
         }
-
     }
+
+//    private class NoteHandler implements ActionListener {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+////            Note newNote = new Note();
+////            activeBar.addToBar(newNote);
+////            mainPanel.add(new JLabel("Bar" + barNum));
+////            barNum++;
+////            memoEditor.revalidate();
+////            memoEditor.repaint();
+//        }
+//    }
+//
+//    private class ChordHandler implements ActionListener {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            //
+//        }
+//    }
+//
+//    private class RestHandler implements ActionListener {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            //
+//        }
+//    }
 
 }
 
