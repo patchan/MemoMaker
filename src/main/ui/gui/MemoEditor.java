@@ -10,14 +10,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static java.lang.Integer.parseInt;
+
 public class MemoEditor extends JFrame {
     private JPanel editorPanel;
+    private JPanel mainPanel = new JPanel();
     private JPanel barPanel;
-    private JPanel notePanel;
+//    private JPanel notePanel;
+    private JPanel input;
     private JMenuBar menuBar;
     private Memo activeMemo;
     private Bar activeBar;
     private int barNum;
+    private JTextField noteName = new JTextField(1);
+    private JTextField octave = new JTextField(1);
+    private JTextField degree = new JTextField(2);
+    private JRadioButton sharp = new JRadioButton("#");
+    private JRadioButton natural = new JRadioButton("natural");
+    private JRadioButton flat = new JRadioButton("b");
+    private JRadioButton noteDuration = new JRadioButton();
 
     public MemoEditor(Memo memo) {
         super("MemoMaker");
@@ -27,9 +38,9 @@ public class MemoEditor extends JFrame {
         barNum = 1;
         editorPanel = new JPanel();
         barPanel = new JPanel();
-        notePanel = new JPanel();
-        barPanel.setLayout(new BoxLayout(barPanel, BoxLayout.Y_AXIS));
-        notePanel.setLayout(new BoxLayout(notePanel, BoxLayout.Y_AXIS));
+//        notePanel = new JPanel();
+        barPanel.setLayout(new BoxLayout(barPanel, BoxLayout.LINE_AXIS));
+//        notePanel.setLayout(new BoxLayout(notePanel, BoxLayout.LINE_AXIS));
         JButton addNote = new JButton("Note");
         JButton addChord = new JButton("Chord");
         JButton addRest = new JButton("Rest");
@@ -47,8 +58,7 @@ public class MemoEditor extends JFrame {
     private void initializeFrame() {
         this.setTitle("MemoMaker");
         this.setSize(500, 500);
-        this.getContentPane().add(BorderLayout.LINE_START, barPanel);
-        this.getContentPane().add(BorderLayout.CENTER, notePanel);
+        this.getContentPane().add(BorderLayout.CENTER, mainPanel);
         this.getContentPane().add(BorderLayout.PAGE_END, editorPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -76,10 +86,12 @@ public class MemoEditor extends JFrame {
             activeMemo.addToMemo(new Bar(barNum));
             activeBar = activeMemo.getBar(barNum);
             activeBar.setBarLength(4);
-            barPanel.add(new JLabel("Bar" + barNum));
-            barPanel.add(new JLabel("\t"));
-            barPanel.add(new JLabel("\t"));
-            barPanel.add(new JLabel("\t"));
+//            barPanel = new JPanel();
+//            mainPanel.add(barPanel);
+            barPanel.add(new JLabel("| Bar" + barNum));
+//            barPanel.add(new JLabel("\t"));
+//            barPanel.add(new JLabel("\t"));
+//            barPanel.add(new JLabel("\t"));
             barNum++;
             editorPanel.revalidate();
             editorPanel.repaint();
@@ -89,19 +101,35 @@ public class MemoEditor extends JFrame {
     private class NoteHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-// TODO:            JDialog noteDialog = new JDialog();
-            Note newNote = new Note("A", 2, 1, 1);
+            initializeInputFields();
+            JOptionPane.showConfirmDialog(null, input, "Add a note:", JOptionPane.OK_CANCEL_OPTION);
+            Note newNote = new Note(noteName.getText(), parseInt(octave.getText()), parseInt(degree.getText()), 1);
             try {
                 activeBar.addToBar(newNote);
-                JOptionPane.showMessageDialog(null,
-                        "Added " + newNote.getCompositeName() + " to bar.");
-                notePanel.add(new JLabel("\t" + newNote.getCompositeName() + "\t"));
+//                JOptionPane.showMessageDialog(null,
+//                        "Added " + newNote.getCompositeName() + " to bar.");
+                barPanel.add(new JLabel("\t" + newNote.getCompositeName() + "\t"));
             } catch (BarLengthException ex) {
                 JOptionPane.showMessageDialog(null,
                         "Could not add note to the bar because the bar is full.");
             }
             editorPanel.revalidate();
             editorPanel.repaint();
+        }
+
+        public void initializeInputFields() {
+            input = new JPanel();
+            input.add(new JLabel("Note Name:"));
+            input.add(noteName);
+            input.add(new JLabel("Octave:"));
+            input.add(octave);
+            input.add(new JLabel("Degree:"));
+            input.add(degree);
+//            input.add(sharp);
+//            input.add(natural);
+//            input.add(flat);
+            input.add(new JLabel("Note Length:"));
+            input.add(noteDuration);
         }
 
     }

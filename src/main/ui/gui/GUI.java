@@ -46,10 +46,6 @@ public class GUI {
         welcomePanel = new JPanel();
         JTextArea welcome = new JTextArea("Welcome to MemoMaker!");
         welcomePanel.add(welcome);
-//        WebReader webReader = new WebReader();
-//        String deezerInfo = webReader.getAlbum(1);
-//        JTextArea deezerInfo = new JTextArea();
-//        welcomePanel.add(deezerInfo);
         mainFrame.getContentPane().add(BorderLayout.CENTER, welcomePanel);
     }
 
@@ -89,8 +85,6 @@ public class GUI {
 
     private void initializeMemoEditor() {
         if (!memoEditor.isVisible()) {
-//            initializeEditorPanel();
-//            initializeFrame(memoEditor);
             mainFrame.setVisible(false);
             memoEditor.setVisible(true);
         }
@@ -111,44 +105,6 @@ public class GUI {
             memoEditor.setTitle("MemoMaker - " + name);
         }
     }
-
-    private class AddBarHandler implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            activeMemo.addToMemo(new Bar(barNum));
-            activeBar = activeMemo.getBar(barNum);
-            mainPanel.add(new JLabel("Bar" + barNum));
-            barNum++;
-            memoEditor.revalidate();
-            memoEditor.repaint();
-        }
-    }
-
-//    private class NoteHandler implements ActionListener {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-////            Note newNote = new Note();
-////            activeBar.addToBar(newNote);
-////            mainPanel.add(new JLabel("Bar" + barNum));
-////            barNum++;
-////            memoEditor.revalidate();
-////            memoEditor.repaint();
-//        }
-//    }
-//
-//    private class ChordHandler implements ActionListener {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            //
-//        }
-//    }
-//
-//    private class RestHandler implements ActionListener {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            //
-//        }
-//    }
 
 }
 
