@@ -51,6 +51,7 @@ public class MemoEditor extends JFrame {
         editorPanel.add(addNote);
         editorPanel.add(addChord);
         editorPanel.add(addRest);
+        mainPanel.add(barPanel);
         this.add(editorPanel);
         initializeFrame();
     }
@@ -93,8 +94,8 @@ public class MemoEditor extends JFrame {
 //            barPanel.add(new JLabel("\t"));
 //            barPanel.add(new JLabel("\t"));
             barNum++;
-            editorPanel.revalidate();
-            editorPanel.repaint();
+            mainPanel.revalidate();
+            mainPanel.repaint();
         }
     }
 
@@ -113,8 +114,8 @@ public class MemoEditor extends JFrame {
                 JOptionPane.showMessageDialog(null,
                         "Could not add note to the bar because the bar is full.");
             }
-            editorPanel.revalidate();
-            editorPanel.repaint();
+            mainPanel.revalidate();
+            mainPanel.repaint();
         }
 
         public void initializeInputFields() {
