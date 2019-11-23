@@ -9,6 +9,7 @@ public enum ChordQuality {
         this.quality = s;
     }
 
+    // EFFECTS: returns the string quality value
     public String getValue() {
         return quality;
     }

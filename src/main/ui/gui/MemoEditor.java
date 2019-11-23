@@ -5,10 +5,13 @@ import model.Memo;
 import model.Note;
 import model.exceptions.BarLengthException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import static java.lang.Integer.parseInt;
 
@@ -16,7 +19,6 @@ public class MemoEditor extends JFrame {
     private JPanel editorPanel;
     private JPanel mainPanel = new JPanel();
     private JPanel barPanel;
-//    private JPanel notePanel;
     private JPanel input;
     private JMenuBar menuBar;
     private Memo activeMemo;
@@ -24,23 +26,24 @@ public class MemoEditor extends JFrame {
     private int barNum;
     private JTextField noteName = new JTextField(1);
     private JTextField octave = new JTextField(1);
-    private JTextField degree = new JTextField(2);
     private JRadioButton sharp = new JRadioButton("#");
     private JRadioButton natural = new JRadioButton("natural");
     private JRadioButton flat = new JRadioButton("b");
-    private JRadioButton noteDuration = new JRadioButton();
+    private ButtonGroup degree = new ButtonGroup();
+    private ButtonGroup noteDuration = new ButtonGroup();
+    private JRadioButton quarterNote = new JRadioButton("Quarter");
+    private JRadioButton eighthNote = new JRadioButton("Eighth");
+    private Image noteImage = ImageIO.read(new File("data/music-note.jpg"));
+    private ImageIcon noteIcon = new ImageIcon(noteImage);
 
-    public MemoEditor(Memo memo) {
+    public MemoEditor(Memo memo) throws IOException {
         super("MemoMaker");
-//        initializeFields();
         initializeMenuBar();
         this.activeMemo = memo;
         barNum = 1;
         editorPanel = new JPanel();
         barPanel = new JPanel();
-//        notePanel = new JPanel();
         barPanel.setLayout(new BoxLayout(barPanel, BoxLayout.LINE_AXIS));
-//        notePanel.setLayout(new BoxLayout(notePanel, BoxLayout.LINE_AXIS));
         JButton addNote = new JButton("Note");
         JButton addChord = new JButton("Chord");
         JButton addRest = new JButton("Rest");
@@ -62,6 +65,11 @@ public class MemoEditor extends JFrame {
         this.getContentPane().add(BorderLayout.CENTER, mainPanel);
         this.getContentPane().add(BorderLayout.PAGE_END, editorPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        degree.add(sharp);
+        degree.add(natural);
+        degree.add(flat);
+        noteDuration.add(quarterNote);
+        noteDuration.add(eighthNote);
     }
 
     private void initializeMenuBar() {
@@ -87,12 +95,7 @@ public class MemoEditor extends JFrame {
             activeMemo.addToMemo(new Bar(barNum));
             activeBar = activeMemo.getBar(barNum);
             activeBar.setBarLength(4);
-//            barPanel = new JPanel();
-//            mainPanel.add(barPanel);
-            barPanel.add(new JLabel("| Bar" + barNum));
-//            barPanel.add(new JLabel("\t"));
-//            barPanel.add(new JLabel("\t"));
-//            barPanel.add(new JLabel("\t"));
+            barPanel.add(new JLabel(" | Bar" + barNum));
             barNum++;
             mainPanel.revalidate();
             mainPanel.repaint();
@@ -103,12 +106,11 @@ public class MemoEditor extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             initializeInputFields();
-            JOptionPane.showConfirmDialog(null, input, "Add a note:", JOptionPane.OK_CANCEL_OPTION);
-            Note newNote = new Note(noteName.getText(), parseInt(octave.getText()), parseInt(degree.getText()), 1);
+            JOptionPane.showConfirmDialog(null, input, "Add a note:",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.OK_CANCEL_OPTION, noteIcon);
+            Note newNote = new Note(noteName.getText(), parseInt(octave.getText()), returnDegree(), returnDuration());
             try {
                 activeBar.addToBar(newNote);
-//                JOptionPane.showMessageDialog(null,
-//                        "Added " + newNote.getCompositeName() + " to bar.");
                 barPanel.add(new JLabel("\t" + newNote.getCompositeName() + "\t"));
             } catch (BarLengthException ex) {
                 JOptionPane.showMessageDialog(null,
@@ -120,17 +122,44 @@ public class MemoEditor extends JFrame {
 
         public void initializeInputFields() {
             input = new JPanel();
-            input.add(new JLabel("Note Name:"));
-            input.add(noteName);
-            input.add(new JLabel("Octave:"));
-            input.add(octave);
-            input.add(new JLabel("Degree:"));
-            input.add(degree);
-//            input.add(sharp);
-//            input.add(natural);
-//            input.add(flat);
-            input.add(new JLabel("Note Length:"));
-            input.add(noteDuration);
+            input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
+            JPanel namePanel = new JPanel();
+            namePanel.add(new JLabel("Note Name:"));
+            namePanel.add(noteName);
+            input.add(namePanel);
+            JPanel octavePanel = new JPanel();
+            octavePanel.add(new JLabel("Octave:"));
+            octavePanel.add(octave);
+            input.add(octavePanel);
+            JPanel degreePanel = new JPanel();
+            degreePanel.add(new JLabel("Degree:"));
+            degreePanel.add(sharp);
+            degreePanel.add(natural);
+            degreePanel.add(flat);
+            input.add(degreePanel);
+            JPanel lengthPanel = new JPanel();
+            lengthPanel.add(new JLabel("Note Length:"));
+            lengthPanel.add(quarterNote);
+            lengthPanel.add(eighthNote);
+            input.add(lengthPanel);
+        }
+
+        public int returnDegree() {
+            if (sharp.isSelected()) {
+                return 1;
+            } else if (flat.isSelected()) {
+                return -1;
+            }
+            return 0;
+        }
+
+        public double returnDuration() {
+            if (quarterNote.isSelected()) {
+                return 1.0;
+            } else if (eighthNote.isSelected()) {
+                return 0.5;
+            }
+            return 0;
         }
 
     }

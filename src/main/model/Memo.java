@@ -102,6 +102,7 @@ public class Memo extends Subject implements Serializable {
         return noteCount;
     }
 
+    // EFFECTS: returns true if this equals o
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -114,6 +115,7 @@ public class Memo extends Subject implements Serializable {
         return Objects.equals(bars, memo.bars);
     }
 
+    // EFFECTS: returns the hash code for this.bars
     @Override
     public int hashCode() {
         return Objects.hash(bars);

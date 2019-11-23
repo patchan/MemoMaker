@@ -34,6 +34,7 @@ public class WebParser {
         }
     }
 
+    // EFFECTS: parses an album for album name, album artist, rank, and album link
     private void parseAlbum(JSONObject album) throws JSONException {
         int position = album.getInt("position");
         String albumName = album.getString("title");

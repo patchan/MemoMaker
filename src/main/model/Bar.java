@@ -157,6 +157,7 @@ public class Bar extends Subject implements Serializable {
         return musicalObjects.size();
     }
 
+    // EFFECTS: returns true if o is equal to this
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -169,6 +170,7 @@ public class Bar extends Subject implements Serializable {
         return Objects.equals(musicalObjects, bar.musicalObjects);
     }
 
+    // EFFECTS: returns the hash code of this.musicalObjects
     @Override
     public int hashCode() {
         return Objects.hash(musicalObjects);

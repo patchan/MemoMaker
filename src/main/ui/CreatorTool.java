@@ -131,11 +131,14 @@ public class CreatorTool {
 
     // REQUIRES: input is single character string
     // EFFECTS: returns user input for note name as string
+    //          throws NameException if name is not valid
     public String getNoteName() throws NameException {
         System.out.println("Enter a note name:");
         return getName();
     }
 
+    // EFFECTS: gets user input for the note name
+    //          throws NameException if name is not valid
     public String getName() throws NameException {
         String result = scanner.nextLine();
         if (MusicalObject.isValidName(result)) {
@@ -157,6 +160,7 @@ public class CreatorTool {
 
     // REQUIRES: input is single character string
     // EFFECTS: returns user input for note name as string
+    //          throws OctaveException if octave input is not valid
     public int getNoteOctave() throws OctaveException {
         System.out.println("Enter the octave of the note:");
         int octave = scanner.nextInt();
@@ -170,6 +174,7 @@ public class CreatorTool {
 
     // REQUIRES: input is integer -1, 0, or 1
     // EFFECTS: returns user input for note degree as an integer
+    //          throws DegreeException if degree input is not valid
     public int getNoteDegree() throws DegreeException {
         System.out.println("Enter an accidental (-1 for flat, 0 for natural, 1 for sharp):");
         int degree = scanner.nextInt();
@@ -183,6 +188,7 @@ public class CreatorTool {
 
     // REQUIRES: input is single character string
     // EFFECTS: returns user input for chord name as string
+    //          throws NameException if name is not valid
     public String getChordName() throws NameException {
         System.out.println("Enter a chord root:");
         return getName();
@@ -190,6 +196,7 @@ public class CreatorTool {
 
     // REQUIRES: input must be one of "maj" "min" "aug" or "dim"
     // EFFECTS: returns user input for chord quality as string
+    //          throws QualityException if chord quality is not valid
     public String getChordQuality() throws QualityException {
         System.out.println("Enter (maj, min, aug, or dim) as the chord quality:");
         String result = scanner.nextLine();

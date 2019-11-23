@@ -38,6 +38,7 @@ public class WebReader {
         new WebReader();
     }
 
+    // EFFECTS: returns the json string as a StringBuilder
     private static StringBuilder getJsonString(BufferedReader input) throws IOException {
         StringBuilder responseString = new StringBuilder();
         String line;

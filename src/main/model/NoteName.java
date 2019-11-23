@@ -9,6 +9,7 @@ public enum NoteName {
         this.noteName = s;
     }
 
+    // EFFECTS: returns noteName
     public String getNoteName() {
         return this.noteName;
     }

@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class GUI {
     private JPanel welcomePanel;
@@ -49,27 +50,6 @@ public class GUI {
         mainFrame.getContentPane().add(BorderLayout.CENTER, welcomePanel);
     }
 
-//    private void initializeEditorPanel() {
-//        editorPanel = new JPanel();
-//        topPanel = new JPanel();
-//        mainPanel = new JPanel();
-//        JButton note = new JButton("Note");
-//        note.addActionListener(new NoteHandler());
-//        editorPanel.add(note);
-//        JButton chord = new JButton("Chord");
-//        chord.addActionListener(new ChordHandler());
-//        editorPanel.add(chord);
-//        JButton rest = new JButton("Rest");
-//        rest.addActionListener(new RestHandler());
-//        editorPanel.add(rest);
-//        JButton addBar = new JButton("Add Bar");
-//        addBar.addActionListener(new AddBarHandler());
-//        topPanel.add(addBar);
-//        memoEditor.getContentPane().add(BorderLayout.PAGE_END, editorPanel);
-//        memoEditor.getContentPane().add(BorderLayout.PAGE_START, topPanel);
-//        memoEditor.getContentPane().add(BorderLayout.CENTER, mainPanel);
-//    }
-
     private void initializeMainFrame() {
         initializeMenuBar();
         initializeWelcomePanel();
@@ -100,7 +80,11 @@ public class GUI {
             String name = JOptionPane.showInputDialog(mainFrame, "Enter the memo name", null);
             library.addNewMemo(name);
             activeMemo = library.getMemo(name);
-            memoEditor = new MemoEditor(activeMemo);
+            try {
+                memoEditor = new MemoEditor(activeMemo);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             initializeMemoEditor();
             memoEditor.setTitle("MemoMaker - " + name);
         }

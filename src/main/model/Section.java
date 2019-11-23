@@ -49,6 +49,7 @@ public class Section implements Serializable {
         return bars;
     }
 
+    // EFFECTS: returns true if this equals o
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -61,6 +62,7 @@ public class Section implements Serializable {
         return Objects.equals(name, section.name);
     }
 
+    // EFFECTS: returns the hash code for this.name
     @Override
     public int hashCode() {
         return Objects.hash(name);

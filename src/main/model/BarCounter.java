@@ -5,10 +5,13 @@ public class BarCounter implements Observer {
 
     public BarCounter() {}
 
+    // EFFECTS: returns barCount
     public int getCount() {
         return barCount;
     }
 
+    // MODIFIES: this
+    // EFFECTS: increments barCount and prints out bar counter results
     @Override
     public void update() {
         barCount++;

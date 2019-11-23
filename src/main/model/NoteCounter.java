@@ -8,10 +8,12 @@ public class NoteCounter implements Observer {
 
     }
 
+    // EFFECTS: returns noteCount
     public int getCount() {
         return noteCount;
     }
 
+    // EFFECTS: increments noteCount and prints out note counter information
     @Override
     public void update() {
         noteCount++;
