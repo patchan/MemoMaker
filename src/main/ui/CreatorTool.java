@@ -1,3 +1,7 @@
+/**
+ * This is deprecated after the implementation of a GUI
+ */
+
 package ui;
 
 import model.Chord;

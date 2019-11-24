@@ -13,12 +13,11 @@ import java.io.IOException;
 
 import static java.lang.Integer.parseInt;
 
-public class MemoEditor extends JFrame {
+public class MemoEditor extends JPanel {
     private JPanel editorTools = new JPanel();
     private JPanel mainPanel = new JPanel();
     private JPanel barPanel;
     private JPanel input;
-    private JMenuBar menuBar;
     private Memo activeMemo;
     private Bar activeBar;
     private JTextField noteName = new JTextField(1);
@@ -40,18 +39,17 @@ public class MemoEditor extends JFrame {
     private ImageIcon restIcon;
 
     public MemoEditor(Memo memo) {
-        super("MemoMaker");
-        initializeMenuBar();
         try {
             loadIcons();
         } catch (IOException e) {
             e.printStackTrace();
         }
         this.activeMemo = memo;
+        this.setLayout(new BorderLayout());
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         initializeButtons(editorTools);
-        this.add(editorTools);
-        initializeFrame();
+        this.add(mainPanel, BorderLayout.CENTER);
+        this.add(editorTools, BorderLayout.PAGE_END);
     }
 
     // EFFECTS: initializes all buttons, action listeners and button groups
@@ -89,29 +87,6 @@ public class MemoEditor extends JFrame {
         noteIcon = new ImageIcon(noteImage);
         Image restImage = ImageIO.read(new File("data/music-rest.png"));
         restIcon = new ImageIcon(restImage);
-    }
-
-    private void initializeFrame() {
-        this.setTitle("MemoMaker");
-        this.setSize(500, 500);
-        this.getContentPane().add(BorderLayout.CENTER, mainPanel);
-        this.getContentPane().add(BorderLayout.PAGE_END, editorTools);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    private void initializeMenuBar() {
-        menuBar = new JMenuBar();
-        JMenu file = new JMenu("File");
-        JMenuItem newMemo = new JMenuItem("Create New Memo");
-        JMenuItem load = new JMenuItem("Load");
-        JMenuItem save = new JMenuItem("Save");
-        JMenuItem quit = new JMenuItem("Quit");
-        menuBar.add(file);
-        file.add(newMemo);
-        file.add(load);
-        file.add(save);
-        file.add(quit);
-        setJMenuBar(menuBar);
     }
 
     private class AddBarHandler implements ActionListener {

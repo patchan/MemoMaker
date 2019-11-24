@@ -10,15 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class GUI {
-//    private JPanel welcomePanel;
+public class MemoMaker {
+    private JPanel welcomePanel;
     private JMenuBar menuBar;
     private JFrame mainFrame = new JFrame("MemoMaker");
-    private JFrame memoEditor;
+    private JPanel memoEditor;
     private Library library = new Library();
-//    private Memo activeMemo;
 
-    public GUI() {
+    public MemoMaker() {
         initializeMainFrame();
     }
 
@@ -28,7 +27,9 @@ public class GUI {
         JMenuItem newMemo = new JMenuItem("Create New Memo");
         newMemo.addActionListener(new CreateNewMemoHandler());
         JMenuItem load = new JMenuItem("Load");
+        load.addActionListener(new LoadListener());
         JMenuItem save = new JMenuItem("Save");
+        save.addActionListener(new SaveListener());
         JMenuItem quit = new JMenuItem("Quit");
         quit.addActionListener(new QuitListener());
         menuBar.add(file);
@@ -41,7 +42,7 @@ public class GUI {
     private void initializeWelcomePanel() {
         JPanel centeringPanel = new JPanel();
         setupCenteringPanel(centeringPanel);
-        JPanel welcomePanel = new JPanel();
+        welcomePanel = new JPanel();
         welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
         welcomePanel.setBackground(new Color(255, 255, 255));
         JTextArea welcome = makeWelcomeMessage();
@@ -83,18 +84,19 @@ public class GUI {
     private void initializeFrame(JFrame frame) {
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
         frame.setJMenuBar(menuBar);
     }
 
     private void initializeMemoEditor() {
-        if (!memoEditor.isVisible()) {
-            mainFrame.setVisible(false);
-            memoEditor.setVisible(true);
-        }
+        mainFrame.getContentPane().removeAll();
+        mainFrame.getContentPane().add(BorderLayout.CENTER, memoEditor);
+        mainFrame.validate();
+        mainFrame.repaint();
     }
 
     public static void main(String[] args) {
-        new GUI();
+        new MemoMaker();
     }
 
     private class CreateNewMemoHandler implements ActionListener {
@@ -105,7 +107,7 @@ public class GUI {
             Memo activeMemo = library.getMemo(name);
             memoEditor = new MemoEditor(activeMemo);
             initializeMemoEditor();
-            memoEditor.setTitle("MemoMaker - " + name);
+            mainFrame.setTitle("MemoMaker - " + name);
         }
     }
 
@@ -116,6 +118,31 @@ public class GUI {
                     "Are you sure you want to quit?\nAny unsaved progress will be lost.");
             if (quit == JOptionPane.YES_OPTION) {
                 System.exit(0);
+            }
+        }
+    }
+
+    private class LoadListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                library.load();
+                JOptionPane.showMessageDialog(null, "Load successful.");
+            } catch (IOException | ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+
+    private class SaveListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                library.save();
+                JOptionPane.showMessageDialog(null, "Save successful.");
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
     }
