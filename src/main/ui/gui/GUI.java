@@ -11,12 +11,12 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class GUI {
-    private JPanel welcomePanel;
+//    private JPanel welcomePanel;
     private JMenuBar menuBar;
     private JFrame mainFrame = new JFrame("MemoMaker");
     private JFrame memoEditor;
     private Library library = new Library();
-    private Memo activeMemo;
+//    private Memo activeMemo;
 
     public GUI() {
         initializeMainFrame();
@@ -41,7 +41,7 @@ public class GUI {
     private void initializeWelcomePanel() {
         JPanel centeringPanel = new JPanel();
         setupCenteringPanel(centeringPanel);
-        welcomePanel = new JPanel();
+        JPanel welcomePanel = new JPanel();
         welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
         welcomePanel.setBackground(new Color(255, 255, 255));
         JTextArea welcome = makeWelcomeMessage();
@@ -102,12 +102,8 @@ public class GUI {
         public void actionPerformed(ActionEvent e) {
             String name = JOptionPane.showInputDialog(mainFrame, "Enter the memo name", null);
             library.addNewMemo(name);
-            activeMemo = library.getMemo(name);
-            try {
-                memoEditor = new MemoEditor(activeMemo);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            Memo activeMemo = library.getMemo(name);
+            memoEditor = new MemoEditor(activeMemo);
             initializeMemoEditor();
             memoEditor.setTitle("MemoMaker - " + name);
         }
@@ -117,7 +113,7 @@ public class GUI {
         @Override
         public void actionPerformed(ActionEvent e) {
             int quit = JOptionPane.showConfirmDialog(mainFrame,
-                    "Are you sure you want to quit? Any unsaved progress will be lost.");
+                    "Are you sure you want to quit?\nAny unsaved progress will be lost.");
             if (quit == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }

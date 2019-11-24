@@ -1,9 +1,6 @@
 package ui.gui;
 
-import model.Bar;
-import model.Memo;
-import model.Note;
-import model.Rest;
+import model.*;
 import model.exceptions.BarLengthException;
 
 import javax.imageio.ImageIO;
@@ -17,14 +14,13 @@ import java.io.IOException;
 import static java.lang.Integer.parseInt;
 
 public class MemoEditor extends JFrame {
-    private JPanel editorPanel;
+    private JPanel editorTools = new JPanel();
     private JPanel mainPanel = new JPanel();
     private JPanel barPanel;
     private JPanel input;
     private JMenuBar menuBar;
     private Memo activeMemo;
     private Bar activeBar;
-    private int barNum;
     private JTextField noteName = new JTextField(1);
     private JTextField octave = new JTextField(1);
     private JRadioButton sharp = new JRadioButton("#");
@@ -34,17 +30,32 @@ public class MemoEditor extends JFrame {
     private ButtonGroup noteDuration = new ButtonGroup();
     private JRadioButton quarterNote = new JRadioButton("Quarter");
     private JRadioButton eighthNote = new JRadioButton("Eighth");
-    private Image noteImage = ImageIO.read(new File("data/music-note.jpg"));
-    private ImageIcon noteIcon = new ImageIcon(noteImage);
-    private Image restImage = ImageIO.read(new File("data/music-rest.png"));
-    private ImageIcon restIcon = new ImageIcon(restImage);
+    private ButtonGroup chordQuality = new ButtonGroup();
+    private JRadioButton maj = new JRadioButton("maj");
+    private JRadioButton min = new JRadioButton("min");
+    private JRadioButton aug = new JRadioButton("aug");
+    private JRadioButton dim = new JRadioButton("dim");
+    private JTextField extensions = new JTextField(3);
+    private ImageIcon noteIcon;
+    private ImageIcon restIcon;
 
-    public MemoEditor(Memo memo) throws IOException {
+    public MemoEditor(Memo memo) {
         super("MemoMaker");
         initializeMenuBar();
+        try {
+            loadIcons();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.activeMemo = memo;
-        barNum = 1;
-        editorPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        initializeButtons(editorTools);
+        this.add(editorTools);
+        initializeFrame();
+    }
+
+    // EFFECTS: initializes all buttons, action listeners and button groups
+    private void initializeButtons(JPanel panel) {
         JButton addNote = new JButton("Note");
         JButton addChord = new JButton("Chord");
         JButton addRest = new JButton("Rest");
@@ -52,26 +63,40 @@ public class MemoEditor extends JFrame {
         addBar.addActionListener(new AddBarHandler());
         addNote.addActionListener(new NoteHandler());
         addRest.addActionListener(new RestHandler());
-        editorPanel.add(addBar);
-        editorPanel.add(addNote);
-        editorPanel.add(addChord);
-        editorPanel.add(addRest);
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        this.add(editorPanel);
-        initializeFrame();
+        addChord.addActionListener(new ChordHandler());
+        panel.add(addBar);
+        panel.add(addNote);
+        panel.add(addChord);
+        panel.add(addRest);
+        initializeButtonGroups();
+    }
+
+    // EFFECTS: initializes button groups
+    private void initializeButtonGroups() {
+        degree.add(sharp);
+        degree.add(natural);
+        degree.add(flat);
+        noteDuration.add(quarterNote);
+        noteDuration.add(eighthNote);
+        chordQuality.add(maj);
+        chordQuality.add(min);
+        chordQuality.add(dim);
+        chordQuality.add(aug);
+    }
+
+    private void loadIcons() throws IOException {
+        Image noteImage = ImageIO.read(new File("data/music-note.jpg"));
+        noteIcon = new ImageIcon(noteImage);
+        Image restImage = ImageIO.read(new File("data/music-rest.png"));
+        restIcon = new ImageIcon(restImage);
     }
 
     private void initializeFrame() {
         this.setTitle("MemoMaker");
         this.setSize(500, 500);
         this.getContentPane().add(BorderLayout.CENTER, mainPanel);
-        this.getContentPane().add(BorderLayout.PAGE_END, editorPanel);
+        this.getContentPane().add(BorderLayout.PAGE_END, editorTools);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        degree.add(sharp);
-        degree.add(natural);
-        degree.add(flat);
-        noteDuration.add(quarterNote);
-        noteDuration.add(eighthNote);
     }
 
     private void initializeMenuBar() {
@@ -86,8 +111,6 @@ public class MemoEditor extends JFrame {
         file.add(load);
         file.add(save);
         file.add(quit);
-        JPanel topPanel = new JPanel();
-        topPanel.add(menuBar);
         setJMenuBar(menuBar);
     }
 
@@ -96,23 +119,48 @@ public class MemoEditor extends JFrame {
         public void actionPerformed(ActionEvent e) {
             barPanel = new JPanel();
             barPanel.setLayout(new BoxLayout(barPanel, BoxLayout.LINE_AXIS));
-            activeMemo.addToMemo(new Bar(barNum));
-            activeBar = activeMemo.getBar(barNum);
+            activeMemo.addToMemo(new Bar(activeMemo.barCount() + 1));
+            activeBar = activeMemo.getBar(activeMemo.barCount());
             activeBar.setBarLength(4);
             mainPanel.add(barPanel);
-            barPanel.add(new JLabel("(Bar" + barNum + ")  "));
-            barNum++;
+            barPanel.add(new JLabel("(Bar" + activeBar.getBarNum() + ")  "));
             mainPanel.revalidate();
             mainPanel.repaint();
         }
     }
 
-    private class RestHandler implements ActionListener {
+    private abstract class CreatorTool {
+        protected void addNamePanel() {
+            JPanel namePanel = new JPanel();
+            namePanel.add(new JLabel("Root:"));
+            namePanel.add(noteName);
+            input.add(namePanel);
+        }
+
+        protected void addLengthPanel() {
+            JPanel lengthPanel = new JPanel();
+            lengthPanel.add(new JLabel("Length:"));
+            lengthPanel.add(quarterNote);
+            lengthPanel.add(eighthNote);
+            input.add(lengthPanel);
+        }
+
+        protected double returnDuration() {
+            if (quarterNote.isSelected()) {
+                return 1.0;
+            } else if (eighthNote.isSelected()) {
+                return 0.5;
+            }
+            return 0;
+        }
+    }
+
+    private class RestHandler extends CreatorTool implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             initializeInputFields();
-            JOptionPane.showConfirmDialog(editorPanel, input, "Add a rest:",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.OK_CANCEL_OPTION, restIcon);
+            JOptionPane.showConfirmDialog(editorTools, input, "Add a rest:",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, restIcon);
             Rest newRest = new Rest(returnDuration());
             try {
                 activeBar.addToBar(newRest);
@@ -131,30 +179,14 @@ public class MemoEditor extends JFrame {
             addLengthPanel();
         }
 
-        private void addLengthPanel() {
-            JPanel lengthPanel = new JPanel();
-            lengthPanel.add(new JLabel("Note Length:"));
-            lengthPanel.add(quarterNote);
-            lengthPanel.add(eighthNote);
-            input.add(lengthPanel);
-        }
-
-        public double returnDuration() {
-            if (quarterNote.isSelected()) {
-                return 1.0;
-            } else if (eighthNote.isSelected()) {
-                return 0.5;
-            }
-            return 0;
-        }
     }
 
-    private class NoteHandler implements ActionListener {
+    private class NoteHandler extends CreatorTool implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             initializeInputFields();
-            JOptionPane.showConfirmDialog(editorPanel, input, "Add a note:",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.OK_CANCEL_OPTION, noteIcon);
+            JOptionPane.showConfirmDialog(editorTools, input, "Add a note:",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, noteIcon);
             Note newNote = new Note(noteName.getText(), parseInt(octave.getText()), returnDegree(), returnDuration());
             try {
                 activeBar.addToBar(newNote);
@@ -176,13 +208,6 @@ public class MemoEditor extends JFrame {
             addLengthPanel();
         }
 
-        private void addNamePanel() {
-            JPanel namePanel = new JPanel();
-            namePanel.add(new JLabel("Note Name:"));
-            namePanel.add(noteName);
-            input.add(namePanel);
-        }
-
         private void addOctavePanel() {
             JPanel octavePanel = new JPanel();
             octavePanel.add(new JLabel("Octave:"));
@@ -199,15 +224,7 @@ public class MemoEditor extends JFrame {
             input.add(degreePanel);
         }
 
-        private void addLengthPanel() {
-            JPanel lengthPanel = new JPanel();
-            lengthPanel.add(new JLabel("Note Length:"));
-            lengthPanel.add(quarterNote);
-            lengthPanel.add(eighthNote);
-            input.add(lengthPanel);
-        }
-
-        public int returnDegree() {
+        private int returnDegree() {
             if (sharp.isSelected()) {
                 return 1;
             } else if (flat.isSelected()) {
@@ -216,14 +233,62 @@ public class MemoEditor extends JFrame {
             return 0;
         }
 
-        public double returnDuration() {
-            if (quarterNote.isSelected()) {
-                return 1.0;
-            } else if (eighthNote.isSelected()) {
-                return 0.5;
+    }
+
+    private class ChordHandler extends CreatorTool implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            initializeInputFields();
+            JOptionPane.showConfirmDialog(editorTools, input, "Add a chord:",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, noteIcon);
+            Chord newChord = new Chord(noteName.getText(), returnQuality(), extensions.getText(), returnDuration());
+            try {
+                activeBar.addToBar(newChord);
+                barPanel.add(new JLabel("\t" + newChord.getCompositeName() + "\t"));
+            } catch (BarLengthException ex) {
+                JOptionPane.showMessageDialog(null,
+                        "Could not add that note because the bar is full.");
             }
-            return 0;
+            mainPanel.revalidate();
+            mainPanel.repaint();
         }
 
+        private void initializeInputFields() {
+            input = new JPanel();
+            input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
+            addNamePanel();
+            addQualityPanel();
+            addExtensionPanel();
+            addLengthPanel();
+        }
+
+        private void addQualityPanel() {
+            JPanel qualityPanel = new JPanel();
+            qualityPanel.add(new JLabel("Quality"));
+            qualityPanel.add(maj);
+            qualityPanel.add(min);
+            qualityPanel.add(dim);
+            qualityPanel.add(aug);
+            input.add(qualityPanel);
+        }
+
+        private void addExtensionPanel() {
+            JPanel extensionPanel = new JPanel();
+            extensionPanel.add(new JLabel("Extensions"));
+            extensionPanel.add(extensions);
+            input.add(extensionPanel);
+        }
+
+        private String returnQuality() {
+            if (min.isSelected()) {
+                return ChordQuality.MIN.getValue();
+            } else if (dim.isSelected()) {
+                return ChordQuality.DIM.getValue();
+            } else if (aug.isSelected()) {
+                return ChordQuality.AUG.getValue();
+            } else {
+                return ChordQuality.MAJ.getValue();
+            }
+        }
     }
 }
