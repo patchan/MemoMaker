@@ -11,7 +11,7 @@ public class Rest extends MusicalObject implements Serializable {
 
     // EFFECTS: returns the composite rest name
     @Override
-    protected String getCompositeName() {
+    public String getCompositeName() {
         String compositeName;
         if (duration == 1) {
             compositeName = "Q-rest";

@@ -30,7 +30,7 @@ public class WebParser {
     public void parseChart(String jsonObj) throws JSONException {
         JSONObject chart = new JSONObject(jsonObj);
         JSONArray albums = chart.optJSONArray("data");
-        panel.add(new JTextArea("For inspiration, the top 3 albums of the day are:"));
+        panel.add(new JTextArea("For your inspiration, the top 3 albums of the day are:"));
 
         for (int i = 0; i < 3; i++) {
             JSONObject album = albums.getJSONObject(i);

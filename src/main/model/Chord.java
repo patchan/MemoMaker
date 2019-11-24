@@ -77,7 +77,7 @@ public class Chord extends MusicalObject implements Serializable {
 
     // EFFECTS: produces a composite name with the chord name and quality
     @Override
-    protected String getCompositeName() {
+    public String getCompositeName() {
         return this.name + this.quality + this.extensions;
     }
 

@@ -3,6 +3,7 @@ package ui.gui;
 import model.Bar;
 import model.Memo;
 import model.Note;
+import model.Rest;
 import model.exceptions.BarLengthException;
 
 import javax.imageio.ImageIO;
@@ -35,6 +36,8 @@ public class MemoEditor extends JFrame {
     private JRadioButton eighthNote = new JRadioButton("Eighth");
     private Image noteImage = ImageIO.read(new File("data/music-note.jpg"));
     private ImageIcon noteIcon = new ImageIcon(noteImage);
+    private Image restImage = ImageIO.read(new File("data/music-rest.png"));
+    private ImageIcon restIcon = new ImageIcon(restImage);
 
     public MemoEditor(Memo memo) throws IOException {
         super("MemoMaker");
@@ -42,19 +45,18 @@ public class MemoEditor extends JFrame {
         this.activeMemo = memo;
         barNum = 1;
         editorPanel = new JPanel();
-        barPanel = new JPanel();
-        barPanel.setLayout(new BoxLayout(barPanel, BoxLayout.LINE_AXIS));
         JButton addNote = new JButton("Note");
         JButton addChord = new JButton("Chord");
         JButton addRest = new JButton("Rest");
         JButton addBar = new JButton("Add Bar");
         addBar.addActionListener(new AddBarHandler());
         addNote.addActionListener(new NoteHandler());
+        addRest.addActionListener(new RestHandler());
         editorPanel.add(addBar);
         editorPanel.add(addNote);
         editorPanel.add(addChord);
         editorPanel.add(addRest);
-        mainPanel.add(barPanel);
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         this.add(editorPanel);
         initializeFrame();
     }
@@ -92,29 +94,32 @@ public class MemoEditor extends JFrame {
     private class AddBarHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            barPanel = new JPanel();
+            barPanel.setLayout(new BoxLayout(barPanel, BoxLayout.LINE_AXIS));
             activeMemo.addToMemo(new Bar(barNum));
             activeBar = activeMemo.getBar(barNum);
             activeBar.setBarLength(4);
-            barPanel.add(new JLabel(" | Bar" + barNum));
+            mainPanel.add(barPanel);
+            barPanel.add(new JLabel("(Bar" + barNum + ")  "));
             barNum++;
             mainPanel.revalidate();
             mainPanel.repaint();
         }
     }
 
-    private class NoteHandler implements ActionListener {
+    private class RestHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             initializeInputFields();
-            JOptionPane.showConfirmDialog(null, input, "Add a note:",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.OK_CANCEL_OPTION, noteIcon);
-            Note newNote = new Note(noteName.getText(), parseInt(octave.getText()), returnDegree(), returnDuration());
+            JOptionPane.showConfirmDialog(editorPanel, input, "Add a rest:",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.OK_CANCEL_OPTION, restIcon);
+            Rest newRest = new Rest(returnDuration());
             try {
-                activeBar.addToBar(newNote);
-                barPanel.add(new JLabel("\t" + newNote.getCompositeName() + "\t"));
+                activeBar.addToBar(newRest);
+                barPanel.add(new JLabel("\t" + newRest.getCompositeName() + "\t"));
             } catch (BarLengthException ex) {
                 JOptionPane.showMessageDialog(null,
-                        "Could not add note to the bar because the bar is full.");
+                        "Could not add that rest because the bar is full.");
             }
             mainPanel.revalidate();
             mainPanel.repaint();
@@ -123,25 +128,48 @@ public class MemoEditor extends JFrame {
         public void initializeInputFields() {
             input = new JPanel();
             input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
-//            JPanel namePanel = new JPanel();
-//            namePanel.add(new JLabel("Note Name:"));
-//            namePanel.add(noteName);
-//            input.add(namePanel);
-//            JPanel octavePanel = new JPanel();
-//            octavePanel.add(new JLabel("Octave:"));
-//            octavePanel.add(octave);
-//            input.add(octavePanel);
-//            JPanel degreePanel = new JPanel();
-//            degreePanel.add(new JLabel("Degree:"));
-//            degreePanel.add(sharp);
-//            degreePanel.add(natural);
-//            degreePanel.add(flat);
-//            input.add(degreePanel);
-//            JPanel lengthPanel = new JPanel();
-//            lengthPanel.add(new JLabel("Note Length:"));
-//            lengthPanel.add(quarterNote);
-//            lengthPanel.add(eighthNote);
-//            input.add(lengthPanel);
+            addLengthPanel();
+        }
+
+        private void addLengthPanel() {
+            JPanel lengthPanel = new JPanel();
+            lengthPanel.add(new JLabel("Note Length:"));
+            lengthPanel.add(quarterNote);
+            lengthPanel.add(eighthNote);
+            input.add(lengthPanel);
+        }
+
+        public double returnDuration() {
+            if (quarterNote.isSelected()) {
+                return 1.0;
+            } else if (eighthNote.isSelected()) {
+                return 0.5;
+            }
+            return 0;
+        }
+    }
+
+    private class NoteHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            initializeInputFields();
+            JOptionPane.showConfirmDialog(editorPanel, input, "Add a note:",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.OK_CANCEL_OPTION, noteIcon);
+            Note newNote = new Note(noteName.getText(), parseInt(octave.getText()), returnDegree(), returnDuration());
+            try {
+                activeBar.addToBar(newNote);
+                barPanel.add(new JLabel("\t" + newNote.getCompositeName() + "\t"));
+            } catch (BarLengthException ex) {
+                JOptionPane.showMessageDialog(null,
+                        "Could not add that note because the bar is full.");
+            }
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        }
+
+        public void initializeInputFields() {
+            input = new JPanel();
+            input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
             addNamePanel();
             addOctavePanel();
             addDegreePanel();

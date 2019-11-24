@@ -39,21 +39,38 @@ public class GUI {
     }
 
     private void initializeWelcomePanel() {
+        JPanel centeringPanel = new JPanel();
+        setupCenteringPanel(centeringPanel);
         welcomePanel = new JPanel();
+        welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
         welcomePanel.setBackground(new Color(255, 255, 255));
-        JTextArea welcome = new JTextArea("Welcome to MemoMaker!");
-        welcome.setSize(400, 100);
-        welcome.setEditable(false);
-        welcome.setFont(welcome.getFont().deriveFont(24f));
+        JTextArea welcome = makeWelcomeMessage();
         welcomePanel.add(welcome);
         try {
             WebReader.main(new String[]{});
+            JPanel webText = WebReader.getParsedText();
+            welcomePanel.add(webText);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JPanel webText = WebReader.getParsedText();
-        welcomePanel.add(webText);
-        mainFrame.getContentPane().add(BorderLayout.CENTER, welcomePanel);
+        centeringPanel.add(welcomePanel);
+        mainFrame.getContentPane().add(BorderLayout.CENTER, centeringPanel);
+    }
+
+    private JTextArea makeWelcomeMessage() {
+        JTextArea welcome = new JTextArea();
+        welcome.setText("Welcome to MemoMaker!");
+        welcome.setAlignmentX(0.5f);
+        welcome.setSize(400, 100);
+        welcome.setEditable(false);
+        welcome.setFont(welcome.getFont().deriveFont(24f));
+        return welcome;
+    }
+
+    private void setupCenteringPanel(JPanel panel) {
+        panel.setLayout(new GridBagLayout());
+        panel.setBackground(new Color(255, 255, 255));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
     private void initializeMainFrame() {
