@@ -1,8 +1,8 @@
 package ui.gui;
 
-import model.Bar;
 import model.Library;
 import model.Memo;
+import network.WebReader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,20 +12,14 @@ import java.io.IOException;
 
 public class GUI {
     private JPanel welcomePanel;
-    private JPanel editorPanel;
-    private JPanel topPanel;
-    private JPanel mainPanel;
     private JMenuBar menuBar;
     private JFrame mainFrame = new JFrame("MemoMaker");
     private JFrame memoEditor;
     private Library library = new Library();
     private Memo activeMemo;
-    private int barNum;
-    private Bar activeBar;
 
     public GUI() {
         initializeMainFrame();
-        barNum = 1;
     }
 
     private void initializeMenuBar() {
@@ -36,6 +30,7 @@ public class GUI {
         JMenuItem load = new JMenuItem("Load");
         JMenuItem save = new JMenuItem("Save");
         JMenuItem quit = new JMenuItem("Quit");
+        quit.addActionListener(new QuitListener());
         menuBar.add(file);
         file.add(newMemo);
         file.add(load);
@@ -45,8 +40,19 @@ public class GUI {
 
     private void initializeWelcomePanel() {
         welcomePanel = new JPanel();
+        welcomePanel.setBackground(new Color(255, 255, 255));
         JTextArea welcome = new JTextArea("Welcome to MemoMaker!");
+        welcome.setSize(400, 100);
+        welcome.setEditable(false);
+        welcome.setFont(welcome.getFont().deriveFont(24f));
         welcomePanel.add(welcome);
+        try {
+            WebReader.main(new String[]{});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JPanel webText = WebReader.getParsedText();
+        welcomePanel.add(webText);
         mainFrame.getContentPane().add(BorderLayout.CENTER, welcomePanel);
     }
 
@@ -90,5 +96,15 @@ public class GUI {
         }
     }
 
+    private class QuitListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int quit = JOptionPane.showConfirmDialog(mainFrame,
+                    "Are you sure you want to quit? Any unsaved progress will be lost.");
+            if (quit == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        }
+    }
 }
 

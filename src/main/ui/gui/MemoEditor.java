@@ -123,20 +123,55 @@ public class MemoEditor extends JFrame {
         public void initializeInputFields() {
             input = new JPanel();
             input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
+//            JPanel namePanel = new JPanel();
+//            namePanel.add(new JLabel("Note Name:"));
+//            namePanel.add(noteName);
+//            input.add(namePanel);
+//            JPanel octavePanel = new JPanel();
+//            octavePanel.add(new JLabel("Octave:"));
+//            octavePanel.add(octave);
+//            input.add(octavePanel);
+//            JPanel degreePanel = new JPanel();
+//            degreePanel.add(new JLabel("Degree:"));
+//            degreePanel.add(sharp);
+//            degreePanel.add(natural);
+//            degreePanel.add(flat);
+//            input.add(degreePanel);
+//            JPanel lengthPanel = new JPanel();
+//            lengthPanel.add(new JLabel("Note Length:"));
+//            lengthPanel.add(quarterNote);
+//            lengthPanel.add(eighthNote);
+//            input.add(lengthPanel);
+            addNamePanel();
+            addOctavePanel();
+            addDegreePanel();
+            addLengthPanel();
+        }
+
+        private void addNamePanel() {
             JPanel namePanel = new JPanel();
             namePanel.add(new JLabel("Note Name:"));
             namePanel.add(noteName);
             input.add(namePanel);
+        }
+
+        private void addOctavePanel() {
             JPanel octavePanel = new JPanel();
             octavePanel.add(new JLabel("Octave:"));
             octavePanel.add(octave);
             input.add(octavePanel);
+        }
+
+        private void addDegreePanel() {
             JPanel degreePanel = new JPanel();
             degreePanel.add(new JLabel("Degree:"));
             degreePanel.add(sharp);
             degreePanel.add(natural);
             degreePanel.add(flat);
             input.add(degreePanel);
+        }
+
+        private void addLengthPanel() {
             JPanel lengthPanel = new JPanel();
             lengthPanel.add(new JLabel("Note Length:"));
             lengthPanel.add(quarterNote);

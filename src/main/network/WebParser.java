@@ -8,12 +8,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import java.awt.*;
 
 public class WebParser {
+    private JPanel panel;
 
-    public HashMap<Integer, ArrayList<String>> result;
+    public WebParser(JPanel panel) {
+        this.panel = panel;
+    }
 
     /**
      * Prints library parsed from JSON data to console
@@ -25,8 +30,7 @@ public class WebParser {
     public void parseChart(String jsonObj) throws JSONException {
         JSONObject chart = new JSONObject(jsonObj);
         JSONArray albums = chart.optJSONArray("data");
-        System.out.println("The top 3 albums of the day are: \n");
-        result = new HashMap<>();
+        panel.add(new JTextArea("For inspiration, the top 3 albums of the day are:"));
 
         for (int i = 0; i < 3; i++) {
             JSONObject album = albums.getJSONObject(i);
@@ -34,28 +38,50 @@ public class WebParser {
         }
     }
 
-    // EFFECTS: parses an album for album name, album artist, rank, and album link
+    // EFFECTS: parses an album for album name, artist, rank, and album link and adds it to this.panel
     private void parseAlbum(JSONObject album) throws JSONException {
         int position = album.getInt("position");
         String albumName = album.getString("title");
         JSONObject artist = album.getJSONObject("artist");
         String artistName = artist.getString("name");
         String link = album.getString("link");
-        String albumPos = "--- Rank " + position + "---";
-        String albumTitle = "Album: " + albumName;
-        String albumArtist = "Artist: " + artistName;
-        String albumLink = "Click here to listen: " + link;
-        ArrayList<String> albums = new ArrayList<>();
-        albums.add(albumPos);
-        albums.add(albumTitle);
-        albums.add(albumArtist);
-        albums.add(albumLink);
-        result.put(position, albums);
+        addToText(position, albumName, artistName);
+        addLink(link);
     }
 
-    // EFFECTS: gets the album information at position i
-    public ArrayList<String> getAlbum(int i) {
-        return result.get(i);
+    // EFFECTS: adds album position, album name, and album artist to this.panel
+    private void addToText(int pos, String album, String artist) {
+        JTextArea text = new JTextArea();
+        text.setEditable(false);
+        text.append("\nRank " + pos + ":");
+        text.append("\nAlbum: " + album);
+        text.append("\nArtist: " + artist);
+        panel.add(text);
     }
 
+    private void addLink(String link) {
+        JEditorPane linkPane = new JEditorPane();
+        linkPane.setContentType("text/html");
+        linkPane.setEditable(false);
+        linkPane.setText("Click <a href=" + link + ">here</a> to listen.");
+        linkPane.addHyperlinkListener(new LinkListener());
+        panel.add(linkPane);
+    }
+
+    // this implementation of HyperlinkListener was adapted from
+    // https://stackoverflow.com/questions/14862425/clickable-html-link-in-jeditorpane
+    private class LinkListener implements HyperlinkListener {
+        @Override
+        public void hyperlinkUpdate(HyperlinkEvent e) {
+            if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
+                System.out.println(e.getURL());
+                Desktop desktop = Desktop.getDesktop();
+                try {
+                    desktop.browse(e.getURL().toURI());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
 }
