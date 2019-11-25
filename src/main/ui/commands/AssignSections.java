@@ -12,6 +12,7 @@ public class AssignSections implements Command {
     private transient Scanner scanner = new Scanner(System.in);
     private Section section;
 
+    // EFFECTS: assigns sections to each bar in the memo
     @Override
     public void executeCommand(Library library) {
         library.printMemosInLibrary();

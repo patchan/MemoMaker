@@ -82,6 +82,8 @@ public class MemoEditor extends JPanel {
         chordQuality.add(aug);
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads the note and rest icons
     private void loadIcons() throws IOException {
         Image noteImage = ImageIO.read(new File("data/music-note.jpg"));
         noteIcon = new ImageIcon(noteImage);
@@ -105,6 +107,7 @@ public class MemoEditor extends JPanel {
     }
 
     private abstract class CreatorTool {
+        // EFFECTS: adds note name input to the input panel
         protected void addNamePanel() {
             JPanel namePanel = new JPanel();
             namePanel.add(new JLabel("Root:"));
@@ -112,6 +115,7 @@ public class MemoEditor extends JPanel {
             input.add(namePanel);
         }
 
+        // EFFECTS: adds note length input to the input panel
         protected void addLengthPanel() {
             JPanel lengthPanel = new JPanel();
             lengthPanel.add(new JLabel("Length:"));
@@ -120,6 +124,7 @@ public class MemoEditor extends JPanel {
             input.add(lengthPanel);
         }
 
+        // EFFECTS: returns the note duration stored in the noteDuration button group
         protected double returnDuration() {
             if (quarterNote.isSelected()) {
                 return 1.0;
@@ -148,6 +153,7 @@ public class MemoEditor extends JPanel {
             mainPanel.repaint();
         }
 
+        // EFFECTS: initializes the input fields for JOptionPane confirm dialog
         public void initializeInputFields() {
             input = new JPanel();
             input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
@@ -174,6 +180,7 @@ public class MemoEditor extends JPanel {
             mainPanel.repaint();
         }
 
+        // EFFECTS: initializes the input fields for JOptionPane confirm dialog
         public void initializeInputFields() {
             input = new JPanel();
             input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
@@ -183,6 +190,7 @@ public class MemoEditor extends JPanel {
             addLengthPanel();
         }
 
+        // EFFECTS: adds note octave input to the input panel
         private void addOctavePanel() {
             JPanel octavePanel = new JPanel();
             octavePanel.add(new JLabel("Octave:"));
@@ -190,6 +198,7 @@ public class MemoEditor extends JPanel {
             input.add(octavePanel);
         }
 
+        // EFFECTS: adds note degree input to the input panel
         private void addDegreePanel() {
             JPanel degreePanel = new JPanel();
             degreePanel.add(new JLabel("Degree:"));
@@ -199,6 +208,7 @@ public class MemoEditor extends JPanel {
             input.add(degreePanel);
         }
 
+        // EFFECTS: returns the note degree value in the degree button group
         private int returnDegree() {
             if (sharp.isSelected()) {
                 return 1;
@@ -228,6 +238,7 @@ public class MemoEditor extends JPanel {
             mainPanel.repaint();
         }
 
+        // EFFECTS: initializes the input fields for JOptionPane confirm dialog
         private void initializeInputFields() {
             input = new JPanel();
             input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
@@ -237,6 +248,7 @@ public class MemoEditor extends JPanel {
             addLengthPanel();
         }
 
+        // EFFECTS: adds chord quality input to the input panel
         private void addQualityPanel() {
             JPanel qualityPanel = new JPanel();
             qualityPanel.add(new JLabel("Quality"));
@@ -247,6 +259,7 @@ public class MemoEditor extends JPanel {
             input.add(qualityPanel);
         }
 
+        // EFFECTS: adds chord extension input to the input panel
         private void addExtensionPanel() {
             JPanel extensionPanel = new JPanel();
             extensionPanel.add(new JLabel("Extensions"));
@@ -254,6 +267,7 @@ public class MemoEditor extends JPanel {
             input.add(extensionPanel);
         }
 
+        // EFFECTS: returns the chord quality stored in the chordQuality button group
         private String returnQuality() {
             if (min.isSelected()) {
                 return ChordQuality.MIN.getValue();

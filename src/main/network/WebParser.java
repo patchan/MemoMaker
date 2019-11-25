@@ -59,6 +59,7 @@ public class WebParser {
         panel.add(text);
     }
 
+    // EFFECTS: adds link to this.panel
     private void addLink(String link) {
         JEditorPane linkPane = new JEditorPane();
         linkPane.setContentType("text/html");

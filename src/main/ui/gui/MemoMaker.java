@@ -21,6 +21,8 @@ public class MemoMaker {
         initializeMainFrame();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the menu bar with the appropriate items
     private void initializeMenuBar() {
         menuBar = new JMenuBar();
         JMenu file = new JMenu("File");
@@ -39,6 +41,8 @@ public class MemoMaker {
         file.add(quit);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the welcome panel with text message and parsed web information
     private void initializeWelcomePanel() {
         JPanel centeringPanel = new JPanel();
         setupCenteringPanel(centeringPanel);
@@ -58,6 +62,7 @@ public class MemoMaker {
         mainFrame.getContentPane().add(BorderLayout.CENTER, centeringPanel);
     }
 
+    // EFFECTS: produces JTextArea containing welcome message
     private JTextArea makeWelcomeMessage() {
         JTextArea welcome = new JTextArea();
         welcome.setText("Welcome to MemoMaker!");
@@ -68,12 +73,16 @@ public class MemoMaker {
         return welcome;
     }
 
+    // MODIFIES: panel
+    // EFFECTS: sets the parameters for the centering panel
     private void setupCenteringPanel(JPanel panel) {
         panel.setLayout(new GridBagLayout());
         panel.setBackground(new Color(255, 255, 255));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes all parts of mainFrame
     private void initializeMainFrame() {
         initializeMenuBar();
         initializeWelcomePanel();
@@ -81,6 +90,8 @@ public class MemoMaker {
         mainFrame.setVisible(true);
     }
 
+    // MODIFIES: frame
+    // EFFECTS: initializes default parameters for frame
     private void initializeFrame(JFrame frame) {
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,6 +99,8 @@ public class MemoMaker {
         frame.setJMenuBar(menuBar);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets memoEditor to the center panel of mainFrame
     private void initializeMemoEditor() {
         mainFrame.getContentPane().removeAll();
         mainFrame.getContentPane().add(BorderLayout.CENTER, memoEditor);
